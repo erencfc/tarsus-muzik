@@ -73,7 +73,7 @@ export default function ProductList({
                                 <div className="h-full w-full pt-6">
                                     <Image
                                         alt={product.model}
-                                        className="mb-2 h-[200px] w-full object-cover mix-blend-darken transition duration-300 ease-in group-hover:scale-90"
+                                        className="mb-2 h-[200px] w-[200px] object-cover mix-blend-darken transition duration-300 ease-in group-hover:scale-90"
                                         height="200"
                                         width="200"
                                         src={product.images[0]}
@@ -81,6 +81,7 @@ export default function ProductList({
                                             aspectRatio: "200/200",
                                             objectFit: "cover",
                                         }}
+                                        priority={false}
                                     />
                                 </div>
                                 <p className="items-end text-center text-lg font-bold">
