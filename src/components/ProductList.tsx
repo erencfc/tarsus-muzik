@@ -1,6 +1,6 @@
 "use client";
 
-import { incrementProductQuantity } from "@/app/urun/[slug]/actions";
+import { incrementProductQuantity } from "@/app/(product)/urun/[slug]/actions";
 import { formatPrice } from "@/lib/format";
 import { EyeIcon, HeartIcon } from "@heroicons/react/24/outline";
 import { Prisma } from "@prisma/client";

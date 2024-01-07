@@ -3,23 +3,25 @@
 import { getServerSession } from "next-auth";
 import dynamic from "next/dynamic";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/(auth)/api/auth/[...nextauth]/route";
 import { fetchUserInfo } from "@/app/utils/fetchUserInfo";
 
 import Loading from "@/app/loading";
+import { Suspense } from "react";
 
-const Addresses = dynamic(() => import("@/app/hesabim/[...slug]/Addresses"));
-const Coupons = dynamic(() => import("@/app/hesabim/[...slug]/Coupons"));
-const Favorites = dynamic(() => import("@/app/hesabim/[...slug]/Favorites"));
-const Orders = dynamic(() => import("@/app/hesabim/[...slug]/Orders"));
+const Addresses = dynamic(
+    () => import("@/app/(user)/hesabim/[...slug]/Addresses")
+);
+const Coupons = dynamic(() => import("@/app/(user)/hesabim/[...slug]/Coupons"));
+const Favorites = dynamic(
+    () => import("@/app/(user)/hesabim/[...slug]/Favorites")
+);
+const Orders = dynamic(() => import("@/app/(user)/hesabim/[...slug]/Orders"));
 const PersonalInformation = dynamic(
-    () => import("@/app/hesabim/[...slug]/PersonalInformation"),
-    {
-        loading: () => <Loading />,
-    }
+    () => import("@/app/(user)/hesabim/[...slug]/PersonalInformation")
 );
 const ChangePassword = dynamic(
-    () => import("@/app/hesabim/[...slug]/ChangePassword")
+    () => import("@/app/(user)/hesabim/[...slug]/ChangePassword")
 );
 
 export default async function AccountSlugPage({
@@ -49,7 +51,11 @@ export default async function AccountSlugPage({
     const ComponentToRender = components[page];
 
     if (ComponentToRender) {
-        return <ComponentToRender user={user} />;
+        return (
+            <Suspense fallback={<Loading />}>
+                <ComponentToRender user={user} />
+            </Suspense>
+        );
     } else {
         console.log("Page not found");
         return null;

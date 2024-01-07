@@ -1,6 +1,6 @@
 "use client";
 
-import { applyCoupon } from "@/app/sepetim/action";
+import { applyCoupon } from "@/app/(user)/sepetim/action";
 import { getErrorMessage } from "@/lib/utils";
 import { useState, useTransition } from "react";
 import { toast } from "react-toastify";

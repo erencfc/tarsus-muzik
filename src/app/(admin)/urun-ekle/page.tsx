@@ -1,9 +1,9 @@
 "use client";
 
-import { fetchCategories } from "../utils/fetchCategories";
+import { fetchCategories } from "../../utils/fetchCategories";
 import AddProductForm from "@/components/Forms/AddProductForm";
 import { useEffect, useState } from "react";
-import { fetchBrands } from "../utils/fetchBrands";
+import { fetchBrands } from "../../utils/fetchBrands";
 import type { Category, Brand } from "@prisma/client";
 
 export const metadata = {

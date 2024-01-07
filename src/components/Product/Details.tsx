@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { incrementProductQuantity } from "@/app/urun/[slug]/actions";
+import { incrementProductQuantity } from "@/app/(product)/urun/[slug]/actions";
 import { formatPrice } from "@/lib/format";
 import {
     BellAlertIcon,

@@ -1,6 +1,6 @@
 "use server";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/(auth)/api/auth/[...nextauth]/route";
 import ProductDetails from "@/components/Product/Details";
 import { prisma } from "@/lib/db/prisma";
 import { Metadata } from "next";
