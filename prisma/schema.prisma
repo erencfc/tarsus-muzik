@@ -1,0 +1,191 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Cart {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  items     CartItem[]
+  shipping  Int        @default(0)
+  discount  Int        @default(0)
+  Coupon    Coupon?    @relation(fields: [couponId], references: [id])
+  couponId  String?    @db.ObjectId
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@map("carts")
+}
+
+model CartItem {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  productId String  @db.ObjectId
+  Product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity  Int
+  CartId    String  @db.ObjectId
+  Cart      Cart    @relation(fields: [CartId], references: [id], onDelete: Cascade)
+
+  @@map("cartItems")
+}
+
+model Coupon {
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  active        Boolean      @default(true)
+  description   String?
+  maxUse        Int?
+  minPurchase   Int?
+  code          String       @unique
+  discount      Int
+  discountType  DiscountType
+  validFrom     DateTime     @default(now())
+  validTo       DateTime?
+  Category      Category?    @relation(fields: [categoryId], references: [id])
+  categoryId    String?      @db.ObjectId
+  SubCategory   SubCategory? @relation(fields: [subCategoryId], references: [id])
+  subCategoryId String?      @db.ObjectId
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  Cart          Cart[]
+
+  @@map("coupons")
+}
+
+enum DiscountType {
+  PERCENT
+  FIXED
+}
+
+model Product {
+  id                 String      @id @default(auto()) @map("_id") @db.ObjectId
+  Brand              Brand       @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  brandId            String      @db.ObjectId
+  model              String      @unique
+  modelSlug          String      @unique
+  images             String[]
+  price              Int
+  discountPrice      Int?
+  description        String
+  deliveryTimeMinDay Int
+  deliveryTimeMaxDay Int
+  stock              Int
+  stockStatus        Boolean
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+  Category           Category    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId         String      @db.ObjectId
+  SubCategory        SubCategory @relation(fields: [subCategoryId], references: [id], onDelete: Cascade)
+  subCategoryId      String      @db.ObjectId
+  CartItem           CartItem[]
+  Favorite           Favorite[]
+  Comment            Comment[]
+
+  @@map("products")
+}
+
+model Comment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String?
+  content   String?
+  rating    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @db.ObjectId
+  Product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String   @db.ObjectId
+
+  @@map("comments")
+}
+
+model Category {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  name        String        @unique
+  slug        String        @unique
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  SubCategory SubCategory[]
+  Product     Product[]
+  Coupon      Coupon[]
+
+  @@map("categories")
+}
+
+model SubCategory {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  name       String    @unique
+  slug       String    @unique
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  Category   Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId String    @db.ObjectId
+  Product    Product[]
+  Coupon     Coupon[]
+
+  @@map("subCategories")
+}
+
+model Brand {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String    @unique
+  slug      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Product   Product[]
+
+  @@map("brands")
+}
+
+model User {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  firstName String
+  lastName  String
+  Addresses Address[]
+  email     String     @unique
+  tel       String     @unique
+  password  String
+  emailNoti Boolean    @default(true)
+  smsNoti   Boolean    @default(true)
+  verified  Boolean    @default(false)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  cartId    String?    @db.ObjectId
+  Favorite  Favorite[]
+  Comment   Comment[]
+
+  @@map("users")
+}
+
+model Address {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  alias     String
+  firstName String
+  lastName  String
+  tel       String
+  street    String
+  city      String
+  town      String
+  district  String
+  details   String
+  zipCode   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @unique @db.ObjectId
+
+  @@map("addresses")
+}
+
+model Favorite {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @db.ObjectId
+  Product   Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String   @db.ObjectId
+
+  @@map("favorites")
+}

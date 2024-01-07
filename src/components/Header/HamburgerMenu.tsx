@@ -1,0 +1,148 @@
+"use client";
+
+import { TCategory } from "@/types/TCategory";
+import {
+    Bars3Icon,
+    ChevronDownIcon,
+    ChevronRightIcon,
+    ChevronUpIcon,
+    MagnifyingGlassIcon,
+    XMarkIcon,
+} from "@heroicons/react/24/outline";
+import Image from "next/image";
+import { useState } from "react";
+import ShoppingCartButton from "./ShoppingCartButton";
+import { ShoppingCart } from "@/lib/db/cart";
+import Link from "next/link";
+
+export default function HamburgerMenu({
+    categories,
+    cart,
+}: {
+    categories: TCategory[];
+    cart: ShoppingCart | null;
+}) {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [dropdowns, setDropdowns] = useState<string[]>([]);
+
+    return (
+        <div className="sticky top-0 z-[100] m-auto flex h-20 w-full min-w-[290px] items-center justify-between bg-black px-4 text-white xl:hidden">
+            {/* Hamburger Menu */}
+            <div className="flex flex-col">
+                {/* Menu Toggle Button */}
+                <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                    <>
+                        {isMenuOpen && <XMarkIcon width={32} height={32} />}
+                        {!isMenuOpen && <Bars3Icon width={32} height={32} />}
+                    </>
+                </button>
+
+                {/* Menu */}
+                <ul
+                    className={`${
+                        isMenuOpen ? "flex" : "hidden"
+                    } absolute left-0 top-20 max-h-screen w-full flex-col overflow-y-auto bg-black`}
+                >
+                    {categories.map((category) => (
+                        <li
+                            key={category.slug}
+                            onClick={() =>
+                                dropdowns.find((d) => d === category.slug)
+                                    ? setDropdowns((prev) =>
+                                          prev.filter(
+                                              (d) => d !== category.slug
+                                          )
+                                      )
+                                    : setDropdowns((prev) => [
+                                          ...prev,
+                                          category.slug,
+                                      ])
+                            }
+                            className={`${
+                                dropdowns.find((d) => d === category.slug)
+                                    ? "bg-gray-400/10"
+                                    : ""
+                            } relative flex w-full cursor-pointer flex-col justify-between rounded-lg py-2 after:absolute after:top-0 after:h-[1px] after:w-full after:bg-zinc-800 after:p-0 after:content-['']`}
+                        >
+                            <div className="flex">
+                                <a
+                                    className="px-4 py-1"
+                                    onClick={(e) => e.preventDefault()}
+                                >
+                                    {category.name}
+                                </a>
+
+                                <button className="ml-auto">
+                                    {dropdowns.find(
+                                        (d) => d === category.slug
+                                    ) ? (
+                                        <ChevronUpIcon
+                                            height={24}
+                                            width={24}
+                                            className="mr-4"
+                                        />
+                                    ) : (
+                                        <ChevronDownIcon
+                                            height={24}
+                                            width={24}
+                                            className="mr-4"
+                                        />
+                                    )}
+                                </button>
+                            </div>
+
+                            <ul
+                                className={`${
+                                    dropdowns.find((d) => d === category.slug)
+                                        ? "flex"
+                                        : "hidden"
+                                } mt-2 w-full flex-col bg-black`}
+                            >
+                                <li className="relative flex w-full flex-col justify-end rounded-lg py-1.5 text-sm after:absolute after:top-0 after:h-[1px] after:w-full after:bg-zinc-800 after:p-0 after:content-['']">
+                                    <a
+                                        className="px-4 py-1 font-bold"
+                                        href={`/kategori/${category.slug}`}
+                                    >
+                                        {category.name} Kategorisi Ana Sayfa
+                                    </a>
+                                </li>
+                                {category.SubCategory.map((subCategory) => (
+                                    <li
+                                        key={subCategory.slug}
+                                        className="relative flex w-full flex-col justify-end rounded-lg py-1.5 text-sm after:absolute after:top-0 after:h-[1px] after:w-full after:bg-zinc-800 after:p-0 after:content-['']"
+                                    >
+                                        <a
+                                            className="flex px-8 py-1"
+                                            href={`/kategori/${category.slug}/${subCategory.slug}`}
+                                        >
+                                            <ChevronRightIcon
+                                                width={20}
+                                                height={20}
+                                                className="mr-1.5"
+                                            />
+
+                                            {subCategory.name}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
+            {/* Logo */}
+            <Link href="/">
+                <Image src="/logo.png" alt="logo" width={180} height={58} />
+            </Link>
+
+            {/* Right Side */}
+            <div className="flex items-center gap-2">
+                <Link href="/ara">
+                    <MagnifyingGlassIcon width={24} height={24} />
+                </Link>
+                <ShoppingCartButton cart={cart} width={24} height={24} />
+            </div>
+        </div>
+    );
+}
