@@ -10,6 +10,7 @@ import { notFound } from "next/navigation";
 import { Suspense, cache } from "react";
 import Tabs from "./Tabs";
 import Loading from "@/app/loading";
+import Link from "next/link";
 
 const getUserFavorites = cache(async (userId: string) => {
     const favorites = await prisma.favorite.findMany({
@@ -77,7 +78,7 @@ export default async function ProductPage({
     const isFav = await isFavorite(product.id);
 
     return (
-        <div className="flex flex-col gap-16">
+        <div className="m-auto flex min-w-[300px] max-w-6xl flex-col gap-16 p-6">
             <div className="flex flex-col gap-6 sm:flex-row">
                 <div className="max-w-sm">
                     <div className="carousel w-full">
@@ -102,7 +103,7 @@ export default async function ProductPage({
                     </div>
                     <div className="flex gap-2 py-2">
                         {product.images.map((image, index) => (
-                            <a
+                            <Link
                                 href={`#item${index + 1}`}
                                 key={index + 1}
                                 className="border border-solid border-gray-300/50 p-1"
@@ -114,7 +115,7 @@ export default async function ProductPage({
                                     height={80}
                                     className="min-h-[46px] w-20 mix-blend-darken"
                                 />
-                            </a>
+                            </Link>
                         ))}
                     </div>
                 </div>

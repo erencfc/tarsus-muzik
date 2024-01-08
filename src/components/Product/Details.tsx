@@ -16,6 +16,7 @@ import { useState, useTransition } from "react";
 import ToggleFavoriteButton from "../ToggleFavoriteButton";
 import CreateCommentModal from "./CreateCommentModal";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function ProductDetails({
     product,
@@ -68,12 +69,12 @@ export default function ProductDetails({
                 <CreateCommentModal productId={product.id} userId={user?.id} />
             )}
             <div className="flex w-full flex-col">
-                <a
+                <Link
                     href={`/marka/${product.Brand.slug}`}
                     className="text-sm font-extrabold uppercase text-gray-900/40 transition-colors duration-200 hover:text-gray-900/80"
                 >
                     {product.Brand.name}
-                </a>
+                </Link>
                 <h1 className="text-2xl font-semibold text-gray-900">
                     {product.model}
                 </h1>
@@ -86,12 +87,12 @@ export default function ProductDetails({
                     </div>
                     <div className="flex flex-row">
                         <span className="w-20">Kategori</span>
-                        <a
+                        <Link
                             href={`/kategori/${product.Category.slug}/${product.SubCategory.slug}`}
                             className="transition-colors duration-200 before:mr-2 before:content-[':'] hover:text-primary"
                         >
                             {product.SubCategory.name}
-                        </a>
+                        </Link>
                     </div>
                 </div>
                 <span className="mt-12 text-2xl font-bold text-primary">
@@ -133,7 +134,7 @@ export default function ProductDetails({
                             className="opacity-70"
                         />
                         <span className="text-xs text-opacity-70">
-                            Ucuzlarsa Bildir
+                            İndirime Girerse Bildir
                         </span>
                     </div>
                     <div className="flex cursor-pointer flex-row items-center justify-center gap-2 transition-colors duration-150 hover:text-primary">

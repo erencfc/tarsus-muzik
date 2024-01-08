@@ -134,7 +134,7 @@ export default async function CategoryPage({
     }
 
     return (
-        <>
+        <div className="m-auto min-w-[300px] max-w-6xl p-6">
             <CategoryPageComponent
                 oldQuery={{
                     sayfa,
@@ -152,6 +152,6 @@ export default async function CategoryPage({
                 totalItemCount={products.totalItemCount}
                 user={user}
             />
-        </>
+        </div>
     );
 }

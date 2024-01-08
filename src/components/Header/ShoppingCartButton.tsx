@@ -3,6 +3,7 @@ import { formatPrice } from "@/lib/format";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import CartRemoveItemButton from "./CartRemoveItemButton";
+import Link from "next/link";
 
 export default function ShoppingCartButton({
     width,
@@ -48,26 +49,34 @@ export default function ShoppingCartButton({
                         >
                             <div className="my-2 flex flex-row items-center gap-2">
                                 <div className="max-w-[96px]">
-                                    <Image
-                                        src={item.Product.images[0]}
-                                        alt={item.Product.model}
-                                        width={96}
-                                        height={96}
-                                    />
+                                    <Link
+                                        href={`/urun/${item.Product.modelSlug}`}
+                                    >
+                                        <Image
+                                            src={item.Product.images[0]}
+                                            alt={item.Product.model}
+                                            width={96}
+                                            height={96}
+                                        />
+                                    </Link>
                                 </div>
                                 <div className="flex w-full flex-col">
                                     <span className="text-xs font-medium text-gray-900/60 transition-colors duration-200 hover:text-primary">
-                                        <a
+                                        <Link
                                             href={`/marka/${item.Product.Brand.slug}`}
                                         >
                                             {item.Product.Brand.name}
-                                        </a>
+                                        </Link>
                                     </span>
                                     <span
-                                        className="my-2 line-clamp-2 w-5/6 text-xs"
+                                        className="my-2 line-clamp-2 w-5/6 text-xs transition-colors duration-200 hover:text-primary"
                                         title={item.Product.model}
                                     >
-                                        {item.Product.model}
+                                        <Link
+                                            href={`/urun/${item.Product.modelSlug}`}
+                                        >
+                                            {item.Product.model}
+                                        </Link>
                                     </span>
                                     <span className="font-bold">
                                         <span className="text-xs font-normal">
@@ -87,12 +96,12 @@ export default function ShoppingCartButton({
                     <span className="text-xl font-extrabold">
                         {formatPrice(cart?.subtotal || 0)}
                     </span>
-                    <a
+                    <Link
                         href="/sepetim"
                         className="btn btn-primary btn-block mt-4 text-white"
                     >
                         Ödeme Yap
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>

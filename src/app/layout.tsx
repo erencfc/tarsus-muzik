@@ -32,7 +32,7 @@ export default function RootLayout({
                 {/* Header & Navbar */}
                 <header className="inline">
                     <div className="hidden xl:inline">
-                        <div className="container m-auto">
+                        <div className="container m-auto max-w-6xl">
                             <HeaderTop />
                         </div>
                         <Navbar />
@@ -42,7 +42,7 @@ export default function RootLayout({
                 </header>
                 <AuthProvider>
                     {/* Main */}
-                    <main className="m-auto min-w-[300px] max-w-6xl p-6">
+                    <main>
                         {children}
                         <Suspense>
                             <ToastContainer />

@@ -99,19 +99,19 @@ export default function HamburgerMenu({
                                 } mt-2 w-full flex-col bg-black`}
                             >
                                 <li className="relative flex w-full flex-col justify-end rounded-lg py-1.5 text-sm after:absolute after:top-0 after:h-[1px] after:w-full after:bg-zinc-800 after:p-0 after:content-['']">
-                                    <a
+                                    <Link
                                         className="px-4 py-1 font-bold"
                                         href={`/kategori/${category.slug}`}
                                     >
                                         {category.name} Kategorisi Ana Sayfa
-                                    </a>
+                                    </Link>
                                 </li>
                                 {category.SubCategory.map((subCategory) => (
                                     <li
                                         key={subCategory.slug}
                                         className="relative flex w-full flex-col justify-end rounded-lg py-1.5 text-sm after:absolute after:top-0 after:h-[1px] after:w-full after:bg-zinc-800 after:p-0 after:content-['']"
                                     >
-                                        <a
+                                        <Link
                                             className="flex px-8 py-1"
                                             href={`/kategori/${category.slug}/${subCategory.slug}`}
                                         >
@@ -122,7 +122,7 @@ export default function HamburgerMenu({
                                             />
 
                                             {subCategory.name}
-                                        </a>
+                                        </Link>
                                     </li>
                                 ))}
                             </ul>

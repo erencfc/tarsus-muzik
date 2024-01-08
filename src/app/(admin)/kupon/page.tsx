@@ -19,7 +19,7 @@ export default async function CouponPage() {
     });
 
     return (
-        <>
+        <div className="m-auto min-w-[300px] max-w-6xl p-6">
             <CreateModal categories={categories} />
             <div className="flex justify-between">
                 <h1 className="text-2xl font-bold">Kuponlar</h1>
@@ -28,6 +28,6 @@ export default async function CouponPage() {
             <div className="h-[672px] min-h-[250px] overflow-auto">
                 <CouponsTable coupons={coupons} />
             </div>
-        </>
+        </div>
     );
 }

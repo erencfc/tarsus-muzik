@@ -10,18 +10,40 @@ import Loading from "@/app/loading";
 import { Suspense } from "react";
 
 const Addresses = dynamic(
-    () => import("@/app/(user)/hesabim/[...slug]/Addresses")
+    () => import("@/app/(user)/hesabim/[...slug]/(addresses)/Addresses"),
+    {
+        loading: () => <Loading />,
+    }
 );
-const Coupons = dynamic(() => import("@/app/(user)/hesabim/[...slug]/Coupons"));
+const Coupons = dynamic(
+    () => import("@/app/(user)/hesabim/[...slug]/Coupons"),
+    {
+        loading: () => <Loading />,
+    }
+);
 const Favorites = dynamic(
-    () => import("@/app/(user)/hesabim/[...slug]/Favorites")
+    () => import("@/app/(user)/hesabim/[...slug]/(favorites)/Favorites"),
+    {
+        loading: () => <Loading />,
+    }
 );
-const Orders = dynamic(() => import("@/app/(user)/hesabim/[...slug]/Orders"));
+const Orders = dynamic(() => import("@/app/(user)/hesabim/[...slug]/Orders"), {
+    loading: () => <Loading />,
+});
 const PersonalInformation = dynamic(
-    () => import("@/app/(user)/hesabim/[...slug]/PersonalInformation")
+    () => import("@/app/(user)/hesabim/[...slug]/PersonalInformation"),
+    {
+        loading: () => <Loading />,
+    }
 );
 const ChangePassword = dynamic(
-    () => import("@/app/(user)/hesabim/[...slug]/ChangePassword")
+    () =>
+        import(
+            "@/app/(user)/hesabim/[...slug]/(change_password)/ChangePassword"
+        ),
+    {
+        loading: () => <Loading />,
+    }
 );
 
 export default async function AccountSlugPage({
@@ -52,9 +74,11 @@ export default async function AccountSlugPage({
 
     if (ComponentToRender) {
         return (
-            <Suspense fallback={<Loading />}>
-                <ComponentToRender user={user} />
-            </Suspense>
+            <div className="m-auto min-w-[300px] max-w-6xl p-6">
+                <Suspense fallback={<Loading />}>
+                    <ComponentToRender user={user} />
+                </Suspense>
+            </div>
         );
     } else {
         console.log("Page not found");

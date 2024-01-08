@@ -13,6 +13,7 @@ import {
     XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Loading from "./Loading";
+import Link from "next/link";
 
 export default function CategoryPageComponent({
     oldQuery,
@@ -128,7 +129,7 @@ export default function CategoryPageComponent({
                                         className="group form-control"
                                         key={subCategory.slug}
                                     >
-                                        <a
+                                        <Link
                                             href={getPath(
                                                 category.slug,
                                                 subCategory.slug
@@ -148,7 +149,7 @@ export default function CategoryPageComponent({
                                             >
                                                 {subCategory.name}
                                             </span>
-                                        </a>
+                                        </Link>
                                     </div>
                                 ))}
                             <div
@@ -159,7 +160,7 @@ export default function CategoryPageComponent({
                                           " group form-control after:h-[1px] after:w-full after:rounded-lg after:bg-zinc-300 after:content-['']"
                                 }
                             >
-                                <a
+                                <Link
                                     href={
                                         sub_category
                                             ? getPath(category.slug)
@@ -182,7 +183,7 @@ export default function CategoryPageComponent({
                                             ? category.name
                                             : "Tüm Kategoriler"}
                                     </span>
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -468,7 +469,7 @@ export default function CategoryPageComponent({
                                           className="group form-control"
                                           key={formatSlug(subCategory.name)}
                                       >
-                                          <a
+                                          <Link
                                               href={getPath(
                                                   category.slug,
                                                   subCategory.slug
@@ -484,7 +485,7 @@ export default function CategoryPageComponent({
                                               <span className="label-text font-medium transition-colors duration-150 ease-in-out group-hover:text-accent">
                                                   {subCategory.name}
                                               </span>
-                                          </a>
+                                          </Link>
                                       </div>
                                   ))}
                             <div
@@ -495,7 +496,7 @@ export default function CategoryPageComponent({
                                           " group form-control after:h-[1px] after:w-full after:rounded-lg after:bg-zinc-300 after:content-['']"
                                 }
                             >
-                                <a
+                                <Link
                                     href={
                                         sub_category
                                             ? getPath(category.slug)
@@ -518,7 +519,7 @@ export default function CategoryPageComponent({
                                             ? category.name
                                             : "Tüm Kategoriler"}
                                     </span>
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>

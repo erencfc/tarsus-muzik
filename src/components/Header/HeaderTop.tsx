@@ -50,7 +50,7 @@ export default async function HeaderTop() {
             {/* SEARCH INPUT END */}
 
             <div className="flex items-center gap-4 text-sm">
-                <a
+                <Link
                     href="/hesabim"
                     className="flex items-center gap-2 rounded-lg border border-transparent px-2 py-1 transition duration-300 ease-in-out hover:translate-y-1 hover:cursor-pointer hover:border-gray-600 hover:text-primary hover:shadow-lg"
                 >
@@ -66,7 +66,7 @@ export default async function HeaderTop() {
                             )}
                         </div>
                     </div>
-                </a>
+                </Link>
                 {user && <SignOutButton />}
                 <Suspense
                     fallback={

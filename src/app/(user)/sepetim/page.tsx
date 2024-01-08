@@ -13,7 +13,7 @@ export default async function CartPage() {
     if (!cart) return null;
 
     return (
-        <div className="grid grid-cols-4 grid-rows-2 gap-4">
+        <div className="m-auto grid min-w-[300px] max-w-6xl grid-cols-4 grid-rows-2 gap-4 p-6">
             {cart && cart.items.length > 0 ? (
                 <>
                     <div className="col-span-3 mb-6 rounded-md border border-solid border-[#dadada] p-6">

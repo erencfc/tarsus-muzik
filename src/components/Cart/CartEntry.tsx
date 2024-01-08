@@ -43,7 +43,7 @@ export default function CartEntry({
                         className="border border-solid border-gray-300/40 p-1 mix-blend-darken"
                     />
                 </Link>
-                <div className="flex flex-col items-start justify-between">
+                <div className="flex flex-col items-start justify-between py-2">
                     <div className="w-80 text-xs font-semibold text-gray-600">
                         <Link href={`/urun/${cartItem.Product.modelSlug}`}>
                             {cartItem.Product.model}
