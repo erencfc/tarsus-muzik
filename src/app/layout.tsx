@@ -13,6 +13,7 @@ import { Suspense } from "react";
 import HeaderTop from "@/components/Header/HeaderTop";
 import HeaderMobile from "@/components/Header/HeaderMobile";
 import Navbar from "@/components/Header/Navbar";
+import FooterTop from "@/components/Footer/FooterTop";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -50,27 +51,33 @@ export default function RootLayout({
                     </main>
 
                     {/* Footer */}
-                    <div className="m-auto min-w-[300px] max-w-6xl p-6">
-                        <footer className="flex w-full shrink-0 flex-col items-center gap-2 border-t px-4 py-6 sm:flex-row md:px-6">
-                            <p className="text-xs text-gray-500 dark:text-gray-400">
-                                © Tarsus Müzik Market. Tüm hakları saklıdır.
-                            </p>
-                            <nav className="flex gap-4 sm:ml-auto sm:gap-6">
-                                <Link
-                                    className="text-xs underline-offset-4 hover:underline"
-                                    href="#"
-                                >
-                                    Terms of Service
-                                </Link>
-                                <Link
-                                    className="text-xs underline-offset-4 hover:underline"
-                                    href="#"
-                                >
-                                    Privacy
-                                </Link>
-                            </nav>
-                        </footer>
-                    </div>
+                    <footer className="mt-12">
+                        <FooterTop />
+                        <div className="bg-black/90">
+                            <div className="mx-auto min-w-[300px] max-w-6xl p-6">
+                                <div className="flex w-full shrink-0 flex-col items-center gap-2 px-4 py-6 sm:flex-row md:px-6">
+                                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                                        © Tarsus Müzik Market. Tüm hakları
+                                        saklıdır.
+                                    </p>
+                                    {/* <nav className="flex gap-4 sm:ml-auto sm:gap-6">
+                                        <Link
+                                            className="text-xs underline-offset-4 hover:underline"
+                                            href="#"
+                                        >
+                                            Terms of Service
+                                        </Link>
+                                        <Link
+                                            className="text-xs underline-offset-4 hover:underline"
+                                            href="#"
+                                        >
+                                            Privacy
+                                        </Link>
+                                    </nav> */}
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
                 </AuthProvider>
             </body>
         </html>

@@ -10,7 +10,9 @@ import {
     HeartIcon,
     MinusIcon,
     PlusIcon,
+    StarIcon,
 } from "@heroicons/react/24/outline";
+import { StarIcon as StarIconFilled } from "@heroicons/react/24/solid";
 import type { Product, Brand, SubCategory, Category } from "@prisma/client";
 import { useState, useTransition } from "react";
 import ToggleFavoriteButton from "../ToggleFavoriteButton";
@@ -63,6 +65,32 @@ export default function ProductDetails({
         }, 3000);
     }
 
+    const getRatingStars = (rating: number) => {
+        const stars = [];
+        for (let i = 0; i < 5; i++) {
+            if (rating - i > 0) {
+                stars.push(
+                    <StarIconFilled
+                        key={i}
+                        width={24}
+                        height={24}
+                        className="mb-0.5 text-yellow-500"
+                    />
+                );
+            } else {
+                stars.push(
+                    <StarIcon
+                        key={i}
+                        width={24}
+                        height={24}
+                        className="mb-0.5 text-yellow-500"
+                    />
+                );
+            }
+        }
+        return <div className="flex">{stars}</div>;
+    };
+
     return (
         <>
             {user && (
@@ -95,8 +123,18 @@ export default function ProductDetails({
                         </Link>
                     </div>
                 </div>
-                <span className="mt-12 text-2xl font-bold text-primary">
-                    {formatPrice(product.price)}
+
+                {product.rating > 0 && (
+                    <div className="mt-4 flex items-center gap-3">
+                        {getRatingStars(product.rating)}
+                        <span className="text-sm text-gray-700/60">
+                            {product.rating} Puan
+                        </span>
+                    </div>
+                )}
+
+                <div className="mt-12 text-2xl font-bold text-primary">
+                    <span>{formatPrice(product.price)}</span>
                     {quantity > 1 && (
                         <span className="ml-2 text-sm font-semibold text-gray-900/60">
                             (
@@ -106,7 +144,7 @@ export default function ProductDetails({
                             )
                         </span>
                     )}
-                </span>
+                </div>
 
                 <span className="ml-auto text-xs font-bold text-gray-900/80">
                     KARGO:{" "}

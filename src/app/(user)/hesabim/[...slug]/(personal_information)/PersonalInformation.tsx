@@ -1,8 +1,7 @@
 "use client";
 
 import { ChangeEvent, useState } from "react";
-import { Prisma } from "@prisma/client";
-import { updateUserInfo } from "@/actions/updateUserInfo.action";
+import { updateUserInfo } from "./action";
 import { toast } from "react-toastify";
 import { UserPayload } from "@/types/UserPayload";
 
@@ -41,7 +40,7 @@ export default function PersonalInformation({ user }: { user: UserPayload }) {
     return (
         <div className="flex items-center justify-center">
             <form action={clientAction} className="min-w-[550px]">
-                <h1 className="text-center text-xl font-bold">
+                <h1 className="mt-6 text-center text-xl font-bold">
                     Kişisel Bilgilerim
                 </h1>
                 <div className="mt-5 grid grid-cols-2 grid-rows-3 gap-x-6 gap-y-4 ">

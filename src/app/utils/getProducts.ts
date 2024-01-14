@@ -74,6 +74,11 @@ export const getProducts = async ({
         Brand: true,
         Category: true,
         SubCategory: true,
+        _count: {
+            select: {
+                Comment: true,
+            },
+        },
     } as Prisma.ProductInclude;
 
     if (user) {
@@ -100,10 +105,19 @@ export const getProducts = async ({
         take: itemsPerPage,
     })) as Prisma.ProductGetPayload<{
         include: {
+            _count: {
+                select: {
+                    Comment: true;
+                };
+            };
             Brand: true;
             Category: true;
             SubCategory: true;
-            Favorite?: true;
+            Favorite?: {
+                select: {
+                    userId: true;
+                };
+            };
         };
     }>[];
 

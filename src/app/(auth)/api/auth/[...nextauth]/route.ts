@@ -50,16 +50,15 @@ export const authOptions = {
         signIn: "/login",
     },
     callbacks: {
-        jwt({ token, account, user }: any) {
+        jwt({ token, account, user }) {
             if (account) {
-                token.id = user?.id;
+                token.id = user.id;
             }
             return token;
         },
-        session({ session, token }: any) {
-            session.user = {
-                id: token.id,
-            };
+        session({ session, token }) {
+            session.user.id = token.id as string;
+
             return session;
         },
     },

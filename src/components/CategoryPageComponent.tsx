@@ -43,7 +43,14 @@ export default function CategoryPageComponent({
     sub_category_slug: string;
     page: string;
     products: Prisma.ProductGetPayload<{
-        include: { Favorite: true };
+        include: {
+            Favorite: true;
+            _count: {
+                select: {
+                    Comment: true;
+                };
+            };
+        };
     }>[];
     brands: { name: string; slug: string; count: number }[];
     totalItemCount: number;
@@ -402,7 +409,7 @@ export default function CategoryPageComponent({
                                 onClick={() =>
                                     (
                                         document.getElementById(
-                                            "my_modal_1"
+                                            "filter_modal"
                                         ) as HTMLDialogElement
                                     )?.showModal()
                                 }
@@ -426,7 +433,12 @@ export default function CategoryPageComponent({
                             </div>
                         ) : (
                             <Suspense fallback={<Loading />}>
-                                <ProductList products={products} user={user} />
+                                <div className="p-6">
+                                    <ProductList
+                                        products={products}
+                                        user={user}
+                                    />
+                                </div>
                             </Suspense>
                         )}
 
@@ -448,7 +460,7 @@ export default function CategoryPageComponent({
             </main>
 
             {/* MOBILE FILTER MODAL START */}
-            <dialog id="my_modal_1" className="modal">
+            <dialog id="filter_modal" className="modal">
                 <div className="modal-box h-full w-full">
                     <div className="modal-action">
                         <form method="dialog">

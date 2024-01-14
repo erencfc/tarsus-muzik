@@ -26,7 +26,7 @@ export default function HamburgerMenu({
     const [dropdowns, setDropdowns] = useState<string[]>([]);
 
     return (
-        <div className="sticky top-0 z-[100] m-auto flex h-20 w-full min-w-[290px] items-center justify-between bg-black px-4 text-white xl:hidden">
+        <div className="sticky top-0 z-[1111] m-auto flex h-20 w-full min-w-[290px] items-center justify-between bg-black px-4 text-white xl:hidden">
             {/* Hamburger Menu */}
             <div className="flex flex-col">
                 {/* Menu Toggle Button */}

@@ -129,9 +129,13 @@ export default function CreateCommentModal({
                         );
 
                         if (comment.success) {
-                            setTimeout(() => {
-                                window.location.reload();
-                            }, 2000);
+                            (
+                                document.getElementById(
+                                    "create_comment_modal"
+                                ) as HTMLDialogElement
+                            )?.close();
+
+                            document.getElementById("comments")?.click();
                         }
                     }}
                     className="mt-4 flex flex-col gap-4 [&_*:focus]:outline-none [&_*:focus]:ring-2 [&_*:focus]:ring-blue-600"

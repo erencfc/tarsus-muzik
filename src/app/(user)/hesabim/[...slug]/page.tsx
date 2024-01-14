@@ -31,7 +31,10 @@ const Orders = dynamic(() => import("@/app/(user)/hesabim/[...slug]/Orders"), {
     loading: () => <Loading />,
 });
 const PersonalInformation = dynamic(
-    () => import("@/app/(user)/hesabim/[...slug]/PersonalInformation"),
+    () =>
+        import(
+            "@/app/(user)/hesabim/[...slug]/(personal_information)/PersonalInformation"
+        ),
     {
         loading: () => <Loading />,
     }

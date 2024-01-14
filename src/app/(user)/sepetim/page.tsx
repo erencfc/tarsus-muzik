@@ -10,8 +10,6 @@ import RemoveCouponButton from "./RemoveCouponButton";
 export default async function CartPage() {
     const cart = await getCart();
 
-    if (!cart) return null;
-
     return (
         <div className="m-auto grid min-w-[300px] max-w-6xl grid-cols-4 grid-rows-2 gap-4 p-6">
             {cart && cart.items.length > 0 ? (

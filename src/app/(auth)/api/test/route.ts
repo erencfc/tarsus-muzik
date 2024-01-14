@@ -4,7 +4,11 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: any) {
     try {
-        const data = await prisma.comment.findMany({});
+        const data = await prisma.product.updateMany({
+            data: {
+                rating: 0,
+            },
+        });
 
         return NextResponse.json({
             data,

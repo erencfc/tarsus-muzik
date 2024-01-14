@@ -31,7 +31,7 @@ export default function ShoppingCartButton({
             </label>
             <div
                 tabIndex={0}
-                className="card dropdown-content card-compact z-[101] mt-3 w-80 bg-white shadow-md"
+                className="card dropdown-content card-compact z-[2222] mt-3 w-80 bg-white shadow-md"
             >
                 <div className="card-body max-h-[90vh] overflow-y-auto text-black">
                     <h1 className="text-2xl font-bold">Alışveriş Sepeti</h1>

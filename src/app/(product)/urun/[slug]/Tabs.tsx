@@ -116,7 +116,7 @@ const getContent = cache(
             ));
 
             content = (
-                <div className="flex flex-col [&>div:not(:first-child)]:mt-2 [&>div:not(:last-child)]:after:mt-4 [&>div:not(:last-child)]:after:h-[1px] [&>div:not(:last-child)]:after:w-full [&>div:not(:last-child)]:after:bg-gray-300/60">
+                <div className="flex flex-col [&>div:not(:first-child)]:mt-1 [&>div:not(:last-child)]:after:mt-10 [&>div:not(:last-child)]:after:h-[1px] [&>div:not(:last-child)]:after:w-full [&>div:not(:last-child)]:after:bg-gray-300/60">
                     {commentsList}
                 </div>
             );
@@ -178,6 +178,7 @@ export default function Tabs({
                 {tabs.map((t) => (
                     <button
                         key={t.name}
+                        id={t.name}
                         className={`rounded p-4 shadow-md ${
                             t.name === tab
                                 ? "bg-indigo-500 text-white"

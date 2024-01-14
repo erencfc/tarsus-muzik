@@ -65,6 +65,28 @@ export async function createComment({
             },
         });
 
+        const newRating = Math.round(
+            (
+                await prisma.comment.aggregate({
+                    where: {
+                        productId,
+                    },
+                    _avg: {
+                        rating: true,
+                    },
+                })
+            )._avg.rating || 0
+        );
+
+        await prisma.product.update({
+            where: {
+                id: productId,
+            },
+            data: {
+                rating: newRating,
+            },
+        });
+
         revalidatePath("/urun/[slug]", "page");
 
         return {

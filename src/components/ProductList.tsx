@@ -2,7 +2,8 @@
 
 import { incrementProductQuantity } from "@/app/(product)/urun/[slug]/actions";
 import { formatPrice } from "@/lib/format";
-import { EyeIcon, HeartIcon } from "@heroicons/react/24/outline";
+import { EyeIcon, HeartIcon, StarIcon } from "@heroicons/react/24/outline";
+import { StarIcon as StarIconFilled } from "@heroicons/react/24/solid";
 import { Prisma } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,7 +15,14 @@ export default function ProductList({
     user,
 }: {
     products: Prisma.ProductGetPayload<{
-        include: { Favorite: true };
+        include: {
+            Favorite: true;
+            _count: {
+                select: {
+                    Comment: true;
+                };
+            };
+        };
     }>[];
     user: any;
 }) {
@@ -23,8 +31,34 @@ export default function ProductList({
     const [pendingProduct, setPendingProduct] = useState("");
     const [addedProducts, setAddedProducts] = useState<string[]>([]);
 
+    const getRatingStars = (rating: number) => {
+        const stars = [];
+        for (let i = 0; i < 5; i++) {
+            if (rating - i > 0) {
+                stars.push(
+                    <StarIconFilled
+                        key={i}
+                        width={18}
+                        height={18}
+                        className="mb-0.5 text-yellow-500"
+                    />
+                );
+            } else {
+                stars.push(
+                    <StarIcon
+                        key={i}
+                        width={18}
+                        height={18}
+                        className="mb-0.5 text-yellow-500"
+                    />
+                );
+            }
+        }
+        return <div className="flex">{stars}</div>;
+    };
+
     return (
-        <div className="grid grid-cols-1 gap-8 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
             {products.map((product) => {
                 let isFavorite = false;
                 if (product.Favorite && product.Favorite.length > 0) {
@@ -71,18 +105,29 @@ export default function ProductList({
                                 </div>
 
                                 <div className="h-full w-full pt-6">
-                                    <Image
-                                        alt={product.model}
-                                        className="mb-2 h-[200px] w-[200px] object-cover mix-blend-darken transition duration-300 ease-in group-hover:scale-90"
-                                        height="200"
-                                        width="200"
-                                        src={product.images[0]}
-                                        style={{
-                                            aspectRatio: "200/200",
-                                            objectFit: "cover",
-                                        }}
-                                        priority={false}
-                                    />
+                                    <div className="flex items-center justify-center">
+                                        <Image
+                                            alt={product.model}
+                                            className="mb-2 h-[200px] w-[200px] object-cover mix-blend-darken transition duration-300 ease-in group-hover:scale-90"
+                                            height="200"
+                                            width="200"
+                                            src={product.images[0]}
+                                            style={{
+                                                aspectRatio: "200/200",
+                                                objectFit: "cover",
+                                            }}
+                                            priority={false}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="mb-4 flex items-center justify-center gap-2">
+                                    <div className="flex items-center gap-2">
+                                        {getRatingStars(product.rating)}
+                                    </div>
+                                    -
+                                    <span className="text-xs font-semibold text-gray-700">
+                                        {product._count.Comment} Yorum
+                                    </span>
                                 </div>
                                 <p className="items-end text-center text-lg font-bold">
                                     {formatPrice(product.price)}

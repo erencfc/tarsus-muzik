@@ -16,8 +16,10 @@ export default function Loading({
         | "infinity";
 }) {
     return (
-        <span
-            className={`loading loading-${type} loading-${size} text-${color}`}
-        />
+        <div className="flex items-center justify-center">
+            <span
+                className={`loading loading-${type} loading-${size} text-${color} p-6`}
+            />
+        </div>
     );
 }

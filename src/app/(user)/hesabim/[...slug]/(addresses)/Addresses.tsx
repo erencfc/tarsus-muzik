@@ -1,7 +1,14 @@
 "use server";
 
-import { prisma } from "@/lib/db/prisma";
+import { Suspense } from "react";
 import { UserPayload } from "@/types/UserPayload";
+import { prisma } from "@/lib/db/prisma";
+
+import CreateAddressButton from "./ButtonCreate";
+import CreateAddressModal from "./ModalCreate";
+
+import UpdateAddressModal from "./ModalUpdate";
+import UpdateAddressButton from "./ButtonUpdate";
 
 export default async function Addresses({ user }: { user: UserPayload }) {
     const addresses = await prisma.address.findMany({
@@ -12,16 +19,21 @@ export default async function Addresses({ user }: { user: UserPayload }) {
 
     return (
         <div className="flex flex-col">
-            <h1 className="text-center text-xl font-bold">Adreslerim</h1>
-            <button className="btn btn-primary btn-sm my-4 w-fit text-white">
-                Yeni Adres Tanımla
-            </button>
+            <Suspense>
+                <CreateAddressModal userId={user.id} />
+            </Suspense>
+            <h1 className="mt-6 text-center text-xl font-bold">Adreslerim</h1>
+            <CreateAddressButton />
             <div className="flex flex-col">
                 {addresses.map((address) => (
                     <div
                         key={address.id}
                         className="mb-4 flex flex-col rounded-lg border border-gray-200 p-4"
                     >
+                        <UpdateAddressModal
+                            userId={user.id}
+                            address={address}
+                        />
                         <div className="flex justify-between">
                             <div className="flex flex-col">
                                 <span className="font-bold">
@@ -32,9 +44,7 @@ export default async function Addresses({ user }: { user: UserPayload }) {
                                 </span>
                             </div>
                             <div className="flex flex-col gap-2">
-                                <button className="btn btn-primary btn-sm text-white">
-                                    Düzenle
-                                </button>
+                                <UpdateAddressButton />
                                 <button className="btn-danger btn btn-sm">
                                     Sil
                                 </button>
