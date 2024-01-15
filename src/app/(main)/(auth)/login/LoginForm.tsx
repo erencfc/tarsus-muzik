@@ -55,10 +55,10 @@ export default function LoginForm() {
         <CardWrapper
             headerIcon={
                 <i>
-                    <ArrowRightEndOnRectangleIcon width={20} height={20} />
+                    <ArrowRightEndOnRectangleIcon width={36} height={36} />
                 </i>
             }
-            headerLabel="Giriş Yap"
+            headerLabel="Tekrar Hoş Geldiniz!"
             backButtonLabel="Hesabınız mı yok?"
             backButtonHref={DEFAULT_REGISTER_PATH}
         >

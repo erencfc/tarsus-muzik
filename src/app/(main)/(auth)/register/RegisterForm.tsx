@@ -59,10 +59,10 @@ export default function RegisterForm() {
         <CardWrapper
             backButtonHref={DEFAULT_LOGIN_PATH}
             backButtonLabel="Zaten Üye Misiniz?"
-            headerLabel="Kayıt Ol"
+            headerLabel="Yeni Üyelik Oluşturun"
             headerIcon={
                 <i>
-                    <UserPlusIcon width={20} height={20} />
+                    <UserPlusIcon width={36} height={36} />
                 </i>
             }
         >
