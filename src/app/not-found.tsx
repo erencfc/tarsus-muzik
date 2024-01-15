@@ -5,30 +5,22 @@ export const metadata = {
 export default function NotFound() {
     return (
         <div>
-            <div
-                className="absolute left-0 top-0 h-full w-full bg-black"
-                style={{ zIndex: -1 }}
-            >
+            <div className="absolute left-0 top-0 h-full w-full bg-black">
                 <div className="flex h-full flex-col items-center justify-center text-center">
-                    <div>
-                        <style>
-                            {`
-            .error-h1 {
-                font-size: 1.5rem;
-                font-weight: 900;
-                color: #fff;
-                text-shadow: 0 0 10px #000;
-                border-right: 1px solid rgba(255, 255, 255, 0.3);
-            }
-            `}
-                        </style>
-                        <h1 className="error-h1 my-0 ml-0 mr-5 inline-block py-0 pl-0 pr-6 align-top">
+                    <div className="flex scale-150 items-center justify-center">
+                        <h1 className="my-0 ml-0 mr-5 inline-block border-r border-r-white/30 py-0 pl-0 pr-6 align-top text-2xl font-black text-white">
                             404
                         </h1>
-                        <p className="inline-block leading-10">
+                        <p className="inline-block leading-10 text-white">
                             Sayfa bulunamadı.
                         </p>
                     </div>
+                    <a
+                        href="/"
+                        className="mt-10 inline-block rounded-2xl bg-gray-300 px-8 py-3 font-semibold text-black"
+                    >
+                        Ana Sayfa
+                    </a>
                 </div>
             </div>
         </div>

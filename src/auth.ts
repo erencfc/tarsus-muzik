@@ -13,7 +13,7 @@ export const {
     signOut,
 } = NextAuth({
     callbacks: {
-        async signIn({ user, account }) {
+        async signIn({ user }) {
             const existingUser = await getUserById(user.id);
 
             // Prevent sign in if user is not verified their email
