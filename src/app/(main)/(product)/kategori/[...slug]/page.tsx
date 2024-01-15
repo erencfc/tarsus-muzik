@@ -7,6 +7,42 @@ import { prisma } from "@/lib/db/prisma";
 import { formatSlug } from "@/lib/format";
 import { notFound } from "next/navigation";
 
+export const generateMetadata = async ({
+    params: { slug },
+}: {
+    params: { slug: string[] };
+}) => {
+    const category_slug = slug[0];
+    const sub_category_slug = slug[1];
+
+    const category = await prisma.category.findUnique({
+        where: {
+            slug: category_slug,
+        },
+        select: {
+            name: true,
+            SubCategory: {
+                select: {
+                    name: true,
+                    slug: true,
+                },
+            },
+        },
+    });
+
+    const subCategory = category.SubCategory.find(
+        (sub) => sub.slug === sub_category_slug
+    );
+
+    let title = category?.name;
+
+    if (subCategory) title = subCategory.name;
+
+    return {
+        title,
+    };
+};
+
 export default async function CategoryPage({
     params,
     searchParams: { sayfa, sirala, marka, min, max },

@@ -5,8 +5,8 @@ import Link from "next/link";
 import { newVerification } from "./new-verification";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import { FormError } from "@/components/Login/form-error";
-import { FormSuccess } from "@/components/Login/form-success";
+import { FormError } from "@/app/(main)/(auth)/login/form-error";
+import { FormSuccess } from "@/app/(main)/(auth)/login/form-success";
 
 export default function NewVerificationPage() {
     const [error, setError] = useState<string | undefined>();

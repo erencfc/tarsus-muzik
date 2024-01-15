@@ -34,7 +34,7 @@ export default function MainLayout({
                 </main>
 
                 {/* Footer */}
-                <footer className="mt-12">
+                <footer>
                     <FooterTop />
                     <div className="bg-black/90">
                         <div className="mx-auto min-w-[300px] max-w-6xl p-6">

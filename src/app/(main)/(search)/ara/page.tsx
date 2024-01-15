@@ -4,13 +4,36 @@ import { prisma } from "@/lib/db/prisma";
 import { formatSlug } from "@/lib/format";
 import { Prisma } from "@prisma/client";
 import SearchPageComponent from "./SearchPage";
+import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 
 type SearchPageProps = {
     searchParams: { [key: string]: string | undefined };
 };
 
-export default async function SearchPage({ searchParams }: SearchPageProps) {
+export const generateMetadata = async ({ searchParams }: SearchPageProps) => {
     const query = searchParams.q as string;
+
+    return {
+        title: `Ara: ${query}`,
+    };
+};
+
+export default async function SearchPage({ searchParams }: SearchPageProps) {
+    const query = (searchParams.q as string).trim();
+
+    if (query.length < 3) {
+        return (
+            <div className="mx-auto max-w-6xl p-6 py-14">
+                <div className="flex flex-col items-center justify-center gap-4">
+                    <ExclamationCircleIcon className="h-12 w-12 text-gray-500" />
+                    <h1 className="text-xl font-semibold text-gray-700">
+                        Arama sorgusu en az 3 karakterden oluşmalıdır.
+                    </h1>
+                </div>
+            </div>
+        );
+    }
+
     const currentPage = parseInt(searchParams.sayfa || "1");
     const itemsPerPage = 12;
 

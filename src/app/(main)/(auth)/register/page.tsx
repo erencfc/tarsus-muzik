@@ -1,5 +1,11 @@
-import RegisterForm from "@/components/Register/RegisterForm";
+import RegisterForm from "./RegisterForm";
 
-export default async function RegisterPage() {
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Kayıt Ol",
+};
+
+export default function RegisterPage() {
     return <RegisterForm />;
 }

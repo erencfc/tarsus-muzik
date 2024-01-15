@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
+import type { Metadata } from "next";
 
 import { Carousel } from "./Carousel";
 import Loading from "@/app/loading";
@@ -16,10 +17,15 @@ import {
 } from "@heroicons/react/24/outline";
 
 import Categories from "./Categories";
+
 const NewProducts = dynamic(() => import("./NewProducts"), { ssr: false });
 const PopularProducts = dynamic(() => import("./PopularProducts"), {
     ssr: false,
 });
+
+export const metadata: Metadata = {
+    title: "Ana Sayfa",
+};
 
 export default function Home() {
     return (
@@ -73,7 +79,7 @@ export default function Home() {
                 <NewProducts Carousel={Carousel} />
             </Suspense>
 
-            <div className="container mx-auto mt-14 flex max-w-6xl flex-col items-center">
+            <div className="container mx-auto my-14 flex max-w-6xl flex-col items-center">
                 <h2 className="text-2xl font-bold">
                     Soru ve Talepleriniz İçin
                 </h2>

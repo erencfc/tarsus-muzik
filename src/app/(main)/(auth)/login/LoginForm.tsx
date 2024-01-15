@@ -1,11 +1,16 @@
 "use client";
 
 import * as z from "zod";
-
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { useState, useTransition } from "react";
+import Link from "next/link";
+
 import { LoginSchema } from "@/schemas";
+import { DEFAULT_FORGOT_PASSWORD_PATH, DEFAULT_REGISTER_PATH } from "@/routes";
+import { login } from "./action";
+
+import { useForm } from "react-hook-form";
 import {
     Form,
     FormControl,
@@ -16,12 +21,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { FormError } from "./form-error";
-import { FormSuccess } from "./form-success";
-import { login } from "@/app/(main)/(auth)/login/action";
-import { useState, useTransition } from "react";
-import Link from "next/link";
-import { DEFAULT_FORGOT_PASSWORD_PATH, DEFAULT_REGISTER_PATH } from "@/routes";
+import { FormError } from "@/components/Form/form-error";
+import { FormSuccess } from "@/components/Form/form-success";
 
 export default function LoginForm() {
     const [error, setError] = useState<string | undefined>("");
@@ -49,7 +50,7 @@ export default function LoginForm() {
     };
 
     return (
-        <div className="flex min-h-[450px] flex-col items-center bg-gray-800 pt-4 text-white">
+        <>
             <h1 className="p-5 text-white">Giriş Yap</h1>
             <div className="relative">
                 <Form {...form}>
@@ -125,6 +126,6 @@ export default function LoginForm() {
                     </form>
                 </Form>
             </div>
-        </div>
+        </>
     );
 }

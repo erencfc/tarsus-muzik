@@ -7,6 +7,12 @@ import { formatPrice } from "@/lib/format";
 import BackButton from "./BackButton";
 import RemoveCouponButton from "./RemoveCouponButton";
 
+export const generateMetadata = async () => {
+    return {
+        title: "Sepetim",
+    };
+};
+
 export default async function CartPage() {
     const cart = await getCart();
 

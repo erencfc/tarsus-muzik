@@ -1,10 +1,16 @@
 "use client";
-import * as z from "zod";
 
-import { useForm } from "react-hook-form";
+import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { useState, useTransition } from "react";
+import Link from "next/link";
+
 import { RegisterSchema } from "@/schemas";
+import { DEFAULT_LOGIN_PATH } from "@/routes";
+import { register } from "./action";
+
+import { useForm } from "react-hook-form";
 import {
     Form,
     FormControl,
@@ -15,12 +21,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { FormError } from "./form-error";
-import { FormSuccess } from "./form-success";
-import { register } from "@/app/(main)/(auth)/register/action";
-import { useState, useTransition } from "react";
-import Link from "next/link";
-import { DEFAULT_LOGIN_PATH } from "@/routes";
+import { FormError } from "@/components/Form/form-error";
+import { FormSuccess } from "@/components/Form/form-success";
 
 export default function RegisterForm() {
     const [error, setError] = useState<string | undefined>("");
