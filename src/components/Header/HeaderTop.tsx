@@ -6,14 +6,15 @@ import SignOutButton from "../SignOutButton";
 import ShoppingCartButton from "./ShoppingCartButton";
 import Link from "next/link";
 import { Suspense } from "react";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/(auth)/api/auth/[...nextauth]/route";
+
 import { getCart } from "@/lib/db/cart";
+
 import SearchInput from "./SearchInput";
+import { auth } from "@/auth";
 
 export default async function HeaderTop() {
-    const session = await getServerSession(authOptions);
-    const user = session?.user as any;
+    const session = await auth();
+    const user = session?.user;
 
     const cart = await getCart();
 

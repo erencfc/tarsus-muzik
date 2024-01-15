@@ -1,77 +1,133 @@
 "use client";
 
-import { toast } from "react-toastify";
-import LoginFormButton from "./LoginFormButton";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
+import * as z from "zod";
 
-const inputClass =
-    "input input-bordered input-secondary mb-5 h-10 w-96 rounded-lg border-2 border-solid border-neutral text-sm placeholder-gray-400 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { LoginSchema } from "@/schemas";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { FormError } from "./form-error";
+import { FormSuccess } from "./form-success";
+import { login } from "@/app/(auth)/login/action";
+import { useState, useTransition } from "react";
+import Link from "next/link";
+import {
+    DEFAULT_FORGOT_PASSWORD_PATH,
+    DEFAULT_LOGIN_PATH,
+    DEFAULT_REGISTER_PATH,
+} from "@/routes";
 
 export default function LoginForm() {
-    const router = useRouter();
+    const [error, setError] = useState<string | undefined>("");
+    const [success, setSuccess] = useState<string | undefined>("");
+    const [isPending, startTransition] = useTransition();
+
+    const form = useForm<z.infer<typeof LoginSchema>>({
+        resolver: zodResolver(LoginSchema),
+        defaultValues: {
+            email: "",
+            password: "",
+        },
+    });
+
+    const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+        setError("");
+        setSuccess("");
+
+        startTransition(() => {
+            login(values).then((data) => {
+                setError(data?.error);
+                setSuccess(data?.success);
+            });
+        });
+    };
 
     return (
-        <div className="flex flex-col items-center justify-center bg-gray-800">
+        <div className="flex min-h-[450px] flex-col items-center bg-gray-800 pt-4 text-white">
             <h1 className="p-5 text-white">Giriş Yap</h1>
             <div className="relative">
-                <form
-                    action={async (formData) => {
-                        const [emailOrTel, password] = [
-                            formData.get("emailOrTel")?.toString(),
-                            formData.get("password")?.toString(),
-                        ];
+                <Form {...form}>
+                    <form
+                        onSubmit={form.handleSubmit(onSubmit)}
+                        className="flex flex-col gap-3"
+                    >
+                        <FormField
+                            control={form.control}
+                            name="email"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Email</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            placeholder="mail@mail.com"
+                                            type="email"
+                                            disabled={isPending}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="password"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Şifre</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            placeholder="******"
+                                            type="password"
+                                            disabled={isPending}
+                                        />
+                                    </FormControl>
+                                    <Button
+                                        size="sm"
+                                        variant="link"
+                                        asChild
+                                        className="px-0 font-normal"
+                                    >
+                                        <Link
+                                            href={DEFAULT_FORGOT_PASSWORD_PATH}
+                                        >
+                                            <p className="text-ellipsis text-[13px] text-gray-300/80">
+                                                Şifremi Unuttum
+                                            </p>
+                                        </Link>
+                                    </Button>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
 
-                        if (!emailOrTel || !password) {
-                            return toast.error("Lütfen tüm alanları doldurun.");
-                        }
-
-                        try {
-                            const res = await signIn("credentials", {
-                                emailOrTel,
-                                password,
-                                redirect: false,
-                            });
-
-                            if (res?.error) {
-                                return toast.error("Email veya şifre hatalı");
-                            }
-
-                            if (res?.ok) {
-                                toast.success("Giriş başarılı");
-                                router.replace("/");
-                                router.refresh();
-                            }
-                        } catch (error) {
-                            toast.error("Bir hata oluştu.");
-                        }
-                    }}
-                    className="flex flex-col items-center justify-center"
-                >
-                    <input
-                        className={inputClass}
-                        type="text"
-                        name="emailOrTel"
-                        placeholder="Email veya Telefon Numaranız"
-                        minLength={2}
-                        maxLength={26}
-                    />
-                    <input
-                        className={inputClass}
-                        type="password"
-                        name="password"
-                        placeholder="Şifreniz"
-                        minLength={6}
-                        maxLength={26}
-                    />
-                    <Link href="/register" className="mb-5">
-                        <p className="absolute right-1 top-28 text-ellipsis text-[13px] text-white underline transition-colors duration-100 ease-in-out hover:text-accent">
-                            Üye Ol
-                        </p>
-                    </Link>
-                    <LoginFormButton />
-                </form>
+                        <FormError message={error} />
+                        <FormSuccess message={success} />
+                        <Button
+                            type="submit"
+                            className="w-full"
+                            disabled={isPending}
+                        >
+                            Giriş Yap
+                        </Button>
+                        <Link href={DEFAULT_REGISTER_PATH} className="mx-auto">
+                            <p className="text-ellipsis text-[13px] text-gray-300/80 underline transition-colors duration-100 ease-in-out  hover:text-accent">
+                                Hesabınız mı yok?
+                            </p>
+                        </Link>
+                    </form>
+                </Form>
             </div>
         </div>
     );

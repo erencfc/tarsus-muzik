@@ -167,13 +167,13 @@ model User {
   password      String
   emailNoti     Boolean         @default(true)
   smsNoti       Boolean         @default(true)
-  verified      Boolean         @default(false)
+  emailVerified DateTime?
   cartId        String?         @db.ObjectId
   Favorite      Favorite[]
   Comment       Comment[]
   Cart          Cart[]
   DiscountAlert DiscountAlert[]
-  Role          Role            @default(USER)
+  role          Role            @default(USER)
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
 
@@ -184,6 +184,17 @@ enum Role {
   ADMIN
   USER
   DEALER
+}
+
+model VerificationToken {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@unique([email, token])
+  @@map("verificationTokens")
 }
 
 model Address {

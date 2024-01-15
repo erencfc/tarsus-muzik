@@ -1,21 +1,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-// import HeaderTop from "@/components/Header/HeaderTop";
 import { AuthProvider } from "./Providers";
-// import Navbar from "@/components/Header/Navbar";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import Link from "next/link";
-// import HeaderMobile from "@/components/Header/HeaderMobile";
 import { Suspense } from "react";
-// import Loading from "./loading";
 import HeaderTop from "@/components/Header/HeaderTop";
 import HeaderMobile from "@/components/Header/HeaderMobile";
 import Navbar from "@/components/Header/Navbar";
 import FooterTop from "@/components/Footer/FooterTop";
-
-import { headers } from "next/dist/client/components/headers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,11 +22,6 @@ export default function RootLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const _headers = headers();
-    const currentUrl = _headers.get("x-url");
-
-    console.log(_headers);
-
     return (
         <html lang="tr">
             <body className={inter.className}>

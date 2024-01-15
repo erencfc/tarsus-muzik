@@ -1,14 +1,12 @@
 "use server";
 
-import { getServerSession } from "next-auth";
 import dynamic from "next/dynamic";
-
-import { authOptions } from "@/app/(auth)/api/auth/[...nextauth]/route";
-import { fetchUserInfo } from "@/app/utils/fetchUserInfo";
 
 import Loading from "@/app/loading";
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
+import { auth } from "@/auth";
+import { getUserById } from "@/data/user";
 
 const Addresses = dynamic(
     () => import("@/app/(user)/hesabim/[...slug]/(addresses)/Addresses"),
@@ -55,10 +53,17 @@ export default async function AccountSlugPage({
 }: {
     params: { slug: string[] };
 }) {
-    const session = await getServerSession(authOptions);
-    const sessionUser = session?.user as any;
-
-    const user = await fetchUserInfo(sessionUser?.id);
+    const session = await auth();
+    const user = await getUserById(session?.user.id, {
+        id: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        smsNoti: true,
+        emailNoti: true,
+        tel: true,
+        verified: true,
+    });
 
     if (!user) return null;
 

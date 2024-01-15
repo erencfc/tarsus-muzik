@@ -1,16 +1,15 @@
 "use server";
 
-import { authOptions } from "@/app/(auth)/api/auth/[...nextauth]/route";
 import ProductDetails from "@/components/Product/Details";
 import { prisma } from "@/lib/db/prisma";
 import { Metadata } from "next";
-import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Suspense, cache } from "react";
 import Tabs from "./Tabs";
 import Loading from "@/app/loading";
 import Link from "next/link";
+import { auth } from "@/auth";
 
 const getUserFavorites = cache(async (userId: string) => {
     const favorites = await prisma.favorite.findMany({
@@ -24,7 +23,7 @@ const getUserFavorites = cache(async (userId: string) => {
 });
 
 const isFavorite = cache(async (productId: string): Promise<boolean> => {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     if (!session?.user) return false;
     const favorites = await getUserFavorites(session.user.id);
     return favorites.includes(productId);

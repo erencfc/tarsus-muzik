@@ -1,11 +1,10 @@
 "use server";
 
-import { authOptions } from "@/app/(auth)/api/auth/[...nextauth]/route";
 import { getProducts } from "@/app/utils/getProducts";
+import { auth } from "@/auth";
 import CategoryPageComponent from "@/components/CategoryPageComponent";
 import { prisma } from "@/lib/db/prisma";
 import { formatSlug } from "@/lib/format";
-import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
 
 export default async function CategoryPage({
@@ -21,7 +20,7 @@ export default async function CategoryPage({
         max: string | null;
     };
 }) {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     const user = session?.user;
 
     const category_slug = params.slug[0];
@@ -47,7 +46,7 @@ export default async function CategoryPage({
         (sub_cat) => sub_cat.slug === sub_category_slug
     );
 
-    const products = await getProducts({
+    const products = (await getProducts({
         category: category_slug,
         subCategory: sub_category_slug,
         sort: sirala || "yeni",
@@ -57,7 +56,7 @@ export default async function CategoryPage({
         currentPage,
         itemsPerPage,
         user,
-    });
+    })) as any;
 
     const filter = sub_category
         ? {
