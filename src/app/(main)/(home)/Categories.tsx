@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 import Image from "next/image";
-import { fetchCategories } from "../utils/fetchCategories";
+import { fetchCategories } from "@/app/utils/fetchCategories";
 
 export default async function Categories({ Carousel }: { Carousel: any }) {
     const categories = await fetchCategories();

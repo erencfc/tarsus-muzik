@@ -18,14 +18,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FormError } from "./form-error";
 import { FormSuccess } from "./form-success";
-import { login } from "@/app/(auth)/login/action";
+import { login } from "@/app/(main)/(auth)/login/action";
 import { useState, useTransition } from "react";
 import Link from "next/link";
-import {
-    DEFAULT_FORGOT_PASSWORD_PATH,
-    DEFAULT_LOGIN_PATH,
-    DEFAULT_REGISTER_PATH,
-} from "@/routes";
+import { DEFAULT_FORGOT_PASSWORD_PATH, DEFAULT_REGISTER_PATH } from "@/routes";
 
 export default function LoginForm() {
     const [error, setError] = useState<string | undefined>("");

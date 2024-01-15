@@ -11,7 +11,7 @@ dynamic(() => import("react-multi-carousel/lib/styles.css"), {
 });
 
 import dynamic from "next/dynamic";
-import Loading from "../loading";
+import Loading from "@/app/loading";
 
 export const Carousel = ({ children }: { children: any }) => {
     return (

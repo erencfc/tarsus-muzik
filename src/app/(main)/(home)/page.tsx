@@ -3,8 +3,8 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 
 import { Carousel } from "./Carousel";
-import Loading from "../loading";
-import ImageCarousel from "@/app/(home)/ImageCarousel";
+import Loading from "@/app/loading";
+import ImageCarousel from "@/app/(main)/(home)/ImageCarousel";
 
 import {
     ArrowUturnRightIcon,

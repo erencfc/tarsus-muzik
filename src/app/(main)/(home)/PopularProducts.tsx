@@ -2,19 +2,14 @@
 
 import { prisma } from "@/lib/db/prisma";
 import { Suspense, cache } from "react";
-import Loading from "../loading";
-import Link from "next/link";
-import Image from "next/image";
-import { StarIcon } from "@heroicons/react/24/outline";
-import { StarIcon as StarIconFilled } from "@heroicons/react/24/solid";
-import Rating from "./Ratings";
+import Loading from "@/app/loading";
 import Product from "./Product";
 
 const getProducts = cache(async () => {
     const products = await prisma.product.findMany({
         take: 12,
         orderBy: {
-            createdAt: "desc",
+            rating: "desc",
         },
         include: {
             _count: {
@@ -33,7 +28,7 @@ const getProducts = cache(async () => {
     return products;
 });
 
-export default async function NewProducts({ Carousel }: { Carousel: any }) {
+export default async function PopularProducts({ Carousel }: { Carousel: any }) {
     const products = await getProducts();
 
     return (
@@ -41,7 +36,7 @@ export default async function NewProducts({ Carousel }: { Carousel: any }) {
             <div className="container mx-auto flex max-w-6xl flex-col gap-6">
                 <div className="flex w-full flex-col gap-3">
                     <h4 className="text-center text-xl font-bold text-gray-700 sm:text-start">
-                        Yeni Eklenen Ürünler
+                        Popüler Ürünler
                     </h4>
                 </div>
 

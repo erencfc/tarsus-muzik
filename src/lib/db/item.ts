@@ -1,6 +1,6 @@
 "use server";
 
-import { updateDiscount } from "@/app/(user)/sepetim/cart";
+import { updateDiscount } from "@/app/(main)/(user)/sepetim/cart";
 import { prisma } from "./prisma";
 
 export async function removeItemFromCart(itemId: string) {

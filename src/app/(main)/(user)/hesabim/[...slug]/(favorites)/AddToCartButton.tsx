@@ -1,6 +1,6 @@
 "use client";
 
-import { incrementProductQuantity } from "@/app/(product)/urun/[slug]/actions";
+import { incrementProductQuantity } from "@/app/(main)/(product)/urun/[slug]/actions";
 import { Prisma } from "@prisma/client";
 import { useState, useTransition } from "react";
 

@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FormError } from "./form-error";
 import { FormSuccess } from "./form-success";
-import { register } from "@/app/(auth)/register/action";
+import { register } from "@/app/(main)/(auth)/register/action";
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { DEFAULT_LOGIN_PATH } from "@/routes";

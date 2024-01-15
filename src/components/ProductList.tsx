@@ -1,6 +1,6 @@
 "use client";
 
-import { incrementProductQuantity } from "@/app/(product)/urun/[slug]/actions";
+import { incrementProductQuantity } from "@/app/(main)/(product)/urun/[slug]/actions";
 import { formatPrice } from "@/lib/format";
 import { EyeIcon, HeartIcon, StarIcon } from "@heroicons/react/24/outline";
 import { StarIcon as StarIconFilled } from "@heroicons/react/24/solid";

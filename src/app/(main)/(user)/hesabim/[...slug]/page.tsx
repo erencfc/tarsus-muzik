@@ -9,30 +9,33 @@ import { auth } from "@/auth";
 import { getUserById } from "@/data/user";
 
 const Addresses = dynamic(
-    () => import("@/app/(user)/hesabim/[...slug]/(addresses)/Addresses"),
+    () => import("@/app/(main)/(user)/hesabim/[...slug]/(addresses)/Addresses"),
     {
         loading: () => <Loading />,
     }
 );
 const Coupons = dynamic(
-    () => import("@/app/(user)/hesabim/[...slug]/Coupons"),
+    () => import("@/app/(main)/(user)/hesabim/[...slug]/Coupons"),
     {
         loading: () => <Loading />,
     }
 );
 const Favorites = dynamic(
-    () => import("@/app/(user)/hesabim/[...slug]/(favorites)/Favorites"),
+    () => import("@/app/(main)/(user)/hesabim/[...slug]/(favorites)/Favorites"),
     {
         loading: () => <Loading />,
     }
 );
-const Orders = dynamic(() => import("@/app/(user)/hesabim/[...slug]/Orders"), {
-    loading: () => <Loading />,
-});
+const Orders = dynamic(
+    () => import("@/app/(main)/(user)/hesabim/[...slug]/Orders"),
+    {
+        loading: () => <Loading />,
+    }
+);
 const PersonalInformation = dynamic(
     () =>
         import(
-            "@/app/(user)/hesabim/[...slug]/(personal_information)/PersonalInformation"
+            "@/app/(main)/(user)/hesabim/[...slug]/(personal_information)/PersonalInformation"
         ),
     {
         loading: () => <Loading />,
@@ -41,7 +44,7 @@ const PersonalInformation = dynamic(
 const ChangePassword = dynamic(
     () =>
         import(
-            "@/app/(user)/hesabim/[...slug]/(change_password)/ChangePassword"
+            "@/app/(main)/(user)/hesabim/[...slug]/(change_password)/ChangePassword"
         ),
     {
         loading: () => <Loading />,
@@ -62,7 +65,7 @@ export default async function AccountSlugPage({
         smsNoti: true,
         emailNoti: true,
         tel: true,
-        verified: true,
+        emailVerified: true,
     });
 
     if (!user) return null;

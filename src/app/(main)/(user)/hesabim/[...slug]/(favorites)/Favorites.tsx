@@ -5,7 +5,6 @@ import { prisma } from "@/lib/db/prisma";
 import { formatPrice } from "@/lib/format";
 import { UserPayload } from "@/types/UserPayload";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { Prisma } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import AddToCartButton from "./AddToCartButton";
