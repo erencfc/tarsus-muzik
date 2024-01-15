@@ -81,7 +81,7 @@ export default async function FooterTop() {
                         </div>
                     </div>
 
-                    <div className="mt-6 flex w-full flex-col min-[700px]:mt-0 min-[700px]:w-1/3">
+                    <div className="mt-6 flex flex-col min-[700px]:mt-0">
                         <h4 className="w-[140px] text-xl font-semibold text-white">
                             Bizi Takip Edin
                         </h4>

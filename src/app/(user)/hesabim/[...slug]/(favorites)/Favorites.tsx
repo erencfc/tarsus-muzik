@@ -31,7 +31,7 @@ export default async function Favorites({ user }: { user: UserPayload }) {
         return (
             // favori ürününüz bulunmamaktadır
             <div className="flex h-[672px] min-h-[250px] flex-col">
-                <h1 className="mt-6 text-2xl font-bold">Favori Ürünlerim</h1>
+                <h1 className="text-2xl font-bold">Favori Ürünlerim</h1>
                 <p className="flex flex-col text-sm text-gray-500 before:mb-2 before:mt-2 before:h-[1px] before:w-full before:bg-black/30">
                     Favori ürününüz bulunmamaktadır.
                 </p>
@@ -40,7 +40,7 @@ export default async function Favorites({ user }: { user: UserPayload }) {
 
     return (
         <div>
-            <h1 className="mt-6 text-2xl font-bold">Favori Ürünlerim</h1>
+            <h1 className="text-2xl font-bold">Favori Ürünlerim</h1>
             <div className="h-[672px] min-h-[250px] overflow-auto">
                 <div>
                     <table className="table table-pin-rows table-pin-cols table-lg mt-2">

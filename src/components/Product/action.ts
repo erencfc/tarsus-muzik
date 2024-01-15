@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/db/prisma";
+import { Product } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 type CreateCommentProps = {
@@ -102,4 +103,57 @@ export async function createComment({
             success: false,
         };
     }
+}
+
+export async function toggleDiscountAlert({
+    product,
+    userId,
+}: {
+    product: Product;
+    userId: string;
+}) {
+    const alreadyAlerted = await prisma.discountAlert.findFirst({
+        where: {
+            productId: product.id,
+            userId,
+        },
+    });
+
+    if (alreadyAlerted) {
+        await prisma.discountAlert.delete({
+            where: {
+                id: alreadyAlerted.id,
+            },
+        });
+
+        revalidatePath("/urun/[slug]", "page");
+
+        return {
+            success: true,
+            message: "İndirim bildirimi iptal edildi.",
+        };
+    }
+
+    await prisma.discountAlert.create({
+        data: {
+            Product: {
+                connect: {
+                    id: product.id,
+                },
+            },
+            User: {
+                connect: {
+                    id: userId,
+                },
+            },
+            currentPrice: product.price,
+        },
+    });
+
+    revalidatePath("/urun/[slug]", "page");
+
+    return {
+        success: true,
+        message: "İndirim bildirimi başarıyla ayarlandı.",
+    };
 }

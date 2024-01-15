@@ -1,11 +1,7 @@
 "use server";
 
 import Image from "next/image";
-import {
-    MagnifyingGlassIcon,
-    ShoppingCartIcon,
-    UserIcon,
-} from "@heroicons/react/24/outline";
+import { ShoppingCartIcon, UserIcon } from "@heroicons/react/24/outline";
 import SignOutButton from "../SignOutButton";
 import ShoppingCartButton from "./ShoppingCartButton";
 import Link from "next/link";
@@ -13,6 +9,7 @@ import { Suspense } from "react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/(auth)/api/auth/[...nextauth]/route";
 import { getCart } from "@/lib/db/cart";
+import SearchInput from "./SearchInput";
 
 export default async function HeaderTop() {
     const session = await getServerSession(authOptions);
@@ -37,14 +34,7 @@ export default async function HeaderTop() {
             {/* SEARCH INPUT START */}
             <div className="inline-block w-2/4 px-4 md:px-0 lg:px-0 xl:px-0 2xl:px-0">
                 <div className="relative flex">
-                    <input
-                        type="text"
-                        placeholder="Ara..."
-                        className="input input-bordered input-secondary h-8 w-full max-w-full rounded-full border border-gray-300 text-sm placeholder-gray-400 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary"
-                    />
-                    <button className="absolute right-2 top-1 scale-[.8] transition duration-200 ease-in-out hover:scale-100">
-                        <MagnifyingGlassIcon width={24} height={24} />
-                    </button>
+                    <SearchInput />
                 </div>
             </div>
             {/* SEARCH INPUT END */}

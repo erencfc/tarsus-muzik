@@ -29,21 +29,21 @@ export default function AccountPage() {
             icon: <IdentificationIcon height={32} width={32} />,
             slug: "bilgilerim",
         },
-        {
-            title: "SİPARİŞ GEÇMİŞİ",
-            icon: <CalendarIcon height={32} width={32} />,
-            slug: "siparislerim",
-        },
+        // {
+        //     title: "SİPARİŞ GEÇMİŞİ",
+        //     icon: <CalendarIcon height={32} width={32} />,
+        //     slug: "siparislerim",
+        // },
         {
             title: "ADRESLER",
             icon: <MapPinIcon height={32} width={32} />,
             slug: "adreslerim",
         },
-        {
-            title: "KUPONLAR",
-            icon: <ReceiptPercentIcon height={32} width={32} />,
-            slug: "kuponlarim",
-        },
+        // {
+        //     title: "KUPONLAR",
+        //     icon: <ReceiptPercentIcon height={32} width={32} />,
+        //     slug: "kuponlarim",
+        // },
         {
             title: "FAVORİ ÜRÜNLER",
             icon: <HeartIcon height={32} width={32} />,

@@ -395,3 +395,38 @@ export const updateAddress = async ({
         };
     }
 };
+
+export const deleteAddress = async ({
+    addressId,
+}: {
+    addressId: string;
+}): Promise<{ success: boolean; message: string | null }> => {
+    try {
+        const address = await prisma.address.delete({
+            where: {
+                id: addressId,
+            },
+        });
+
+        if (!address) {
+            return {
+                success: false,
+                message: "Bir hata oluştu, lütfen tekrar deneyiniz.",
+            };
+        }
+
+        revalidatePath("/hesabim/adreslerim");
+
+        return {
+            success: true,
+            message: "Adres başarıyla silindi.",
+        };
+    } catch (error: unknown) {
+        console.log(error);
+
+        return {
+            success: false,
+            message: "Bir hata oluştu, lütfen tekrar deneyiniz.",
+        };
+    }
+};

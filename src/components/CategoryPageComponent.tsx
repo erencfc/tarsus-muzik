@@ -61,6 +61,7 @@ export default function CategoryPageComponent({
 
     const router = useRouter();
 
+    const [searchBrand, setSearchBrand] = useState<string>("");
     const [brandFilter, setBrandFilter] = useState<string[] | null>(
         oldQuery?.marka || null
     );
@@ -119,6 +120,10 @@ export default function CategoryPageComponent({
         router.push("/");
         return;
     }
+
+    const searchedBrands = brands.filter((brand) =>
+        brand.name.toLowerCase().includes((searchBrand || "").toLowerCase())
+    );
 
     return (
         <div className="grid w-full py-4 lg:grid-cols-[280px_1fr]">
@@ -203,6 +208,9 @@ export default function CategoryPageComponent({
                                 type="text"
                                 placeholder="Marka Ara"
                                 className="input input-bordered input-sm h-8  w-full max-w-full rounded-lg border placeholder:text-gray-500 focus:border-transparent focus:outline-none focus:ring-2"
+                                onChange={(e) => {
+                                    setSearchBrand(e.target.value);
+                                }}
                             />
                             <button className="absolute right-2 top-[0.85rem] scale-[.8] transition duration-200 ease-in-out hover:scale-100">
                                 <MagnifyingGlassIcon width={20} height={20} />
@@ -210,61 +218,74 @@ export default function CategoryPageComponent({
                         </div>
                         <div className="flex flex-col gap-2 py-2 after:mt-3 after:h-[1px] after:w-full after:rounded-lg after:bg-zinc-300 after:content-['']">
                             <ul className="max-h-44 overflow-auto">
-                                {brands
-                                    .sort((a, b) => b.count - a.count)
-                                    .map((brand) => (
-                                        <li key={brand.slug}>
-                                            <label className="label flex cursor-pointer justify-start gap-2">
-                                                <input
-                                                    type="checkbox"
-                                                    className="checkbox-accent checkbox checkbox-xs"
-                                                    checked={
-                                                        brandFilter?.includes(
-                                                            brand.slug
-                                                        ) || false
-                                                    }
-                                                    name={brand.slug}
-                                                    value={brand.slug}
-                                                    onChange={(e) => {
-                                                        if (e.target.checked) {
-                                                            setBrandFilter([
-                                                                ...(brandFilter ||
-                                                                    []),
-                                                                brand.slug,
-                                                            ]);
-                                                            // setQuery({
-                                                            //     ...query,
-                                                            //     marka: [
-                                                            //         ...(query?.marka ||
-                                                            //             []),
-                                                            //         brand.slug,
-                                                            //     ],
-                                                            // });
-                                                        } else {
-                                                            setBrandFilter(
-                                                                brandFilter?.filter(
-                                                                    (slug) =>
-                                                                        slug !==
-                                                                        brand.slug
-                                                                ) || []
-                                                            );
-                                                            // setQuery({
-                                                            //     ...query,
-                                                            //     marka: query?.marka?.filter(
-                                                            //         (slug) =>
-                                                            //             slug !==
-                                                            //             brand.slug
-                                                            //     ),
-                                                            // });
+                                {searchedBrands.length > 0 ? (
+                                    searchedBrands
+                                        .sort((a, b) => b.count - a.count)
+                                        .map((brand) => (
+                                            <li key={brand.slug}>
+                                                <label className="label flex cursor-pointer justify-start gap-2">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="checkbox-accent checkbox checkbox-xs"
+                                                        checked={
+                                                            brandFilter?.includes(
+                                                                brand.slug
+                                                            ) || false
                                                         }
-                                                    }}
-                                                />
-                                                <span className="label-text font-medium">
-                                                    {brand.name} ({brand.count})
-                                                </span>
-                                            </label>
-                                        </li>
-                                    ))}
+                                                        name={brand.slug}
+                                                        value={brand.slug}
+                                                        onChange={(e) => {
+                                                            if (
+                                                                e.target.checked
+                                                            ) {
+                                                                setBrandFilter([
+                                                                    ...(brandFilter ||
+                                                                        []),
+                                                                    brand.slug,
+                                                                ]);
+                                                                // setQuery({
+                                                                //     ...query,
+                                                                //     marka: [
+                                                                //         ...(query?.marka ||
+                                                                //             []),
+                                                                //         brand.slug,
+                                                                //     ],
+                                                                // });
+                                                            } else {
+                                                                setBrandFilter(
+                                                                    brandFilter?.filter(
+                                                                        (
+                                                                            slug
+                                                                        ) =>
+                                                                            slug !==
+                                                                            brand.slug
+                                                                    ) || []
+                                                                );
+                                                                // setQuery({
+                                                                //     ...query,
+                                                                //     marka: query?.marka?.filter(
+                                                                //         (slug) =>
+                                                                //             slug !==
+                                                                //             brand.slug
+                                                                //     ),
+                                                                // });
+                                                            }
+                                                        }}
+                                                    />
+                                                    <span className="label-text font-medium">
+                                                        {brand.name} (
+                                                        {brand.count})
+                                                    </span>
+                                                </label>
+                                            </li>
+                                        ))
+                                ) : (
+                                    <li className="flex items-center justify-center py-1.5">
+                                        <span className="text-gray-500">
+                                            Marka bulunamadı.
+                                        </span>
+                                    </li>
+                                )}
                             </ul>
                         </div>
                     </div>

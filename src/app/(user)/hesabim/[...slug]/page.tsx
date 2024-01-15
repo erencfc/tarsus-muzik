@@ -8,6 +8,7 @@ import { fetchUserInfo } from "@/app/utils/fetchUserInfo";
 
 import Loading from "@/app/loading";
 import { Suspense } from "react";
+import { redirect } from "next/navigation";
 
 const Addresses = dynamic(
     () => import("@/app/(user)/hesabim/[...slug]/(addresses)/Addresses"),
@@ -66,9 +67,9 @@ export default async function AccountSlugPage({
 
     const components: { [key: string]: React.ElementType } = {
         bilgilerim: PersonalInformation,
-        siparislerim: Orders,
+        // siparislerim: Orders,
         adreslerim: Addresses,
-        kuponlarim: Coupons,
+        // kuponlarim: Coupons,
         favorilerim: Favorites,
         "sifre-degistir": ChangePassword,
     };
@@ -77,14 +78,13 @@ export default async function AccountSlugPage({
 
     if (ComponentToRender) {
         return (
-            <div className="m-auto min-w-[300px] max-w-6xl p-6">
+            <div className="m-auto mt-6 min-w-[300px] max-w-6xl p-6">
                 <Suspense fallback={<Loading />}>
                     <ComponentToRender user={user} />
                 </Suspense>
             </div>
         );
     } else {
-        console.log("Page not found");
-        return null;
+        redirect("/hesabim");
     }
 }

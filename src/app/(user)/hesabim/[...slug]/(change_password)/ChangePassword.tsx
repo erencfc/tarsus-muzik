@@ -38,7 +38,7 @@ export default function ChangePassword({ user }: { user: UserPayload }) {
     return (
         <div className="flex items-center justify-center">
             <form action={clientAction} className="min-w-[300px]">
-                <h1 className="mt-6 text-center text-xl font-bold">
+                <h1 className="text-center text-xl font-bold">
                     Şifre Değiştir
                 </h1>
                 <div className="mt-5 grid grid-cols-1 grid-rows-2 gap-x-6 gap-y-4 ">

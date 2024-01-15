@@ -15,6 +15,8 @@ import HeaderMobile from "@/components/Header/HeaderMobile";
 import Navbar from "@/components/Header/Navbar";
 import FooterTop from "@/components/Footer/FooterTop";
 
+import { headers } from "next/dist/client/components/headers";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -27,8 +29,13 @@ export default function RootLayout({
 }: {
     children: React.ReactNode;
 }) {
+    const _headers = headers();
+    const currentUrl = _headers.get("x-url");
+
+    console.log(_headers);
+
     return (
-        <html lang="en">
+        <html lang="tr">
             <body className={inter.className}>
                 {/* Header & Navbar */}
                 <header className="inline">

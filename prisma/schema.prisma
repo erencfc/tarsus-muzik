@@ -61,11 +61,11 @@ enum DiscountType {
 }
 
 model Product {
-  id                 String      @id @default(auto()) @map("_id") @db.ObjectId
-  Brand              Brand       @relation(fields: [brandId], references: [id], onDelete: Cascade)
-  brandId            String      @db.ObjectId
-  model              String      @unique
-  modelSlug          String      @unique
+  id                 String          @id @default(auto()) @map("_id") @db.ObjectId
+  Brand              Brand           @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  brandId            String          @db.ObjectId
+  model              String          @unique
+  modelSlug          String          @unique
   images             String[]
   price              Int
   discountPrice      Int?
@@ -74,19 +74,33 @@ model Product {
   deliveryTimeMaxDay Int
   stock              Int
   stockStatus        Boolean
-  active             Boolean     @default(true)
-  rating             Int         @default(0)
-  createdAt          DateTime    @default(now())
-  updatedAt          DateTime    @updatedAt
-  Category           Category    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  categoryId         String      @db.ObjectId
-  SubCategory        SubCategory @relation(fields: [subCategoryId], references: [id], onDelete: Cascade)
-  subCategoryId      String      @db.ObjectId
+  active             Boolean         @default(true)
+  rating             Int             @default(0)
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  Category           Category        @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId         String          @db.ObjectId
+  SubCategory        SubCategory     @relation(fields: [subCategoryId], references: [id], onDelete: Cascade)
+  subCategoryId      String          @db.ObjectId
   CartItem           CartItem[]
   Favorite           Favorite[]
   Comment            Comment[]
+  DiscountAlert      DiscountAlert[]
 
   @@map("products")
+}
+
+model DiscountAlert {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String   @db.ObjectId
+  Product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId    String   @db.ObjectId
+  currentPrice Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("discountAlerts")
 }
 
 model Comment {
@@ -144,24 +158,32 @@ model Brand {
 }
 
 model User {
-  id        String     @id @default(auto()) @map("_id") @db.ObjectId
-  firstName String
-  lastName  String
-  Addresses Address[]
-  email     String     @unique
-  tel       String     @unique
-  password  String
-  emailNoti Boolean    @default(true)
-  smsNoti   Boolean    @default(true)
-  verified  Boolean    @default(false)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  cartId    String?    @db.ObjectId
-  Favorite  Favorite[]
-  Comment   Comment[]
-  Cart      Cart[]
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  firstName     String
+  lastName      String
+  Addresses     Address[]
+  email         String          @unique
+  tel           String          @unique
+  password      String
+  emailNoti     Boolean         @default(true)
+  smsNoti       Boolean         @default(true)
+  verified      Boolean         @default(false)
+  cartId        String?         @db.ObjectId
+  Favorite      Favorite[]
+  Comment       Comment[]
+  Cart          Cart[]
+  DiscountAlert DiscountAlert[]
+  Role          Role            @default(USER)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
 
   @@map("users")
+}
+
+enum Role {
+  ADMIN
+  USER
+  DEALER
 }
 
 model Address {

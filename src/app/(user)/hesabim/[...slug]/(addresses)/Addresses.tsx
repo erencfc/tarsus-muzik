@@ -9,6 +9,7 @@ import CreateAddressModal from "./ModalCreate";
 
 import UpdateAddressModal from "./ModalUpdate";
 import UpdateAddressButton from "./ButtonUpdate";
+import DeleteAddressButton from "./ButtonDelete";
 
 export default async function Addresses({ user }: { user: UserPayload }) {
     const addresses = await prisma.address.findMany({
@@ -22,7 +23,7 @@ export default async function Addresses({ user }: { user: UserPayload }) {
             <Suspense>
                 <CreateAddressModal userId={user.id} />
             </Suspense>
-            <h1 className="mt-6 text-center text-xl font-bold">Adreslerim</h1>
+            <h1 className="text-center text-xl font-bold">Adreslerim</h1>
             <CreateAddressButton />
             <div className="flex flex-col">
                 {addresses.map((address) => (
@@ -45,9 +46,7 @@ export default async function Addresses({ user }: { user: UserPayload }) {
                             </div>
                             <div className="flex flex-col gap-2">
                                 <UpdateAddressButton />
-                                <button className="btn-danger btn btn-sm">
-                                    Sil
-                                </button>
+                                <DeleteAddressButton addressId={address.id} />
                             </div>
                         </div>
                         <div className="flex flex-col gap-1">
@@ -67,7 +66,7 @@ export default async function Addresses({ user }: { user: UserPayload }) {
 
                 {addresses.length === 0 && (
                     <div className="flex flex-col">
-                        <span className="text-sm text-gray-500">
+                        <span className="text-center text-sm text-gray-500">
                             Henüz adres tanımlamadınız.
                         </span>
                     </div>
