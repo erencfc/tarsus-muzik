@@ -23,6 +23,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/Form/form-error";
 import { FormSuccess } from "@/components/Form/form-success";
+import { CardWrapper } from "@/components/auth/CardWrapper";
+import { ArrowRightEndOnRectangleIcon } from "@heroicons/react/24/outline";
 
 export default function LoginForm() {
     const [error, setError] = useState<string | undefined>("");
@@ -50,82 +52,81 @@ export default function LoginForm() {
     };
 
     return (
-        <>
-            <h1 className="p-5 text-white">Giriş Yap</h1>
-            <div className="relative">
-                <Form {...form}>
-                    <form
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        className="flex flex-col gap-3"
-                    >
-                        <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Email</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            placeholder="mail@mail.com"
-                                            type="email"
-                                            disabled={isPending}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="password"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Şifre</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            placeholder="******"
-                                            type="password"
-                                            disabled={isPending}
-                                        />
-                                    </FormControl>
-                                    <Button
-                                        size="sm"
-                                        variant="link"
-                                        asChild
-                                        className="px-0 font-normal"
-                                    >
-                                        <Link
-                                            href={DEFAULT_FORGOT_PASSWORD_PATH}
-                                        >
-                                            <p className="text-ellipsis text-[13px] text-gray-300/80">
-                                                Şifremi Unuttum
-                                            </p>
-                                        </Link>
-                                    </Button>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+        <CardWrapper
+            headerIcon={
+                <i>
+                    <ArrowRightEndOnRectangleIcon width={20} height={20} />
+                </i>
+            }
+            headerLabel="Giriş Yap"
+            backButtonLabel="Hesabınız mı yok?"
+            backButtonHref={DEFAULT_REGISTER_PATH}
+        >
+            <Form {...form}>
+                <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="flex flex-col gap-3"
+                >
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Email</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        {...field}
+                                        placeholder="mail@mail.com"
+                                        type="email"
+                                        disabled={isPending}
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="password"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Şifre</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        {...field}
+                                        placeholder="******"
+                                        type="password"
+                                        disabled={isPending}
+                                    />
+                                </FormControl>
+                                <Button
+                                    size="sm"
+                                    variant="link"
+                                    asChild
+                                    className="px-0 font-normal"
+                                >
+                                    <Link href={DEFAULT_FORGOT_PASSWORD_PATH}>
+                                        <p className="text-ellipsis text-[13px] text-gray-300/80">
+                                            Şifremi Unuttum
+                                        </p>
+                                    </Link>
+                                </Button>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
 
-                        <FormError message={error} />
-                        <FormSuccess message={success} />
-                        <Button
-                            type="submit"
-                            className="w-full"
-                            disabled={isPending}
-                        >
-                            Giriş Yap
-                        </Button>
-                        <Link href={DEFAULT_REGISTER_PATH} className="mx-auto">
-                            <p className="text-ellipsis text-[13px] text-gray-300/80 underline transition-colors duration-100 ease-in-out  hover:text-accent">
-                                Hesabınız mı yok?
-                            </p>
-                        </Link>
-                    </form>
-                </Form>
-            </div>
-        </>
+                    <FormError message={error} />
+                    <FormSuccess message={success} />
+                    <Button
+                        type="submit"
+                        className="w-full"
+                        disabled={isPending}
+                    >
+                        Giriş Yap
+                    </Button>
+                </form>
+            </Form>
+        </CardWrapper>
     );
 }

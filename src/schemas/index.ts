@@ -26,9 +26,13 @@ export const RegisterSchema = z
         }),
         tel: z
             .string({ required_error: "Lütfen telefon numaranızı giriniz." })
-            .refine((val) => val.length === 11 && !!Number(val), {
-                message: "Telefon numarası geçerli değil.",
-            }),
+            .refine(
+                (val) =>
+                    val.startsWith("0") && val.length === 11 && !!Number(val),
+                {
+                    message: "Telefon numarası geçerli değil.",
+                }
+            ),
         password: z
             .string({ required_error: "Lütfen şifrenizi giriniz." })
             .min(6, {

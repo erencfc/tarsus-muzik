@@ -23,6 +23,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/Form/form-error";
 import { FormSuccess } from "@/components/Form/form-success";
+import { CardWrapper } from "@/components/auth/CardWrapper";
+import { UserPlusIcon } from "@heroicons/react/24/outline";
 
 export default function RegisterForm() {
     const [error, setError] = useState<string | undefined>("");
@@ -54,147 +56,148 @@ export default function RegisterForm() {
     };
 
     return (
-        <div className="flex min-h-[450px] flex-col items-center bg-gray-800 pb-10 pt-4 text-white">
-            <h1 className="p-5 text-white">Kayıt Ol</h1>
-            <div className="relative">
-                <Form {...form}>
-                    <form
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        className="flex flex-col gap-3"
+        <CardWrapper
+            backButtonHref={DEFAULT_LOGIN_PATH}
+            backButtonLabel="Zaten Üye Misiniz?"
+            headerLabel="Kayıt Ol"
+            headerIcon={
+                <i>
+                    <UserPlusIcon width={20} height={20} />
+                </i>
+            }
+        >
+            <Form {...form}>
+                <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="flex flex-col gap-3"
+                >
+                    <div className="flex gap-4">
+                        <FormField
+                            control={form.control}
+                            name="firstName"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Adınız</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            placeholder="Ali"
+                                            type="text"
+                                            disabled={isPending}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="lastName"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Soyadınız</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            placeholder="Can"
+                                            type="text"
+                                            disabled={isPending}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div className="flex gap-4">
+                        <FormField
+                            control={form.control}
+                            name="email"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Email</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            placeholder="mail@mail.com"
+                                            type="email"
+                                            disabled={isPending}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="tel"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Telefon Numaranız</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            placeholder="05012345678"
+                                            type="text"
+                                            disabled={isPending}
+                                            maxLength={11}
+                                            minLength={11}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <div className="flex gap-4">
+                        <FormField
+                            control={form.control}
+                            name="password"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Şifre</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            placeholder="******"
+                                            type="password"
+                                            disabled={isPending}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="passwordConfirm"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Şifre (Tekrar)</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            placeholder="******"
+                                            type="password"
+                                            disabled={isPending}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+                    <FormError message={error} />
+                    <FormSuccess message={success} />
+                    <Button
+                        type="submit"
+                        className="mt-3 w-full"
+                        disabled={isPending}
                     >
-                        <div className="flex gap-4">
-                            <FormField
-                                control={form.control}
-                                name="firstName"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Adınız</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                placeholder="Adınız"
-                                                type="text"
-                                                disabled={isPending}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="lastName"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Soyadınız</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                placeholder="Soyadınız"
-                                                type="text"
-                                                disabled={isPending}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                        <div className="flex gap-4">
-                            <FormField
-                                control={form.control}
-                                name="email"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Email</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                placeholder="mail@mail.com"
-                                                type="email"
-                                                disabled={isPending}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="tel"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Telefon Numaranız</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                placeholder="05012345678"
-                                                type="text"
-                                                disabled={isPending}
-                                                maxLength={11}
-                                                minLength={11}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                        <div className="flex gap-4">
-                            <FormField
-                                control={form.control}
-                                name="password"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Şifre</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                placeholder="******"
-                                                type="password"
-                                                disabled={isPending}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="passwordConfirm"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Şifre (Tekrar)</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                placeholder="******"
-                                                type="password"
-                                                disabled={isPending}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                        <FormError message={error} />
-                        <FormSuccess message={success} />
-                        <Button
-                            type="submit"
-                            className="mt-3 w-full"
-                            disabled={isPending}
-                        >
-                            Kayıt Ol
-                        </Button>
-                        <Link href={DEFAULT_LOGIN_PATH} className="mx-auto">
-                            <p className="text-ellipsis text-[13px] text-gray-300/80 underline transition-colors duration-100 ease-in-out  hover:text-accent">
-                                Zaten üye misiniz?
-                            </p>
-                        </Link>
-                    </form>
-                </Form>
-            </div>
-        </div>
+                        Kayıt Ol
+                    </Button>
+                </form>
+            </Form>
+        </CardWrapper>
     );
 }
