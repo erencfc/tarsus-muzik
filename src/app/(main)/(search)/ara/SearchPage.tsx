@@ -7,11 +7,11 @@ import {
     MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import { Prisma } from "@prisma/client";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useState } from "react";
 import Pagination from "./Pagination";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 type SearchPageComponentProps = {
     products: Prisma.ProductGetPayload<{
@@ -76,8 +76,7 @@ export default function SearchPageComponent({
     itemsPerPage,
     notSkippedProducts,
 }: SearchPageComponentProps) {
-    const { data: session } = useSession();
-    const user = session?.user as any;
+    const user = useCurrentUser();
 
     const searchParams = useSearchParams();
 

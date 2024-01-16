@@ -2,14 +2,11 @@
 
 import {
     ChatBubbleOvalLeftEllipsisIcon,
-    DocumentIcon,
     StarIcon,
 } from "@heroicons/react/24/outline";
 import { StarIcon as StarIconFilled } from "@heroicons/react/24/solid";
-import { Prisma } from "@prisma/client";
 import { toast } from "react-toastify";
 import { createComment } from "./action";
-import { signIn, useSession } from "next-auth/react";
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
 import { useRouter } from "next/navigation";

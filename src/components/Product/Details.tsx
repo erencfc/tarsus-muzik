@@ -1,12 +1,9 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import { incrementProductQuantity } from "@/app/(main)/(product)/urun/[slug]/actions";
 import { formatPrice } from "@/lib/format";
 import {
-    BellAlertIcon,
     ChatBubbleOvalLeftEllipsisIcon,
-    CreditCardIcon,
     HeartIcon,
     MinusIcon,
     PlusIcon,
@@ -20,6 +17,7 @@ import CreateCommentModal from "./CreateCommentModal";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import ToggleDiscountAlert from "./ToggleDiscountAlert";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 export default function ProductDetails({
     product,
@@ -33,8 +31,7 @@ export default function ProductDetails({
     isFavorite: boolean;
 }) {
     const router = useRouter();
-    const { data: session } = useSession();
-    const user = session?.user as any;
+    const user = useCurrentUser();
 
     const [isPending, startTransition] = useTransition();
     const [success, setSuccess] = useState(false);

@@ -11,28 +11,32 @@ import BackButton from "@/components/auth/BackButton";
 
 type CardWrapperProps = {
     children: React.ReactNode;
+    className?: string;
     headerIcon: React.ReactNode;
     headerLabel: string;
-    backButtonLabel: string;
-    backButtonHref: string;
+    backButtonLabel?: string;
+    backButtonHref?: string;
 };
 
 export const CardWrapper = ({
     children,
+    className,
     headerIcon,
     headerLabel,
     backButtonLabel,
     backButtonHref,
 }: CardWrapperProps) => {
     return (
-        <Card className="min-w-[400px] shadow-lg">
+        <Card className={`min-w-[400px] shadow-lg ${className}`}>
             <CardHeader>
                 <Header headerIcon={headerIcon} headerLabel={headerLabel} />
             </CardHeader>
             <CardContent>{children}</CardContent>
-            <CardFooter>
-                <BackButton label={backButtonLabel} href={backButtonHref} />
-            </CardFooter>
+            {backButtonLabel && backButtonHref && (
+                <CardFooter>
+                    <BackButton label={backButtonLabel} href={backButtonHref} />
+                </CardFooter>
+            )}
         </Card>
     );
 };

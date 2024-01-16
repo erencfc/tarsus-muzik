@@ -8,8 +8,8 @@ import { formatDate } from "@/lib/format";
 import { StarIcon } from "@heroicons/react/24/outline";
 import { StarIcon as StarIconSolid } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 type GetContentProps = {
     product: Prisma.ProductGetPayload<null>;
@@ -169,8 +169,7 @@ export default function Tabs({
     ];
 
     const router = useRouter();
-    const { data: session } = useSession();
-    const user = session?.user as any;
+    const user = useCurrentUser();
 
     return (
         <div>

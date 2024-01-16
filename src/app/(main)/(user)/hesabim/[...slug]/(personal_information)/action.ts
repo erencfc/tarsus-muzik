@@ -1,96 +1,79 @@
 "use server";
 
 import { prisma } from "@/lib/db/prisma";
-import { getErrorMessage } from "@/lib/utils";
+import { PersonalInformationSchema } from "@/schemas";
 import { UserPayload } from "@/types/UserPayload";
+import { revalidatePath } from "next/cache";
+import * as z from "zod";
 
-export async function updateUserInfo({
-    formData,
-    oldUser,
-}: {
-    formData: FormData;
-    oldUser: UserPayload | null;
-}) {
-    const firstName = formData.get("firstName")?.toString();
-    const lastName = formData.get("lastName")?.toString();
-    const email = formData.get("email")?.toString();
-    const tel = formData.get("tel")?.toString();
-    const emailNoti =
-        formData.get("mailNoti")?.toString() === "on" ? true : false;
-    const smsNoti = formData.get("smsNoti")?.toString() === "on" ? true : false;
+export const updatePersonalInformation = async (
+    values: z.infer<typeof PersonalInformationSchema>,
+    oldUser: UserPayload
+) => {
+    const validatedFields = PersonalInformationSchema.safeParse(values);
 
-    if (!firstName || !lastName || !email || !tel) {
-        return {
-            success: false,
-            error: "Lütfen boş alan bırakmayınız.",
-        };
+    if (!validatedFields.success) {
+        return { error: "Lütfen gerekli alanları doldurunuz." };
     }
 
-    if (!email.includes("@")) {
-        return {
-            success: false,
-            error: "Lütfen geçerli bir e-posta adresi giriniz.",
-        };
-    }
-
-    if (tel.length !== 11 || isNaN(Number(tel))) {
-        return {
-            success: false,
-            error: "Lütfen geçerli bir telefon numarası giriniz.",
-        };
-    }
-    if (oldUser === null) {
-        return {
-            success: false,
-            error: "Kullanıcı bulunamadı.",
-        };
-    }
-    if (
-        oldUser.firstName === firstName &&
-        oldUser.lastName === lastName &&
-        oldUser.email === email &&
-        oldUser.tel === tel &&
-        oldUser.emailNoti === emailNoti &&
-        oldUser.smsNoti === smsNoti
-    ) {
-        return {
-            success: false,
-            error: "Değişiklik yapmadınız.",
-        };
-    }
-
-    if (oldUser.email !== email) {
-        const user = await prisma.user.findUnique({
-            where: {
-                email,
-            },
-        });
-        if (user) {
-            return {
-                success: false,
-                error: "Bu e-posta adresi kullanılmaktadır.",
-            };
-        }
-    }
-
-    if (oldUser.tel !== tel) {
-        const user = await prisma.user.findUnique({
-            where: {
-                tel,
-            },
-        });
-        if (user) {
-            return {
-                success: false,
-                error: "Bu telefon numarası kullanılmaktadır.",
-            };
-        }
-    }
-
-    let user = null;
+    const { firstName, lastName, email, tel, emailNoti, smsNoti } =
+        validatedFields.data;
 
     try {
-        user = await prisma.user.update({
+        const userExists = await prisma.user.findUnique({
+            where: {
+                id: oldUser.id,
+            },
+        });
+
+        if (!userExists) {
+            return {
+                error: "Kullanıcı bulunamadı.",
+            };
+        }
+
+        if (
+            userExists.firstName === firstName &&
+            userExists.lastName === lastName &&
+            userExists.email === email &&
+            userExists.tel === tel &&
+            userExists.emailNoti === emailNoti &&
+            userExists.smsNoti === smsNoti
+        ) {
+            return {
+                error: "Değişiklik yapmadınız.",
+            };
+        }
+
+        if (userExists.email !== email) {
+            const emailExists = await prisma.user.findFirst({
+                where: {
+                    email,
+                },
+            });
+
+            if (emailExists) {
+                return {
+                    error: "Bu e-posta adresi ile zaten bir hesap var.",
+                };
+            }
+        }
+
+        if (userExists.tel !== tel) {
+            const telExists = await prisma.user.findFirst({
+                where: {
+                    tel,
+                },
+            });
+
+            if (telExists) {
+                return {
+                    error: "Bu telefon numarası ile zaten bir hesap var.",
+                };
+            }
+        }
+
+        await prisma.user.update({
             where: {
                 id: oldUser.id,
             },
@@ -103,24 +86,13 @@ export async function updateUserInfo({
                 smsNoti,
             },
         });
-        if (!user) {
-            return {
-                success: false,
-                error: "Kullanıcı bulunamadı.",
-            };
-        }
 
-        delete (user as { password?: string }).password;
-    } catch (error: unknown) {
+        revalidatePath("/hesabim/kisisel-bilgilerim");
+
         return {
-            success: false,
-            error: getErrorMessage(error),
+            success: "Kişisel bilgileriniz güncellendi.",
         };
+    } catch (error) {
+        throw error;
     }
-
-    return {
-        success: true,
-        data: user,
-        error: null,
-    };
-}
+};
