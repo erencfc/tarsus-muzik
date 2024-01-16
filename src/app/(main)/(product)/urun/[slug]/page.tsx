@@ -9,7 +9,7 @@ import { Suspense, cache } from "react";
 import Tabs from "./Tabs";
 import Loading from "@/app/loading";
 import Link from "next/link";
-import { auth } from "@/auth";
+import { currentUser } from "@/lib/auth";
 
 const getUserFavorites = cache(async (userId: string) => {
     const favorites = await prisma.favorite.findMany({
@@ -23,9 +23,9 @@ const getUserFavorites = cache(async (userId: string) => {
 });
 
 const isFavorite = cache(async (productId: string): Promise<boolean> => {
-    const session = await auth();
-    if (!session?.user) return false;
-    const favorites = await getUserFavorites(session.user.id);
+    const user = await currentUser();
+    if (!user) return false;
+    const favorites = await getUserFavorites(user.id);
     return favorites.includes(productId);
 });
 

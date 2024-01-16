@@ -1,8 +1,8 @@
 "use server";
 
 import { getProducts } from "@/app/utils/getProducts";
-import { auth } from "@/auth";
 import CategoryPageComponent from "@/components/CategoryPageComponent";
+import { currentUser } from "@/lib/auth";
 import { prisma } from "@/lib/db/prisma";
 import { formatSlug } from "@/lib/format";
 import { notFound } from "next/navigation";
@@ -56,8 +56,7 @@ export default async function CategoryPage({
         max: string | null;
     };
 }) {
-    const session = await auth();
-    const user = session?.user;
+    const user = await currentUser();
 
     const category_slug = params.slug[0];
     const sub_category_slug = params.slug[1];

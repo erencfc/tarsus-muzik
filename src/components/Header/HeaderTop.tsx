@@ -10,11 +10,10 @@ import { Suspense } from "react";
 import { getCart } from "@/lib/db/cart";
 
 import SearchInput from "./SearchInput";
-import { auth } from "@/auth";
+import { currentUser } from "@/lib/auth";
 
 export default async function HeaderTop() {
-    const session = await auth();
-    const user = session?.user;
+    const user = await currentUser();
 
     const cart = await getCart();
 

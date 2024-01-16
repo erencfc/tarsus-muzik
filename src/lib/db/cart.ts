@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { prisma } from "./prisma";
 import { Prisma } from "@prisma/client";
-import { auth } from "@/auth";
+import { currentUser } from "../auth";
 
 export type CartWithProducts = Prisma.CartGetPayload<{
     include: {
@@ -29,7 +29,7 @@ export type ShoppingCart = CartWithProducts & {
 };
 
 export async function getCart(): Promise<ShoppingCart | null> {
-    const session = await auth();
+    const user = await currentUser();
 
     let cart: CartWithProducts | null = null;
 
@@ -54,11 +54,11 @@ export async function getCart(): Promise<ShoppingCart | null> {
         },
         Coupon: true,
     };
-    if (session) {
+    if (user) {
         cart =
             (await prisma.cart.findFirst({
                 where: {
-                    userId: session.user.id,
+                    userId: user.id,
                 },
                 include,
             })) ?? null;
@@ -80,7 +80,7 @@ export async function getCart(): Promise<ShoppingCart | null> {
                 data: {
                     User: {
                         connect: {
-                            id: session.user.id,
+                            id: user.id,
                         },
                     },
                 },
@@ -88,7 +88,7 @@ export async function getCart(): Promise<ShoppingCart | null> {
 
             cart = await prisma.cart.findFirst({
                 where: {
-                    userId: session.user.id,
+                    userId: user.id,
                 },
                 include,
             });
@@ -114,7 +114,7 @@ export async function getCart(): Promise<ShoppingCart | null> {
 
                 cart = await prisma.cart.findFirst({
                     where: {
-                        userId: session.user.id,
+                        userId: user.id,
                     },
                     include,
                 });
@@ -190,19 +190,19 @@ export async function getCart(): Promise<ShoppingCart | null> {
 }
 
 export async function createCart(): Promise<ShoppingCart> {
-    const session = await auth();
+    const user = await currentUser();
     let newCart: Prisma.CartGetPayload<{
         include: {
             Coupon: true;
         };
     }>;
 
-    if (session) {
+    if (user) {
         newCart = await prisma.cart.create({
             data: {
                 User: {
                     connect: {
-                        id: session.user.id,
+                        id: user.id,
                     },
                 },
             },

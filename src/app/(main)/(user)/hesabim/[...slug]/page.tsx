@@ -5,8 +5,8 @@ import dynamic from "next/dynamic";
 import Loading from "@/app/loading";
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
-import { auth } from "@/auth";
 import { getUserById } from "@/data/user";
+import { currentUser } from "@/lib/auth";
 
 const Addresses = dynamic(
     () => import("@/app/(main)/(user)/hesabim/[...slug]/(addresses)/Addresses"),
@@ -56,8 +56,8 @@ export default async function AccountSlugPage({
 }: {
     params: { slug: string[] };
 }) {
-    const session = await auth();
-    const user = await getUserById(session?.user.id, {
+    const sessionUser = await currentUser();
+    const user = await getUserById(sessionUser?.id, {
         id: true,
         email: true,
         firstName: true,
