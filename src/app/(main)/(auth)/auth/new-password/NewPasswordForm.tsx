@@ -4,11 +4,9 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useState, useTransition } from "react";
-import Link from "next/link";
 
-import { LoginSchema } from "@/schemas";
-import { DEFAULT_FORGOT_PASSWORD_PATH, DEFAULT_REGISTER_PATH } from "@/routes";
-import { login } from "./action";
+import { NewPasswordSchema } from "@/schemas";
+import { DEFAULT_LOGIN_PATH } from "@/routes";
 
 import { useForm } from "react-hook-form";
 import {
@@ -24,27 +22,29 @@ import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/Form/form-error";
 import { FormSuccess } from "@/components/Form/form-success";
 import { CardWrapper } from "@/components/auth/CardWrapper";
-import { ArrowRightEndOnRectangleIcon } from "@heroicons/react/24/outline";
+import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
+import { newPassword } from "./action";
+import { useSearchParams } from "next/navigation";
 
-export default function LoginForm() {
+export default function NewPasswordForm() {
+    const searchParams = useSearchParams();
+    const token = searchParams.get("token");
+
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
 
-    const form = useForm<z.infer<typeof LoginSchema>>({
-        resolver: zodResolver(LoginSchema),
-        defaultValues: {
-            email: "",
-            password: "",
-        },
+    const form = useForm<z.infer<typeof NewPasswordSchema>>({
+        resolver: zodResolver(NewPasswordSchema),
+        defaultValues: { password: "" },
     });
 
-    const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
         setError("");
         setSuccess("");
 
         startTransition(() => {
-            login(values).then((data) => {
+            newPassword(values, token).then((data) => {
                 setError(data?.error);
                 setSuccess(data?.success);
             });
@@ -55,12 +55,12 @@ export default function LoginForm() {
         <CardWrapper
             headerIcon={
                 <i>
-                    <ArrowRightEndOnRectangleIcon width={36} height={36} />
+                    <QuestionMarkCircleIcon width={36} height={36} />
                 </i>
             }
-            headerLabel="Tekrar Hoş Geldiniz!"
-            backButtonLabel="Hesabınız mı yok?"
-            backButtonHref={DEFAULT_REGISTER_PATH}
+            headerLabel="Şifremi Sıfırla"
+            backButtonLabel="Giriş Sayfasına Dön"
+            backButtonHref={DEFAULT_LOGIN_PATH}
         >
             <Form {...form}>
                 <form
@@ -69,28 +69,10 @@ export default function LoginForm() {
                 >
                     <FormField
                         control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Email</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        {...field}
-                                        placeholder="mail@mail.com"
-                                        type="email"
-                                        disabled={isPending}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
                         name="password"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Şifre</FormLabel>
+                                <FormLabel>Yeni Şifre</FormLabel>
                                 <FormControl>
                                     <Input
                                         {...field}
@@ -99,18 +81,6 @@ export default function LoginForm() {
                                         disabled={isPending}
                                     />
                                 </FormControl>
-                                <Button
-                                    size="sm"
-                                    variant="link"
-                                    asChild
-                                    className="px-0 font-normal"
-                                >
-                                    <Link href={DEFAULT_FORGOT_PASSWORD_PATH}>
-                                        <p className="text-ellipsis text-[13px] text-gray-300/80">
-                                            Şifremi Unuttum
-                                        </p>
-                                    </Link>
-                                </Button>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -123,7 +93,7 @@ export default function LoginForm() {
                         className="w-full"
                         disabled={isPending}
                     >
-                        Giriş Yap
+                        Şifremi Sıfırla
                     </Button>
                 </form>
             </Form>

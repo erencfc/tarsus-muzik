@@ -197,6 +197,17 @@ model VerificationToken {
   @@map("verificationTokens")
 }
 
+model PasswordResetToken {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@unique([email, token])
+  @@map("passwordResetTokens")
+}
+
 model Address {
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
   alias       String      @unique

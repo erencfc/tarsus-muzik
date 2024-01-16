@@ -7,6 +7,8 @@ import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { FormError } from "@/components/Form/form-error";
 import { FormSuccess } from "@/components/Form/form-success";
+import { CardWrapper } from "@/components/auth/CardWrapper";
+import { CheckBadgeIcon } from "@heroicons/react/24/outline";
 
 export default function NewVerificationPage() {
     const [error, setError] = useState<string | undefined>();
@@ -39,29 +41,25 @@ export default function NewVerificationPage() {
     }, [onSubmit]);
 
     return (
-        <div className="h-screen">
+        <CardWrapper
+            headerIcon={
+                <i>
+                    <CheckBadgeIcon width={36} height={36} />
+                </i>
+            }
+            headerLabel="E-mail Doğrulama"
+            backButtonHref={DEFAULT_LOGIN_PATH}
+            backButtonLabel="Giriş Sayfasına Dön"
+        >
             <div className="mx-auto flex h-full w-fit max-w-6xl items-center justify-center p-6">
-                <div className="card h-96 w-96 bg-gray-300 shadow-xl">
-                    <div className="card-body justify-between">
-                        <h2 className="card-title justify-center">
-                            E-Mail Doğrulama
-                        </h2>
-                        {!success && !error && (
-                            <span className="loading loading-bars mx-auto text-primary" />
-                        )}
-                        <div className="flex justify-center">
-                            <FormSuccess message={success} />
-                            {!success && <FormError message={error} />}
-                        </div>
-                        <Link
-                            href={DEFAULT_LOGIN_PATH}
-                            className="text-center text-sm font-semibold text-gray-600"
-                        >
-                            Giriş Sayfasına Dön
-                        </Link>
-                    </div>
+                {!success && !error && (
+                    <span className="loading loading-bars mx-auto text-primary" />
+                )}
+                <div className="flex justify-center">
+                    <FormSuccess message={success} />
+                    {!success && <FormError message={error} />}
                 </div>
             </div>
-        </div>
+        </CardWrapper>
     );
 }

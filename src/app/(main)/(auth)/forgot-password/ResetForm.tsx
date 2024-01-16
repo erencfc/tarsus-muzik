@@ -4,11 +4,9 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useState, useTransition } from "react";
-import Link from "next/link";
 
-import { LoginSchema } from "@/schemas";
-import { DEFAULT_FORGOT_PASSWORD_PATH, DEFAULT_REGISTER_PATH } from "@/routes";
-import { login } from "./action";
+import { ResetSchema } from "@/schemas";
+import { DEFAULT_LOGIN_PATH } from "@/routes";
 
 import { useForm } from "react-hook-form";
 import {
@@ -24,27 +22,25 @@ import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/Form/form-error";
 import { FormSuccess } from "@/components/Form/form-success";
 import { CardWrapper } from "@/components/auth/CardWrapper";
-import { ArrowRightEndOnRectangleIcon } from "@heroicons/react/24/outline";
+import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
+import { reset } from "./action";
 
-export default function LoginForm() {
+export default function ResetForm() {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
 
-    const form = useForm<z.infer<typeof LoginSchema>>({
-        resolver: zodResolver(LoginSchema),
-        defaultValues: {
-            email: "",
-            password: "",
-        },
+    const form = useForm<z.infer<typeof ResetSchema>>({
+        resolver: zodResolver(ResetSchema),
+        defaultValues: { email: "" },
     });
 
-    const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    const onSubmit = (values: z.infer<typeof ResetSchema>) => {
         setError("");
         setSuccess("");
 
         startTransition(() => {
-            login(values).then((data) => {
+            reset(values).then((data) => {
                 setError(data?.error);
                 setSuccess(data?.success);
             });
@@ -55,12 +51,12 @@ export default function LoginForm() {
         <CardWrapper
             headerIcon={
                 <i>
-                    <ArrowRightEndOnRectangleIcon width={36} height={36} />
+                    <QuestionMarkCircleIcon width={36} height={36} />
                 </i>
             }
-            headerLabel="Tekrar Hoş Geldiniz!"
-            backButtonLabel="Hesabınız mı yok?"
-            backButtonHref={DEFAULT_REGISTER_PATH}
+            headerLabel="Şifremi Unuttum"
+            backButtonLabel="Giriş Sayfasına Dön"
+            backButtonHref={DEFAULT_LOGIN_PATH}
         >
             <Form {...form}>
                 <form
@@ -85,36 +81,6 @@ export default function LoginForm() {
                             </FormItem>
                         )}
                     />
-                    <FormField
-                        control={form.control}
-                        name="password"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Şifre</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        {...field}
-                                        placeholder="******"
-                                        type="password"
-                                        disabled={isPending}
-                                    />
-                                </FormControl>
-                                <Button
-                                    size="sm"
-                                    variant="link"
-                                    asChild
-                                    className="px-0 font-normal"
-                                >
-                                    <Link href={DEFAULT_FORGOT_PASSWORD_PATH}>
-                                        <p className="text-ellipsis text-[13px] text-gray-300/80">
-                                            Şifremi Unuttum
-                                        </p>
-                                    </Link>
-                                </Button>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
 
                     <FormError message={error} />
                     <FormSuccess message={success} />
@@ -123,7 +89,7 @@ export default function LoginForm() {
                         className="w-full"
                         disabled={isPending}
                     >
-                        Giriş Yap
+                        Şifre Sıfırlama Linki Gönder
                     </Button>
                 </form>
             </Form>

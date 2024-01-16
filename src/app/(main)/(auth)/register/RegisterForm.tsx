@@ -69,7 +69,7 @@ export default function RegisterForm() {
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="flex flex-col gap-3"
+                    className="flex flex-col space-y-5"
                 >
                     <div className="flex gap-4">
                         <FormField

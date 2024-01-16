@@ -54,3 +54,15 @@ export const RegisterSchema = z
             });
         }
     });
+
+export const ResetSchema = z.object({
+    email: z.string().email({
+        message: "Mail adresi geçerli değil.",
+    }),
+});
+
+export const NewPasswordSchema = z.object({
+    password: z.string().min(6, {
+        message: "Şifreniz en az 6 karakter olmalıdır.",
+    }),
+});

@@ -10,7 +10,12 @@ export const publicRoutes: string[] = ["/", "/auth/new-verification"];
  * These routes will redirect logged in users to the landing page.
  * @type {string[]}
  */
-export const authRoutes: string[] = ["/login", "/register", "/forgot-password"];
+export const authRoutes: string[] = [
+    "/login",
+    "/register",
+    "/forgot-password",
+    "/auth/new-password",
+];
 
 /**
  * The prefix for the API authentication routes.
