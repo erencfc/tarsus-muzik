@@ -28,9 +28,9 @@ export default async function AdminLayout({
                     </div>
                 </aside>
                 <div className="flex-[4] px-16 py-8">
-                    <nav className="mb-8">
+                    <div className="mb-8">
                         <Navbar />
-                    </nav>
+                    </div>
                     <RoleGate allowedRole={Role.ADMIN}>{children}</RoleGate>
                 </div>
             </div>

@@ -76,3 +76,27 @@ export async function getUserCount(): Promise<number> {
         return 0;
     }
 }
+
+export const getUsers = async ({
+    currentPage,
+    itemsPerPage,
+}: {
+    currentPage: number;
+    itemsPerPage: number;
+}) => {
+    const users = await prisma.user.findMany({
+        select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            email: true,
+            tel: true,
+            role: true,
+            createdAt: true,
+        },
+        skip: (currentPage - 1) * itemsPerPage,
+        take: itemsPerPage,
+    });
+
+    return users;
+};

@@ -1,23 +1,40 @@
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
+import PaginationComponent from "./Pagination";
 
 type FormWrapperProps = {
     children: React.ReactNode;
+    className?: string;
+
     inputPlaceHolder: string;
     buttonTitle: string;
     buttonHref: string;
     tableHeadings: string[];
+
+    paginationHref: string;
+    currentPage: number;
+    itemsPerPage: number;
+    totalItems: number;
 };
 
 export default function FormWrapper({
     children,
+    className,
+
     inputPlaceHolder,
     buttonTitle,
     buttonHref,
     tableHeadings,
+
+    paginationHref,
+    currentPage,
+    itemsPerPage,
+    totalItems,
 }: FormWrapperProps) {
     return (
-        <div className="rounded-lg border border-gray-800 bg-gray-900 p-4">
+        <div
+            className={`rounded-lg border border-gray-800 bg-gray-900 p-4 ${className}`}
+        >
             <div className="mb-4 mt-2 flex w-full flex-row justify-between">
                 <div className="relative">
                     {/*
@@ -50,6 +67,15 @@ export default function FormWrapper({
                     </thead>
                     <tbody>{children}</tbody>
                 </table>
+            </div>
+
+            <div className="my-4">
+                <PaginationComponent
+                    currentPage={currentPage}
+                    itemsPerPage={itemsPerPage}
+                    totalItems={totalItems}
+                    href={paginationHref}
+                />
             </div>
         </div>
     );
