@@ -33,3 +33,18 @@ export const getUserByEmail = async (
         return null;
     }
 };
+
+export const getUserByTel = async (tel: string, select?: Prisma.UserSelect) => {
+    try {
+        let args: Prisma.UserFindUniqueArgs = { where: { tel } };
+
+        if (select) {
+            args = { ...args, select };
+        }
+        const user = await prisma.user.findUnique({ ...args });
+
+        return user;
+    } catch (error) {
+        return null;
+    }
+};

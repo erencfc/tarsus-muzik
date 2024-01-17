@@ -1,6 +1,8 @@
 "use server";
 
+import { Role } from "@prisma/client";
 import { prisma } from "./prisma";
+import { currentRole } from "../auth";
 
 export async function ToggleFavorite(
     userId: string,
@@ -53,5 +55,24 @@ export async function ToggleFavorite(
             success: false,
             message: "Bir hata oluştu.",
         };
+    }
+}
+
+export async function getUserCount(): Promise<number> {
+    const role = await currentRole();
+
+    if (role !== Role.ADMIN) {
+        return 0;
+    }
+
+    try {
+        //! TODO: Rolü sadece USER olanları sayacak şekilde güncelle.
+        const count = await prisma.user.count();
+
+        return count;
+    } catch (error: any) {
+        console.error(error);
+
+        return 0;
     }
 }

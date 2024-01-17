@@ -3,7 +3,25 @@
  * These routes do not require authentication.
  * @type {string[]}
  */
-export const publicRoutes: string[] = ["/", "/auth/new-verification"];
+export const publicRoutes: string[] = [
+    "/",
+    "/auth/new-verification",
+    "/urun/*",
+];
+
+/**
+ * An array of routes that are accessible by the users with the role of "ADMIN".
+ * These routes will redirect users with other roles to the landing page.
+ */
+export const adminRoutes: string[] = [
+    "/admin/dashboard",
+    "/admin/dashboard/users",
+    "/admin/dashboard/users/new",
+    "/admin/dashboard/products",
+    "/admin/dashboard/products/new",
+    "/admin/dashboard/orders",
+    "/admin/dashboard/coupons",
+];
 
 /**
  * An array of routes that require authentication.

@@ -10,6 +10,8 @@ import Tabs from "./Tabs";
 import Loading from "@/app/loading";
 import Link from "next/link";
 import { currentUser } from "@/lib/auth";
+import { CldImage } from "next-cloudinary";
+import CloudinaryImage from "@/components/Cloudinary/CloudinaryImage";
 
 const getUserFavorites = cache(async (userId: string) => {
     const favorites = await prisma.favorite.findMany({
@@ -91,10 +93,11 @@ export default async function ProductPage({
                                     <Image
                                         src={image}
                                         alt={product.model}
-                                        width={400}
-                                        height={400}
+                                        width={600}
+                                        height={600}
                                         className="mix-blend-darken"
                                         priority
+                                        draggable={false}
                                     />
                                 </div>
                             </div>
@@ -112,7 +115,9 @@ export default async function ProductPage({
                                     alt={product.model}
                                     width={80}
                                     height={80}
-                                    className="min-h-[46px] w-20 mix-blend-darken"
+                                    className="mix-blend-darken"
+                                    priority
+                                    draggable={false}
                                 />
                             </Link>
                         ))}

@@ -10,6 +10,7 @@ import { StarIcon as StarIconSolid } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { DEFAULT_LOGIN_PATH } from "@/routes";
 
 type GetContentProps = {
     product: Prisma.ProductGetPayload<null>;
@@ -31,7 +32,13 @@ const getContent = cache(
                             className="transition-all duration-150 hover:text-primary hover:underline"
                             onClick={() => {
                                 if (!user) {
-                                    router.push("/login");
+                                    const callback = encodeURIComponent(
+                                        `/urun/${product.modelSlug}`
+                                    );
+
+                                    router.push(
+                                        `${DEFAULT_LOGIN_PATH}?callback=${callback}`
+                                    );
                                     return;
                                 }
 
@@ -123,8 +130,11 @@ const getContent = cache(
         } else if (title === "description") {
             content = (
                 <div className="prose-sm prose max-w-none">
-                    <h2>Ürün Bilgisi</h2>
-                    <p>{product.description}</p>
+                    <div
+                        dangerouslySetInnerHTML={{
+                            __html: product.description,
+                        }}
+                    ></div>
                 </div>
             );
         }
@@ -148,7 +158,11 @@ export default function Tabs({
     const [tab, setTab] = useState<string>("description");
     const [content, setContent] = useState<JSX.Element | null>(
         <div className="prose-sm prose max-w-none">
-            <p>{product.description}</p>
+            <div
+                dangerouslySetInnerHTML={{
+                    __html: product.description,
+                }}
+            ></div>
         </div>
     );
     const [isPending, startTransition] = useTransition();

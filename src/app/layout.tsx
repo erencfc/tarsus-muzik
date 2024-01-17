@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/app/globals.css";
@@ -20,7 +21,12 @@ export default function RootLayout({
 }) {
     return (
         <html lang="tr">
-            <body className={inter.className}>{children}</body>
+            <body className={inter.className}>
+                <main>
+                    {children}
+                    <Toaster />
+                </main>
+            </body>
         </html>
     );
 }

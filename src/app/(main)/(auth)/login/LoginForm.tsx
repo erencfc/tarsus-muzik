@@ -25,8 +25,12 @@ import { FormError } from "@/components/Form/form-error";
 import { FormSuccess } from "@/components/Form/form-success";
 import { CardWrapper } from "@/components/auth/CardWrapper";
 import { ArrowRightEndOnRectangleIcon } from "@heroicons/react/24/outline";
+import { useSearchParams } from "next/navigation";
 
 export default function LoginForm() {
+    const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get("callback");
+
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
@@ -44,7 +48,7 @@ export default function LoginForm() {
         setSuccess("");
 
         startTransition(() => {
-            login(values).then((data) => {
+            login(values, callbackUrl).then((data) => {
                 setError(data?.error);
                 setSuccess(data?.success);
             });

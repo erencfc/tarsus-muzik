@@ -59,7 +59,7 @@ export default async function Favorites({ user }: { user: UserPayload }) {
                                     <th>
                                         <div className="flex items-center justify-center">
                                             <ToggleFavoriteButton
-                                                productId={product.id}
+                                                product={product}
                                                 user={user}
                                             >
                                                 <XMarkIcon

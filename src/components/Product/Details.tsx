@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import ToggleDiscountAlert from "./ToggleDiscountAlert";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { DEFAULT_LOGIN_PATH } from "@/routes";
 
 export default function ProductDetails({
     product,
@@ -181,10 +182,7 @@ export default function ProductDetails({
                         <ToggleDiscountAlert product={product} user={user} />
                     </div>
                     <div className="flex cursor-pointer flex-row items-center justify-center gap-2 transition-colors duration-150 hover:text-primary">
-                        <ToggleFavoriteButton
-                            user={user}
-                            productId={product.id}
-                        >
+                        <ToggleFavoriteButton user={user} product={product}>
                             <div className="flex flex-row items-center gap-2">
                                 {!isFavorite ? (
                                     <>
@@ -219,7 +217,12 @@ export default function ProductDetails({
                     <button
                         onClick={() => {
                             if (!user) {
-                                router.push("/login");
+                                const callback = encodeURIComponent(
+                                    `/urun/${product.modelSlug}`
+                                );
+                                router.push(
+                                    `${DEFAULT_LOGIN_PATH}?callback=${callback}`
+                                );
                                 return;
                             }
 

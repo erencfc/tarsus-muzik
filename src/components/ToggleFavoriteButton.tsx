@@ -4,14 +4,16 @@ import { ToggleFavorite } from "@/lib/db/user";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { Product } from "@prisma/client";
+import { DEFAULT_LOGIN_PATH } from "@/routes";
 
 export default function ToggleFavoriteButton({
     user,
-    productId,
+    product,
     children,
 }: {
     user: any;
-    productId: string;
+    product: Product;
     children?: React.ReactNode;
 }) {
     const router = useRouter();
@@ -25,14 +27,16 @@ export default function ToggleFavoriteButton({
             }`}
             onClick={(e) => {
                 e.preventDefault();
-
+                const callback = encodeURIComponent(
+                    `/urun/${product.modelSlug}`
+                );
                 if (!user) {
-                    router.push("/login");
+                    router.push(`${DEFAULT_LOGIN_PATH}?callback=${callback}`);
                     return;
                 }
 
                 startTransition(async () => {
-                    const favorite = await ToggleFavorite(user.id, productId);
+                    const favorite = await ToggleFavorite(user.id, product.id);
                     router.refresh();
                     toast[favorite.success ? "success" : "error"](
                         favorite.message

@@ -1,5 +1,3 @@
-"use client";
-
 import { UserPayload } from "@/types/UserPayload";
 import PersonalInformationForm from "./PersonalInformationForm";
 

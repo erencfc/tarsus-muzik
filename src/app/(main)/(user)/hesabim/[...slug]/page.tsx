@@ -86,7 +86,7 @@ export default async function AccountSlugPage({
 
     if (ComponentToRender) {
         return (
-            <div className="m-auto mt-6 min-w-[300px] max-w-6xl p-6">
+            <div className="m-auto my-6 min-h-[672px] min-w-[300px] max-w-6xl p-6">
                 <Suspense fallback={<Loading />}>
                     <ComponentToRender user={user} />
                 </Suspense>

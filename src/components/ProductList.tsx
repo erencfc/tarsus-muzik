@@ -148,7 +148,7 @@ export default function ProductList({
                                     <div>
                                         <ToggleFavoriteButton
                                             user={user}
-                                            productId={product.id}
+                                            product={product}
                                         >
                                             {isFavorite ? (
                                                 <svg

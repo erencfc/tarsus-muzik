@@ -16,13 +16,22 @@ const HeartIcon = dynamic(
 const LockClosedIcon = dynamic(
     () => import("@heroicons/react/24/outline/LockClosedIcon")
 );
+const UsersIcon = dynamic(
+    () => import("@heroicons/react/24/outline/UsersIcon")
+);
 
+import { currentRole } from "@/lib/auth";
+import { Role } from "@prisma/client";
 import dynamic from "next/dynamic";
 
 import Link from "next/link";
 import { Suspense } from "react";
 
-export default function AccountPage() {
+export const generateMetadata = () => ({
+    title: "Hesabım",
+});
+
+export default async function AccountPage() {
     const pages = [
         {
             title: "KİŞİSEL BİLGİLER",
@@ -58,7 +67,19 @@ export default function AccountPage() {
         title: string;
         icon: React.ReactNode;
         slug: string;
+        href?: string;
     }[];
+
+    const role = await currentRole();
+
+    if (role === Role.ADMIN) {
+        pages.push({
+            title: "YÖNETİCİ PANELİ",
+            icon: <UsersIcon height={32} width={32} />,
+            slug: "yonetici-paneli",
+            href: "/admin/dashboard",
+        });
+    }
 
     return (
         <div className="m-auto min-w-[300px] max-w-6xl p-6">
@@ -68,7 +89,13 @@ export default function AccountPage() {
                 <ul className="mt-6 grid grid-cols-3 items-center gap-8 font-bold">
                     {pages.map((page) => (
                         <li className="w-full" key={page.slug}>
-                            <Link href={`hesabim/${page.slug}`}>
+                            <Link
+                                href={
+                                    page.href
+                                        ? page.href
+                                        : `hesabim/${page.slug}`
+                                }
+                            >
                                 <div className="card w-full transform bg-base-100 shadow-md transition-all duration-200 ease-in-out hover:scale-[1.02] hover:bg-base-200 hover:shadow-md">
                                     <figure className="px-8 pt-8">
                                         <Suspense>{page.icon}</Suspense>

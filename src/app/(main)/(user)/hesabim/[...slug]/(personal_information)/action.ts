@@ -13,6 +13,10 @@ export const updatePersonalInformation = async (
     const validatedFields = PersonalInformationSchema.safeParse(values);
 
     if (!validatedFields.success) {
+        const issue = (validatedFields as any).error.issues[0];
+        if (issue.code === "custom") {
+            return { error: issue.message };
+        }
         return { error: "Lütfen gerekli alanları doldurunuz." };
     }
 
