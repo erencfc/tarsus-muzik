@@ -9,6 +9,6 @@ export type UserPayload = Prisma.UserGetPayload<{
         smsNoti: true;
         emailNoti: true;
         tel: true;
-        verified: true;
+        emailVerified: true;
     };
 }>;

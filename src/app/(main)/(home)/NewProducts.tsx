@@ -1,51 +1,13 @@
-"use server";
-
-import { prisma } from "@/lib/db/prisma";
-import { Suspense, cache } from "react";
 import Loading from "@/app/loading";
-import Product from "./Product";
+import { fetchNewProducts } from "@/lib/db/product";
+import dynamic from "next/dynamic";
 
-const getProducts = cache(async () => {
-    const products = await prisma.product.findMany({
-        take: 12,
-        orderBy: {
-            createdAt: "desc",
-        },
-        include: {
-            _count: {
-                select: {
-                    Comment: true,
-                },
-            },
-            Favorite: {
-                select: {
-                    userId: true,
-                },
-            },
-        },
-    });
-
-    return products;
+const Products = dynamic(() => import("./Products"), {
+    loading: () => <Loading />,
 });
 
-export default async function NewProducts({ Carousel }: { Carousel: any }) {
-    const products = await getProducts();
+export default async function NewProducts() {
+    const products = await fetchNewProducts();
 
-    return (
-        <Suspense fallback={<Loading />}>
-            <div className="container mx-auto flex max-w-6xl flex-col gap-6">
-                <div className="flex w-full flex-col gap-3">
-                    <h4 className="text-center text-xl font-bold text-gray-700 sm:text-start">
-                        Yeni Eklenen Ürünler
-                    </h4>
-                </div>
-
-                <Carousel>
-                    {products.map((product) => (
-                        <Product key={product.id} product={product} />
-                    ))}
-                </Carousel>
-            </div>
-        </Suspense>
-    );
+    return <Products products={products} title="Yeni Eklenen Ürünler" />;
 }

@@ -1,18 +1,21 @@
+import DeleteButton from "./DeleteButton";
 import FormWrapper from "@/app/(admin)/components/FormWrapper";
-import PaginationComponent from "@/app/(admin)/components/Pagination";
 import { getUserCount, getUsers } from "@/lib/db/user";
 import { formatDate } from "@/lib/format";
 import { redirect } from "next/navigation";
+import ViewButton from "./ViewButton";
+import { Button } from "@/components/ui/button";
+import { getUserRole } from "@/app/utils/getUserRole";
 
 export default async function UsersPage({
-    searchParams: { page },
+    searchParams: { page, q },
 }: {
-    searchParams: { page: string };
+    searchParams: { page: string; q: string };
 }) {
     const currentPage = parseInt(page || "1");
-    const itemsPerPage = 12;
+    const itemsPerPage = 6;
 
-    const users = await getUsers({ currentPage, itemsPerPage });
+    const users = await getUsers({ currentPage, itemsPerPage, q });
     const totalItems = await getUserCount();
 
     // If there are no users and we are not on the first page, redirect to the first page
@@ -38,6 +41,13 @@ export default async function UsersPage({
                 "",
             ]}
         >
+            {users.length === 0 && (
+                <tr>
+                    <td colSpan={6} className="text-center text-gray-400">
+                        Görüntülenecek kayıt bulunamadı.
+                    </td>
+                </tr>
+            )}
             {users.map((user) => (
                 <tr
                     className="transition-colors duration-150 ease-in-out hover:bg-gray-950/30"
@@ -49,15 +59,19 @@ export default async function UsersPage({
                     <td>{user.email}</td>
                     <td>{user.tel}</td>
                     <td>{formatDate(user.createdAt)}</td>
-                    <td>{user.role}</td>
+                    <td>
+                        <span className={getUserRole(user.role).color}>
+                            {getUserRole(user.role).name}
+                        </span>
+                    </td>
                     <td>
                         <div className="flex flex-row gap-3">
-                            <button className="btn btn-sm w-16 border-none bg-teal-700 text-white hover:bg-teal-700/70">
-                                İncele
-                            </button>
-                            <button className="btn btn-sm w-16 border-none bg-red-500 text-white hover:bg-red-800/70">
-                                Sil
-                            </button>
+                            <ViewButton id={user.id} asChild>
+                                <Button variant="outline" size="sm">
+                                    İncele
+                                </Button>
+                            </ViewButton>
+                            <DeleteButton id={user.id} />
                         </div>
                     </td>
                 </tr>

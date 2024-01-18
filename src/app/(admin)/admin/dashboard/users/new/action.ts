@@ -7,16 +7,32 @@ import { NewUserSchema } from "@/schemas";
 
 import * as z from "zod";
 import { prisma } from "@/lib/db/prisma";
+import { currentRole } from "@/lib/auth";
 
 export const newUser = async (values: z.infer<typeof NewUserSchema>) => {
+    const userRole = await currentRole();
+
+    if (userRole !== "ADMIN") {
+        return { error: "Bu işlemi yapmak için yetkiniz yok." };
+    }
+
     const validatedFields = NewUserSchema.safeParse(values);
 
     if (!validatedFields.success) {
         return { error: "Lütfen gerekli alanları doldurunuz." };
     }
 
-    const { firstName, lastName, email, tel, password, role } =
-        validatedFields.data;
+    const {
+        firstName,
+        lastName,
+        email,
+        tel,
+        password,
+        role,
+        emailNoti,
+        smsNoti,
+        emailVerified,
+    } = validatedFields.data;
 
     const existingUserEmail = await getUserByEmail(email);
 
@@ -48,6 +64,9 @@ export const newUser = async (values: z.infer<typeof NewUserSchema>) => {
             tel,
             password: hashedPassword,
             role,
+            emailNoti,
+            smsNoti,
+            emailVerified: emailVerified === true ? new Date() : null,
         },
     });
 

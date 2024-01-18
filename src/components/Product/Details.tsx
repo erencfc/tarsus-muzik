@@ -114,7 +114,7 @@ export default function ProductDetails({
                     <div className="flex flex-row">
                         <span className="w-20">Stok Kodu</span>
                         <span className="uppercase before:mr-2 before:content-[':']">
-                            {product.id.slice(-10)}
+                            {product.id}
                         </span>
                     </div>
                     <div className="flex flex-row">

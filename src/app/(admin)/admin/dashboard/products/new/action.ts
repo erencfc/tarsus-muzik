@@ -6,6 +6,7 @@ import * as z from "zod";
 import { prisma } from "@/lib/db/prisma";
 import { formatSlug } from "@/lib/format";
 import { Brand, Category, SubCategory } from "@prisma/client";
+import { currentRole } from "@/lib/auth";
 
 async function checkProduct(model: string) {
     const existingProduct = await prisma.product.findFirst({
@@ -25,8 +26,13 @@ async function checkProduct(model: string) {
 }
 
 export const newProduct = async (values: z.infer<typeof NewProductSchema>) => {
+    const userRole = await currentRole();
+
+    if (userRole !== "ADMIN") {
+        return { error: "Bu işlemi yapmak için yetkiniz yok." };
+    }
+
     const validatedFields = NewProductSchema.safeParse(values);
-    console.log(validatedFields);
 
     if (!validatedFields.success) {
         return { error: "Lütfen gerekli alanları doldurunuz." };

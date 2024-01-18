@@ -21,8 +21,10 @@ import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/Form/form-error";
 import { FormSuccess } from "@/components/Form/form-success";
 import { CardWrapper } from "@/components/auth/CardWrapper";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { UserPlusIcon } from "@heroicons/react/24/outline";
 import { newUser } from "./action";
+import { Switch } from "@/components/ui/switch";
 
 export default function NewUserForm() {
     const [error, setError] = useState<string | undefined>("");
@@ -38,6 +40,9 @@ export default function NewUserForm() {
             tel: "",
             role: "USER",
             password: "",
+            emailNoti: true,
+            smsNoti: true,
+            emailVerified: false,
         },
     });
 
@@ -159,9 +164,112 @@ export default function NewUserForm() {
                             </FormItem>
                         )}
                     />
-                    {/* 
-                        //! TODO: Rol seçimi ve sms/e-posta bildirimi için checkbox'lar eklenecek
-                    */}
+                    <FormField
+                        control={form.control}
+                        name="role"
+                        render={({ field }) => (
+                            <FormItem className="space-y-3">
+                                <FormLabel>Kullanıcı Rolü</FormLabel>
+                                <FormControl>
+                                    <RadioGroup
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                        className="flex flex-col space-y-1"
+                                    >
+                                        <FormItem className="flex items-center space-x-3 space-y-0">
+                                            <FormControl>
+                                                <RadioGroupItem value="USER" />
+                                            </FormControl>
+                                            <FormLabel className="font-normal">
+                                                Normal Kullanıcı
+                                            </FormLabel>
+                                        </FormItem>
+                                        <FormItem className="flex items-center space-x-3 space-y-0">
+                                            <FormControl>
+                                                <RadioGroupItem value="DEALER" />
+                                            </FormControl>
+                                            <FormLabel className="font-normal">
+                                                Bayilik
+                                            </FormLabel>
+                                        </FormItem>
+                                        <FormItem className="flex items-center space-x-3 space-y-0">
+                                            <FormControl>
+                                                <RadioGroupItem
+                                                    className="focus:bg-red-500"
+                                                    value="ADMIN"
+                                                    onClick={() => {
+                                                        alert(
+                                                            "BU SEÇENEĞİ SEÇEREK YENİ BİR YÖNETİCİ OLUŞTURUYORSUNUZ!"
+                                                        );
+                                                    }}
+                                                />
+                                            </FormControl>
+                                            <FormLabel className="font-normal text-red-500">
+                                                YÖNETİCİ
+                                            </FormLabel>
+                                        </FormItem>
+                                    </RadioGroup>
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="emailVerified"
+                        render={({ field }) => (
+                            <FormItem className="flex flex-row items-center justify-between gap-4 rounded-lg border border-gray-800 p-3 shadow-sm">
+                                <FormLabel>
+                                    E-posta otomatik doğrulansın mı?
+                                </FormLabel>
+                                <FormControl>
+                                    <Switch
+                                        checked={field.value}
+                                        onCheckedChange={field.onChange}
+                                    />
+                                </FormControl>
+                            </FormItem>
+                        )}
+                    />
+                    <div className="flex flex-col gap-3">
+                        <FormLabel className="mt-2">
+                            Kampanyalardan/indirimlerden haberdar olmak için
+                        </FormLabel>
+                        <div className="flex flex-row gap-4">
+                            <FormField
+                                control={form.control}
+                                name="emailNoti"
+                                render={({ field }) => (
+                                    <FormItem className="flex w-1/2 flex-row items-center justify-between gap-4 rounded-lg border border-gray-800 p-3 shadow-sm">
+                                        <FormLabel>
+                                            E-posta bildirimleri
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Switch
+                                                checked={field.value}
+                                                onCheckedChange={field.onChange}
+                                            />
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="smsNoti"
+                                render={({ field }) => (
+                                    <FormItem className="flex w-1/2 flex-row items-center justify-between gap-4 rounded-lg border border-gray-800 p-3 shadow-sm">
+                                        <FormLabel>SMS bildirimleri</FormLabel>
+                                        <FormControl>
+                                            <Switch
+                                                checked={field.value}
+                                                onCheckedChange={field.onChange}
+                                            />
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+                    </div>
 
                     <FormError message={error} />
                     <FormSuccess message={success} />
@@ -170,7 +278,7 @@ export default function NewUserForm() {
                         className="w-full"
                         disabled={isPending}
                     >
-                        Kullanıcıyı Oluştur
+                        Kullanıcı Oluştur
                     </Button>
                 </form>
             </Form>

@@ -1,52 +1,54 @@
 "use client";
-
-const C = dynamic(() => import("react-multi-carousel"), {
-    ssr: false,
-    loading: () => <Loading />,
-});
-//@ts-ignore
-dynamic(() => import("react-multi-carousel/lib/styles.css"), {
-    ssr: false,
-    loading: () => <Loading />,
-});
-
-import dynamic from "next/dynamic";
 import Loading from "@/app/loading";
+const EmblaCarousel = dynamic(
+    () => import("@/components/ui/carousel").then((c) => c.Carousel),
+    {
+        loading: () => <Loading />,
+    }
+);
+const CarouselContent = dynamic(
+    () => import("@/components/ui/carousel").then((c) => c.CarouselContent),
+    {
+        loading: () => <Loading />,
+    }
+);
+const CarouselNext = dynamic(
+    () => import("@/components/ui/carousel").then((c) => c.CarouselNext),
+    {
+        loading: () => <Loading />,
+    }
+);
+const CarouselPrevious = dynamic(
+    () => import("@/components/ui/carousel").then((c) => c.CarouselPrevious),
+    {
+        loading: () => <Loading />,
+    }
+);
+import Autoplay from "embla-carousel-autoplay";
+import dynamic from "next/dynamic";
+import React, { Suspense } from "react";
 
-export const Carousel = ({ children }: { children: any }) => {
+export default function Carousel({
+    children,
+    autoplayDelay = 8000,
+}: {
+    children: React.ReactNode;
+    autoplayDelay?: number;
+}) {
     return (
-        <C
-            swipeable
-            draggable
-            showDots
-            ssr
-            infinite
-            autoPlay
-            autoPlaySpeed={5000}
-            keyBoardControl
-            transitionDuration={800}
-            containerClass="py-9 -mt-7 -mb-9 carousel-container cursor-grab"
-            dotListClass="custom-dot-list-style"
-            itemClass="carousel-item-padding-40-px"
-            responsive={{
-                desktop: {
-                    breakpoint: { max: 3000, min: 1024 },
-                    items: 3,
-                    slidesToSlide: 3, // optional, default to 1.
-                },
-                tablet: {
-                    breakpoint: { max: 1024, min: 464 },
-                    items: 2,
-                    slidesToSlide: 2, // optional, default to 1.
-                },
-                mobile: {
-                    breakpoint: { max: 464, min: 0 },
-                    items: 1,
-                    slidesToSlide: 1, // optional, default to 1.
-                },
+        <EmblaCarousel
+            plugins={[Autoplay({ delay: autoplayDelay })]}
+            opts={{
+                align: "start",
+                loop: true,
+                skipSnaps: true,
+                slidesToScroll: "auto",
             }}
+            className="p-2 text-white"
         >
-            {children}
-        </C>
+            <CarouselContent>{children}</CarouselContent>
+            <CarouselPrevious className="left-4 h-10 w-10 dark:opacity-60" />
+            <CarouselNext className="right-4 h-10 w-10 dark:opacity-60" />
+        </EmblaCarousel>
     );
-};
+}

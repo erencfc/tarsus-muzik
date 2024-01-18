@@ -1,6 +1,6 @@
 "use server";
 
-import { Role } from "@prisma/client";
+import { Prisma, Role } from "@prisma/client";
 import { prisma } from "./prisma";
 import { currentRole } from "../auth";
 
@@ -80,11 +80,53 @@ export async function getUserCount(): Promise<number> {
 export const getUsers = async ({
     currentPage,
     itemsPerPage,
+    q,
 }: {
     currentPage: number;
     itemsPerPage: number;
+    q?: string;
 }) => {
+    const role = await currentRole();
+
+    if (role !== Role.ADMIN) {
+        return [];
+    }
+
+    let where: Prisma.UserWhereInput = {};
+
+    if (q?.length > 0) {
+        where = {
+            OR: [
+                {
+                    firstName: {
+                        contains: q,
+                        mode: "insensitive",
+                    },
+                },
+                {
+                    lastName: {
+                        contains: q,
+                        mode: "insensitive",
+                    },
+                },
+                {
+                    email: {
+                        contains: q,
+                        mode: "insensitive",
+                    },
+                },
+                {
+                    tel: {
+                        contains: q,
+                        mode: "insensitive",
+                    },
+                },
+            ],
+        };
+    }
+
     const users = await prisma.user.findMany({
+        where,
         select: {
             id: true,
             firstName: true,

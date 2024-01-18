@@ -67,11 +67,10 @@ export default function PaginationComponent({
                             <PaginationEllipsis />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="min-w-fit list-none">
-                            {previousPages.map((page) => (
+                            {previousPages.reverse().map((page) => (
                                 <DropdownMenuItem
                                     key={page}
-                                    asChild
-                                    className="cursor-pointer"
+                                    className="cursor-pointer rounded-md p-0"
                                 >
                                     <PaginationLink
                                         key={`prev-${page}`}
@@ -101,11 +100,11 @@ export default function PaginationComponent({
                         </DropdownMenuTrigger>
 
                         <DropdownMenuContent className="min-w-fit list-none">
-                            <ScrollArea className="rin-0 max-h-[250px] border-none outline-none">
+                            <ScrollArea className="h-[250px]">
                                 {nextPages.map((page) => (
                                     <DropdownMenuItem
                                         key={`next-${page}`}
-                                        className="cursor-pointer"
+                                        className="cursor-pointer rounded-md p-0"
                                     >
                                         <PaginationLink
                                             key={`page`}

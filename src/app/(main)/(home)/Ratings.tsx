@@ -24,5 +24,12 @@ export default function Rating({ rating }: { rating: number }) {
             );
         }
     }
-    return <div className="flex">{stars}</div>;
+    return (
+        <div className="flex items-center gap-2">
+            <div className="flex">{stars}</div>
+            <span className="text-xs font-semibold text-gray-700">
+                {rating.toFixed(1)} Puan
+            </span>
+        </div>
+    );
 }

@@ -113,13 +113,14 @@ export const NewUserSchema = z.object({
         message: "Şifre en az 6 karakter olmalıdır.",
     }),
     role: z.enum(["ADMIN", "USER", "DEALER"]),
+    smsNoti: z.boolean(),
+    emailNoti: z.boolean(),
+    emailVerified: z.boolean(),
 });
 
 export const NewProductSchema = z
     .object({
-        images: z.array(
-            z.string().min(1, { message: "En az 1 adet resim eklemelisin." })
-        ),
+        images: z.array(z.string()),
         stock: z
             .string({
                 required_error: "Stok sayısını girmelisin.",

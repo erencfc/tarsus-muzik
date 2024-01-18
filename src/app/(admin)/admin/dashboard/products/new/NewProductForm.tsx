@@ -3,7 +3,7 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useCallback, useEffect, useId, useState, useTransition } from "react";
+import { useCallback, useEffect, useState, useTransition } from "react";
 
 import { NewProductSchema } from "@/schemas";
 
@@ -21,7 +21,7 @@ import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/Form/form-error";
 import { FormSuccess } from "@/components/Form/form-success";
 import { CardWrapper } from "@/components/auth/CardWrapper";
-import { CheckBadgeIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
+import { CheckBadgeIcon, SquaresPlusIcon } from "@heroicons/react/24/outline";
 import { newProduct } from "./action";
 import { Brand, Prisma } from "@prisma/client";
 import { fetchCategories } from "@/app/utils/fetchCategories";
@@ -34,14 +34,7 @@ import {
 } from "@/components/ui/select";
 import { fetchBrands } from "@/app/utils/fetchBrands";
 import { formatSlug } from "@/lib/format";
-import { TextareaAutoHeight } from "@/components/ui/textarea-auto-height";
-import EditorToolbar from "@/components/ui/editor/toolbar/editor-toolbar";
 import Editor from "@/components/ui/editor/editor";
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
 import {
     Dialog,
@@ -148,6 +141,15 @@ export default function NewProductForm() {
     ]);
 
     const onSubmit = (values: z.infer<typeof NewProductSchema>) => {
+        if (values.images.length === 0) {
+            form.setError("images", {
+                message: "En az bir adet resim eklemelisiniz.",
+                type: "required",
+            });
+            setError("En az bir adet resim eklemelisiniz.");
+            return;
+        }
+
         startTransition(() => {
             newProduct(values).then((data) => {
                 setError(data?.error);
@@ -160,7 +162,7 @@ export default function NewProductForm() {
         <CardWrapper
             headerIcon={
                 <i>
-                    <PlusCircleIcon width={36} height={36} />
+                    <SquaresPlusIcon width={36} height={36} />
                 </i>
             }
             headerLabel="Yeni Ürün Ekle"
@@ -500,11 +502,15 @@ export default function NewProductForm() {
                                 </div>
                             </div>
                         )}
+                    </div>
+                    <FormError message={error} />
+                    <FormSuccess message={success} />
+                    <div className="flex w-full flex-row gap-4">
                         <Dialog>
                             <DialogTrigger asChild>
                                 <Button
-                                    variant="outline"
-                                    className="ml-auto w-fit"
+                                    variant="ghost"
+                                    className="ml-auto w-full bg-[#025A71]"
                                 >
                                     Resim Ekle
                                 </Button>
@@ -578,17 +584,15 @@ export default function NewProductForm() {
                                 </DialogFooter>
                             </DialogContent>
                         </Dialog>
+                        <Button
+                            type="submit"
+                            variant="ghost"
+                            className="w-full bg-teal-700"
+                            disabled={isPending}
+                        >
+                            Ürünü Ekle
+                        </Button>
                     </div>
-
-                    <FormError message={error} />
-                    <FormSuccess message={success} />
-                    <Button
-                        type="submit"
-                        className="w-full"
-                        disabled={isPending}
-                    >
-                        Ürünü Ekle
-                    </Button>
                 </form>
             </Form>
         </CardWrapper>

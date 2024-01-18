@@ -1,20 +1,20 @@
 import FormWrapper from "@/app/(admin)/components/FormWrapper";
-import PaginationComponent from "@/app/(admin)/components/Pagination";
 import { getProductCount, getProducts } from "@/lib/db/product";
 import { formatDate, formatPrice } from "@/lib/format";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import DeleteButton from "./DeleteButton";
 
 export default async function ProductsPage({
-    searchParams: { page },
+    searchParams: { page, q },
 }: {
-    searchParams: { page: string };
+    searchParams: { page: string; q: string };
 }) {
     const currentPage = parseInt(page || "1");
-    const itemsPerPage = 12;
+    const itemsPerPage = 6;
 
-    const products = await getProducts({ currentPage, itemsPerPage });
+    const products = await getProducts({ currentPage, itemsPerPage, q });
     const totalItems = await getProductCount();
 
     // If there are no products and we are not on the first page, redirect to the first page
@@ -40,6 +40,13 @@ export default async function ProductsPage({
                 "",
             ]}
         >
+            {products.length === 0 && (
+                <tr>
+                    <td colSpan={6} className="text-center text-gray-400">
+                        Görüntülenecek kayıt bulunamadı.
+                    </td>
+                </tr>
+            )}
             {products.map((product) => (
                 <tr
                     className="transition-colors duration-150 ease-in-out hover:bg-gray-950/30"
@@ -76,9 +83,7 @@ export default async function ProductsPage({
                             <button className="btn btn-sm w-16 border-none bg-teal-700 text-white hover:bg-teal-700/70">
                                 İncele
                             </button>
-                            <button className="btn btn-sm w-16 border-none bg-red-500 text-white hover:bg-red-800/70">
-                                Sil
-                            </button>
+                            <DeleteButton id={product.id} />
                         </div>
                     </td>
                 </tr>

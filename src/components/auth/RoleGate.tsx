@@ -18,10 +18,7 @@ export default function RoleGate({ children, allowedRole }: RoleGateProps) {
                 <h1 className="text-2xl font-semibold text-white">
                     Yetkisiz Erişim
                 </h1>
-                <FormError
-                    message="Bu sayfaya erişim yetkiniz bulunmamaktadır.
-            "
-                />
+                <FormError message="Bu sayfayı görüntülemek için yetkiniz yok." />
             </div>
         );
     }

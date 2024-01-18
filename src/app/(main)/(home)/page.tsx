@@ -3,7 +3,6 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import type { Metadata } from "next";
 
-import { Carousel } from "./Carousel";
 import Loading from "@/app/loading";
 import ImageCarousel from "@/app/(main)/(home)/ImageCarousel";
 
@@ -17,11 +16,10 @@ import {
 } from "@heroicons/react/24/outline";
 
 import Categories from "./Categories";
+import { fetchCategories } from "@/app/utils/fetchCategories";
 
-const NewProducts = dynamic(() => import("./NewProducts"), { ssr: false });
-const PopularProducts = dynamic(() => import("./PopularProducts"), {
-    ssr: false,
-});
+const NewProducts = dynamic(() => import("./NewProducts"));
+import PopularProducts from "./PopularProducts";
 
 export const metadata: Metadata = {
     title: "Ana Sayfa",
@@ -30,9 +28,7 @@ export const metadata: Metadata = {
 export default function Home() {
     return (
         <div className="flex flex-col gap-16 p-6">
-            <Suspense>
-                <ImageCarousel />
-            </Suspense>
+            <ImageCarousel />
 
             <div className="container mx-auto flex max-w-6xl grid-cols-1 flex-col items-center gap-x-8 gap-y-6 py-4 sm:grid lg:grid-cols-4 [&>div]:flex [&>div]:w-[250px] [&>div]:flex-row [&>div]:items-center [&>div]:gap-3">
                 <div className="col-span-2 col-start-1 lg:col-span-1 lg:col-start-1">
@@ -68,15 +64,16 @@ export default function Home() {
                     </span>
                 </div>
             </div>
-
-            <Categories Carousel={Carousel} />
-
             <Suspense fallback={<Loading />}>
-                <PopularProducts Carousel={Carousel} />
+                <Categories />
             </Suspense>
 
             <Suspense fallback={<Loading />}>
-                <NewProducts Carousel={Carousel} />
+                <PopularProducts />
+            </Suspense>
+
+            <Suspense fallback={<Loading />}>
+                <NewProducts />
             </Suspense>
 
             <div className="container mx-auto my-14 flex max-w-6xl flex-col items-center">

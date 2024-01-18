@@ -1,15 +1,28 @@
+"use server";
+
 import { prisma } from "@/lib/db/prisma";
 import { Prisma } from "@prisma/client";
 
-export const getUserById = async (id: string, select?: Prisma.UserSelect) => {
+export const getUserById = async ({
+    id,
+    select,
+    include,
+}: {
+    id: string;
+    select?: Prisma.UserSelect;
+    include?: Prisma.UserInclude;
+}) => {
     try {
         let args: Prisma.UserFindUniqueArgs = { where: { id } };
 
         if (select) {
             args = { ...args, select };
         }
+        if (include) {
+            args = { ...args, include };
+        }
         const user = await prisma.user.findUnique({ ...args });
-
+        delete user.password;
         return user;
     } catch (error) {
         return null;
