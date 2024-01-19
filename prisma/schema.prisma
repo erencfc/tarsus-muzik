@@ -152,6 +152,7 @@ model Product {
   Comment            Comment[]
   DiscountAlert      DiscountAlert[]
   OrderItem          OrderItem[]
+  DealerPrice        DealerPrice[]
 
   @@map("products")
 }
@@ -242,6 +243,7 @@ model User {
   updatedAt     DateTime        @updatedAt
   Cart          Cart?
   Order         Order[]
+  Dealer        Dealer?
 
   @@map("users")
 }
@@ -250,6 +252,37 @@ enum Role {
   ADMIN
   USER
   DEALER
+}
+
+model Dealer {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique @db.ObjectId
+
+  prices DealerPrice[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("dealers")
+}
+
+model DealerPrice {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  price Int
+
+  Product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String  @db.ObjectId
+
+  Dealer   Dealer @relation(fields: [dealerId], references: [id], onDelete: Cascade)
+  dealerId String @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("dealerPrices")
 }
 
 model VerificationToken {

@@ -1,13 +1,12 @@
 "use client";
 
-import { Suspense } from "react";
-import Loading from "@/app/loading";
 import Carousel from "./Carousel";
 import { Prisma } from "@prisma/client";
 import Link from "next/link";
 import Image from "next/image";
 import Rating from "./Ratings";
 import { CarouselItem } from "@/components/ui/carousel";
+import { formatPrice } from "@/lib/format";
 
 type ProductsProps = {
     products: Prisma.ProductGetPayload<{
@@ -59,6 +58,9 @@ export default function Products({ products, title }: ProductsProps) {
                                 />
                                 <span className="line-clamp-1 text-center text-xs font-semibold text-gray-700">
                                     {product.model}
+                                </span>
+                                <span className="text-lg font-bold text-primary">
+                                    {formatPrice(product.price)}
                                 </span>
                                 <div className="flex items-center gap-2 text-gray-700">
                                     <Rating rating={product.rating} />-
