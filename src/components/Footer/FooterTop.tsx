@@ -7,11 +7,15 @@ export default async function FooterTop() {
     const dummyInfo = [
         {
             name: "Hakkımızda",
-            link: "#",
+            link: "/hakkimizda",
+        },
+        {
+            name: "Üyelik Sözleşmesi",
+            link: "/uyelik-sozlesmesi",
         },
         {
             name: "Satış Sözleşmesi",
-            link: "#",
+            link: "/satis-sozlesmesi",
         },
         {
             name: "Kişisel Verilerin Korunması",
@@ -19,7 +23,7 @@ export default async function FooterTop() {
         },
         {
             name: "Gizlilik Politikası",
-            link: "#",
+            link: "/gizlilik-politikasi",
         },
         {
             name: "Çerez Politikası",
@@ -31,7 +35,7 @@ export default async function FooterTop() {
         },
         {
             name: "Ürün İade Koşulları",
-            link: "#",
+            link: "/urun-iade-kosullari",
         },
         {
             name: "Garanti Koşulları",
