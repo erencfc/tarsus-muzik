@@ -32,7 +32,12 @@ export default function ImageCarousel() {
                 }}
             >
                 {Array.from({ length: 5 }).map((_, index) => (
-                    <CarouselItem key={index} className={`max-h-[${height}px]`}>
+                    <CarouselItem
+                        key={index}
+                        style={{
+                            maxHeight: `${height}px !important`,
+                        }}
+                    >
                         <Image
                             src={`/slider${index + 1}.jpg`}
                             width={width}
@@ -40,9 +45,10 @@ export default function ImageCarousel() {
                             style={{
                                 maxHeight: `${height}px !important`,
                             }}
-                            objectFit="cover"
-                            className={`max-h-[${height}px]  max-w-[${width}px] object-cover`}
+                            sizes="(max-width: 1152px) 100vw, 1152px"
+                            className={`max-h-[${height}px] h-[${height}px]  max-w-[${width}px] object-cover`}
                             alt=""
+                            priority
                         />
                     </CarouselItem>
                 ))}

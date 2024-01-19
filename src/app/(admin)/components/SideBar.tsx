@@ -24,7 +24,7 @@ const menuItems = [
             },
             {
                 title: "Siparişler",
-                path: "/admin/dashboard/orders",
+                path: "#",
                 icon: <BanknotesIcon height={iconSize} width={iconSize} />,
             },
             {
@@ -39,7 +39,7 @@ const menuItems = [
             },
             {
                 title: "Kuponlar",
-                path: "/admin/dashboard/coupons",
+                path: "#",
                 icon: <ReceiptPercentIcon height={iconSize} width={iconSize} />,
             },
         ],
@@ -49,17 +49,17 @@ const menuItems = [
         list: [
             {
                 title: "Lorem1",
-                path: "/admin/dashboard/lorem1",
+                path: "#",
                 icon: <DashboardIcon height={iconSize} width={iconSize} />,
             },
             {
                 title: "Lorem2",
-                path: "/admin/dashboard/lorem2",
+                path: "#",
                 icon: <DashboardIcon height={iconSize} width={iconSize} />,
             },
             {
                 title: "Lorem3",
-                path: "/admin/dashboard/lorem3",
+                path: "#",
                 icon: <DashboardIcon height={iconSize} width={iconSize} />,
             },
         ],

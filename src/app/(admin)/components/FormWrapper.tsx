@@ -61,7 +61,9 @@ export default function FormWrapper({
 
     return (
         <div
-            className={`rounded-lg border border-gray-800 bg-gray-900 p-4 ${className}`}
+            className={`rounded-lg border border-gray-800 bg-gray-900 p-4 ${
+                className || ""
+            }`}
         >
             <div className="mb-4 mt-2 flex w-full flex-row justify-between">
                 <div className="flex flex-row items-center gap-1">

@@ -66,7 +66,7 @@ export default async function UsersPage({
                     </td>
                     <td>
                         <div className="flex flex-row gap-3">
-                            <ViewButton id={user.id} asChild>
+                            <ViewButton id={user.id}>
                                 <Button variant="outline" size="sm">
                                     İncele
                                 </Button>
