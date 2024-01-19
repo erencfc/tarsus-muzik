@@ -8,6 +8,7 @@ import { NewUserSchema } from "@/schemas";
 import * as z from "zod";
 import { prisma } from "@/lib/db/prisma";
 import { currentRole } from "@/lib/auth";
+import { Role } from "@prisma/client";
 
 export const newUser = async (values: z.infer<typeof NewUserSchema>) => {
     const userRole = await currentRole();
@@ -56,7 +57,7 @@ export const newUser = async (values: z.infer<typeof NewUserSchema>) => {
         };
     }
 
-    await prisma.user.create({
+    const user = await prisma.user.create({
         data: {
             firstName,
             lastName,
@@ -69,6 +70,18 @@ export const newUser = async (values: z.infer<typeof NewUserSchema>) => {
             emailVerified: emailVerified === true ? new Date() : null,
         },
     });
+
+    if (role === Role.DEALER) {
+        await prisma.dealer.create({
+            data: {
+                User: {
+                    connect: {
+                        id: user.id,
+                    },
+                },
+            },
+        });
+    }
 
     return {
         success: "Kullanıcı başarıyla oluşturuldu.",

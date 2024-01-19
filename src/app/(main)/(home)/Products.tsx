@@ -59,7 +59,7 @@ export default function Products({ products, title }: ProductsProps) {
                                 <span className="line-clamp-1 text-center text-xs font-semibold text-gray-700">
                                     {product.model}
                                 </span>
-                                <span className="text-lg font-bold text-primary">
+                                <span className="text-lg font-extrabold text-gray-900">
                                     {formatPrice(product.price)}
                                 </span>
                                 <div className="flex items-center gap-2 text-gray-700">

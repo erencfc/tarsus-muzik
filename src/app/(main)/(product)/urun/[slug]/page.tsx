@@ -10,8 +10,6 @@ import Tabs from "./Tabs";
 import Loading from "@/app/loading";
 import Link from "next/link";
 import { currentUser } from "@/lib/auth";
-import { CldImage } from "next-cloudinary";
-import CloudinaryImage from "@/components/Cloudinary/CloudinaryImage";
 
 const getUserFavorites = cache(async (userId: string) => {
     const favorites = await prisma.favorite.findMany({
@@ -57,8 +55,8 @@ export async function generateMetadata({
     const product = await getProduct(modelSlug);
 
     return {
-        title: `${product?.model} - Tarsus Müzik Market`,
-        description: `${product?.model} - Tarsus Müzik Market`,
+        title: `${product?.model}`,
+        description: `${product?.model}`,
         // openGraph: {
         //     images: [{ url: product.images[0], alt: product.model }],
         // },

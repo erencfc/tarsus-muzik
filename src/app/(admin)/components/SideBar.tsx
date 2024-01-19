@@ -4,6 +4,7 @@ import {
     BanknotesIcon,
     CubeIcon,
     ReceiptPercentIcon,
+    UserGroupIcon,
     UsersIcon,
 } from "@heroicons/react/24/outline";
 import { DashboardIcon } from "@radix-ui/react-icons";
@@ -36,6 +37,11 @@ const menuItems = [
                 title: "Kullanıcılar",
                 path: "/admin/dashboard/users",
                 icon: <UsersIcon height={iconSize} width={iconSize} />,
+            },
+            {
+                title: "Bayiler",
+                path: "/admin/dashboard/dealers",
+                icon: <UserGroupIcon height={iconSize} width={iconSize} />,
             },
             {
                 title: "Kuponlar",
@@ -74,10 +80,10 @@ export default function SideBar() {
             <div className="mb-12 flex items-center justify-center">
                 <Link href="/">
                     <Image
-                        className="h-20 w-52"
-                        src="/logo.png"
-                        width={208}
-                        height={208}
+                        src="/logotest.png"
+                        width={280}
+                        height={110}
+                        className="h-auto"
                         alt="Logo"
                     />
                 </Link>

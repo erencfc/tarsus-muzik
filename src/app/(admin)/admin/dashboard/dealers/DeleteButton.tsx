@@ -1,0 +1,74 @@
+"use client";
+
+import { toast } from "sonner";
+// import { deleteDealer } from "./action";
+import { CheckBadgeIcon } from "@heroicons/react/24/outline";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { deleteDealer } from "@/lib/db/dealer";
+
+export default function DeleteButton({ id }: { id: string }) {
+    const [isPending, setIsPending] = useState(false);
+    const handleClick = async () => {
+        if (confirm("Bu bayiyi silmek istediğinize emin misiniz?")) {
+            let deleteUser: boolean = false;
+
+            if (
+                confirm(
+                    "Bu bayiye ait hesap da silinsin mi? (Hayır derseniz sadece bayi silinecek fakat aynı e-posta ve şifre ile normal üye olarak giriş yapılabilecek.)"
+                )
+            ) {
+                deleteUser = true;
+            }
+
+            setIsPending(true);
+            const response = await deleteDealer({ id, deleteUser });
+
+            if (response.success) {
+                toast(response.success, {
+                    icon: (
+                        <i>
+                            <CheckBadgeIcon
+                                width={24}
+                                height={24}
+                                className="text-green-500"
+                            />
+                        </i>
+                    ),
+                });
+            } else if (response.error) {
+                toast(response.error, {
+                    icon: (
+                        <i>
+                            <ExclamationTriangleIcon
+                                width={24}
+                                height={24}
+                                className="text-red-500"
+                            />
+                        </i>
+                    ),
+                });
+            }
+
+            setIsPending(false);
+        } else {
+            toast("İşlem iptal edildi.");
+        }
+    };
+
+    return (
+        <Button
+            variant="destructive"
+            size="sm"
+            disabled={isPending}
+            onClick={handleClick}
+        >
+            {isPending ? (
+                <span className="loading loading-spinner loading-xs text-white" />
+            ) : (
+                <span>Sil</span>
+            )}
+        </Button>
+    );
+}

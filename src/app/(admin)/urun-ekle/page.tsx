@@ -6,10 +6,6 @@ import { useEffect, useState } from "react";
 import { fetchBrands } from "../../utils/fetchBrands";
 import type { Category, Brand } from "@prisma/client";
 
-// export const metadata = {
-//     title: "Ürün Ekle - Tarsus Müzik Market",
-// };
-
 export default function AddProductPage() {
     const [categories, setCategories] = useState<Category[]>([]);
     const [brands, setBrands] = useState<Brand[]>([]);

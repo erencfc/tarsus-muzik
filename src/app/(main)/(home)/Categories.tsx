@@ -15,7 +15,7 @@ export default async function Categories() {
                     Kategoriler
                 </h4>
             </div>
-            <Carousel>
+            <Carousel autoplayDelay={5000}>
                 {categories.map((category) => (
                     <CarouselItem
                         key={category.id}

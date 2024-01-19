@@ -22,7 +22,7 @@ export default {
         async jwt({ token }) {
             if (!token.sub) return token;
 
-            const existingUser = await getUserById(token.sub);
+            const existingUser = await getUserById({ id: token.sub });
 
             if (!existingUser) return token;
 

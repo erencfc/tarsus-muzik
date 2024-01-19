@@ -18,15 +18,15 @@ export default async function HeaderTop() {
     const cart = await getCart();
 
     return (
-        <div className="flex items-center justify-between px-6 pb-5 pt-6">
+        <div className="flex items-center justify-between p-6 py-3">
             <div className="pb-3 ">
                 <Link href="/">
                     <Image
-                        src="/desktop.png"
+                        src="/desktoptest.png"
                         alt="logo"
-                        className="h-[52px] w-[180px]"
+                        className=""
                         width={179}
-                        height={36}
+                        height={52}
                         priority
                     />
                 </Link>

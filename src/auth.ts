@@ -14,7 +14,7 @@ export const {
 } = NextAuth({
     callbacks: {
         async signIn({ user }) {
-            const existingUser = await getUserById(user.id);
+            const existingUser = await getUserById({ id: user.id });
 
             // Prevent sign in if user is not verified their email
             if (!existingUser?.emailVerified) return false;
@@ -34,7 +34,7 @@ export const {
         async jwt({ token }) {
             if (!token.sub) return token;
 
-            const existingUser = await getUserById(token.sub);
+            const existingUser = await getUserById({ id: token.sub });
 
             if (!existingUser) return token;
 

@@ -14,8 +14,8 @@ type FormWrapperProps = {
     className?: string;
 
     inputPlaceHolder: string;
-    buttonTitle: string;
-    buttonHref: string;
+    buttonTitle?: string;
+    buttonHref?: string;
     tableHeadings: string[];
 
     paginationHref: string;
@@ -101,12 +101,14 @@ export default function FormWrapper({
                         </i>
                     </Button>
                 </div>
-                <Link
-                    href={buttonHref}
-                    className="btn btn-sm border-none bg-primary/70 text-white hover:bg-primary/40"
-                >
-                    {buttonTitle}
-                </Link>
+                {buttonHref && buttonTitle && (
+                    <Link
+                        href={buttonHref}
+                        className="btn btn-sm border-none bg-primary/70 text-white hover:bg-primary/40"
+                    >
+                        {buttonTitle}
+                    </Link>
+                )}
             </div>
             <div className="overflow-x-auto">
                 <table className="table">

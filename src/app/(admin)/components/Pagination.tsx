@@ -121,11 +121,11 @@ export default function PaginationComponent({
                 )}
                 <PaginationNext
                     className={
-                        currentPage === totalPages &&
+                        (currentPage === totalPages || totalPages < 1) &&
                         "pointer-events-none opacity-40"
                     }
                     href={`${
-                        currentPage === totalPages
+                        currentPage === totalPages || totalPages < 1
                             ? "#"
                             : `${href}?page=${currentPage + 1}`
                     }`}

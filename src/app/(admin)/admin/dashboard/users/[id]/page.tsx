@@ -1,4 +1,4 @@
-import ViewDetails from "../ViewDetails";
+import ViewDetails from "./ViewDetails";
 
 export default function UserDetailsPage({
     params: { id },

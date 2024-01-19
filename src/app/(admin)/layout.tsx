@@ -8,6 +8,10 @@ import Navbar from "@/app/(admin)/components/Navbar";
 import SignOutButton from "@/app/(admin)/components/SignOutButton";
 import ReturnButton from "@/app/(admin)/components/ReturnButton";
 
+export const generateMetadata = () => ({
+    title: "Yönetici Paneli",
+});
+
 export default async function AdminLayout({
     children,
 }: {

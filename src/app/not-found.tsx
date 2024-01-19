@@ -1,7 +1,7 @@
 "use client";
 
 export const metadata = {
-    title: "Sayfa Bulunamadı - Tarsus Müzik Market",
+    title: "Sayfa Bulunamadı - Hesaplı Müzik Aletleri",
 };
 
 export default function NotFound() {

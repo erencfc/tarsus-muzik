@@ -133,7 +133,13 @@ export default function HamburgerMenu({
 
             {/* Logo */}
             <Link href="/">
-                <Image src="/logo.png" alt="logo" width={180} height={58} />
+                <Image
+                    src="/logotest.png"
+                    alt="logo"
+                    width={180}
+                    height={80}
+                    className="h-auto"
+                />
             </Link>
 
             {/* Right Side */}

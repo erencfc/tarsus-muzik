@@ -57,15 +57,18 @@ export default async function AccountSlugPage({
     params: { slug: string[] };
 }) {
     const sessionUser = await currentUser();
-    const user = await getUserById(sessionUser?.id, {
-        id: true,
-        email: true,
-        firstName: true,
-        lastName: true,
-        smsNoti: true,
-        emailNoti: true,
-        tel: true,
-        emailVerified: true,
+    const user = await getUserById({
+        id: sessionUser?.id,
+        select: {
+            id: true,
+            email: true,
+            firstName: true,
+            lastName: true,
+            smsNoti: true,
+            emailNoti: true,
+            tel: true,
+            emailVerified: true,
+        },
     });
 
     if (!user) return null;

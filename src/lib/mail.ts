@@ -6,10 +6,10 @@ export const sendVerificationEmail = async (email: string, token: string) => {
     const confirmLink = `http://localhost:3000/auth/new-verification?token=${token}`;
 
     await resend.emails.send({
-        from: "Tarsus Müzik Market <tarsusmuzik@resend.dev>",
+        from: "Hesaplı Müzik Aletleri <hesaplimuzikaletleri@resend.dev>",
 
         to: email,
-        subject: "Hesap Doğrulama | Tarsus Müzik Market",
+        subject: "Hesap Doğrulama | Hesaplı Müzik Aletleri",
         html:
             `<p>Merhaba,</p>` +
             `<p>Üyeliğinizi tamamlamak için lütfen <a href="${confirmLink}">buraya</a> tıklayın.</p>` +
@@ -21,9 +21,9 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
     const confirmLink = `http://localhost:3000/auth/new-password?token=${token}`;
 
     await resend.emails.send({
-        from: "Tarsus Müzik Market <tarsusmuzik@resend.dev>",
+        from: "Hesaplı Müzik Aletleri <hesaplimuzikaletleri@resend.dev>",
         to: email,
-        subject: "Şifre Sıfırlama | Tarsus Müzik Market",
+        subject: "Şifre Sıfırlama | Hesaplı Müzik Aletleri",
         html:
             `<p>Merhaba,</p>` +
             `<p>Şifrenizi sıfırlamak için lütfen <a href="${confirmLink}">buraya</a> tıklayın.</p>` +
