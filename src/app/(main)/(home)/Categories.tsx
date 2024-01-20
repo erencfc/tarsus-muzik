@@ -1,6 +1,5 @@
 import { CarouselItem } from "@/components/ui/carousel";
 import Carousel from "./Carousel";
-import { Category } from "@prisma/client";
 import Link from "next/link";
 import Image from "next/image";
 import { fetchCategories } from "@/app/utils/fetchCategories";
