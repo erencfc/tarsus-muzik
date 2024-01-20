@@ -67,6 +67,7 @@ type SearchPageComponentProps = {
             };
         };
     }>[];
+    dealerId?: string | null;
 };
 
 export default function SearchPageComponent({
@@ -75,6 +76,7 @@ export default function SearchPageComponent({
     categories,
     itemsPerPage,
     notSkippedProducts,
+    dealerId,
 }: SearchPageComponentProps) {
     const user = useCurrentUser();
 
@@ -435,6 +437,7 @@ export default function SearchPageComponent({
                                 <ProductList
                                     products={products as any}
                                     user={user}
+                                    dealerId={dealerId}
                                 />
                             </div>
                         </Suspense>

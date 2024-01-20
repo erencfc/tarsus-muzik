@@ -2,9 +2,11 @@
 
 import { prisma } from "@/lib/db/prisma";
 import { formatSlug } from "@/lib/format";
-import { Prisma } from "@prisma/client";
+import { Dealer, Prisma } from "@prisma/client";
 import SearchPageComponent from "./SearchPage";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
+import { currentUser } from "@/lib/auth";
+import { getDealerByUserId } from "@/lib/db/dealer";
 
 type SearchPageProps = {
     searchParams: { [key: string]: string | undefined };
@@ -19,6 +21,15 @@ export const generateMetadata = async ({ searchParams }: SearchPageProps) => {
 };
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
+    const user = await currentUser();
+    let dealer: Dealer | null = null;
+    if (user) {
+        dealer = await getDealerByUserId({
+            userId: user.id,
+            select: { id: true },
+        });
+    }
+
     const query = (searchParams.q as string).trim();
 
     if (query.length < 3) {
@@ -183,6 +194,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                 categories={categories}
                 itemsPerPage={itemsPerPage}
                 notSkippedProducts={notSkippedProducts}
+                dealerId={dealer?.id}
             />
         </div>
     );
