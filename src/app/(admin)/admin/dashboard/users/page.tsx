@@ -3,9 +3,9 @@ import FormWrapper from "@/app/(admin)/components/FormWrapper";
 import { getUserCount, getUsers } from "@/lib/db/user";
 import { formatDate } from "@/lib/format";
 import { redirect } from "next/navigation";
-import ViewButton from "./ViewButton";
 import { Button } from "@/components/ui/button";
 import { getUserRole } from "@/app/utils/getUserRole";
+import ViewButton from "@/app/(admin)/components/ViewButton";
 
 export default async function UsersPage({
     searchParams: { page, q },
@@ -65,12 +65,11 @@ export default async function UsersPage({
                         </span>
                     </td>
                     <td>
-                        <div className="flex flex-row gap-3">
-                            <ViewButton id={user.id}>
-                                <Button variant="outline" size="sm">
-                                    İncele
-                                </Button>
-                            </ViewButton>
+                        <div className="flex flex-row items-center gap-3">
+                            <ViewButton
+                                url={`/admin/dashboard/users/${user.id}`}
+                                key={user.id}
+                            />
                             <DeleteButton id={user.id} />
                         </div>
                     </td>

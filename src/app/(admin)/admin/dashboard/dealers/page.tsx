@@ -2,9 +2,8 @@ import FormWrapper from "@/app/(admin)/components/FormWrapper";
 import { getDealerCount, getDealers } from "@/lib/db/dealer";
 import { formatDate } from "@/lib/format";
 import { redirect } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import ViewButton from "./ViewButton";
 import DeleteButton from "./DeleteButton";
+import ViewButton from "@/app/(admin)/components/ViewButton";
 
 export default async function DealersPage({
     searchParams: { page, q },
@@ -29,8 +28,6 @@ export default async function DealersPage({
             totalItems={totalItems}
             paginationHref="/admin/dashboard/dealers"
             inputPlaceHolder="Bayi Ara"
-            // buttonTitle="Yeni Bayi"
-            // buttonHref="/admin/dashboard/dealers/new"
             tableHeadings={[
                 "Ad Soyad",
                 "Email",
@@ -61,11 +58,10 @@ export default async function DealersPage({
                     <td>{formatDate(dealer.createdAt)}</td>
                     <td>
                         <div className="flex flex-row gap-3">
-                            <ViewButton id={dealer.id}>
-                                <Button variant="outline" size="sm">
-                                    İncele
-                                </Button>
-                            </ViewButton>
+                            <ViewButton
+                                url={`/admin/dashboard/dealers/${dealer.id}`}
+                                key={dealer.id}
+                            />
                             <DeleteButton id={dealer.id} />
                         </div>
                     </td>

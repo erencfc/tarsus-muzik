@@ -24,6 +24,8 @@ import { CardWrapper } from "@/components/auth/CardWrapper";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import { UserPayload } from "@/types/UserPayload";
 import { updatePersonalInformation } from "./action";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 export default function PersonalInformationForm({
     user,
@@ -219,115 +221,111 @@ export default function PersonalInformationForm({
                                 </FormItem>
                             )}
                         />
-                        <FormField
-                            control={form.control}
-                            name="emailNoti"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <div className="flex justify-center gap-1">
-                                        <FormLabel className="flex justify-center py-2 text-center font-medium leading-4">
-                                            Kampanyalardan/indirimlerden
-                                            haberdar olmak için e-posta almak
-                                            istiyorum.
-                                        </FormLabel>
-                                        {changedInputs.includes(
-                                            "emailNoti"
-                                        ) && (
-                                            <span className="text-xs font-semibold text-red-400">
-                                                *
-                                            </span>
-                                        )}
-                                    </div>
+                        <div className="flex w-full flex-col gap-2">
+                            <Label>
+                                Kampanyalardan/indirimlerden haberdar olmak için
+                            </Label>
+                            <div className="flex w-full flex-row gap-4">
+                                <FormField
+                                    control={form.control}
+                                    name="emailNoti"
+                                    render={({ field }) => (
+                                        <FormItem className="flex w-1/2 flex-row items-center justify-between gap-4 rounded-lg border border-gray-800 p-3 shadow-sm">
+                                            <FormLabel className="flex gap-1">
+                                                E-posta bildirimleri
+                                                <span
+                                                    className={`text-xs font-semibold text-red-400 ${
+                                                        !changedInputs.includes(
+                                                            "emailNoti"
+                                                        ) && "invisible"
+                                                    }`}
+                                                >
+                                                    *
+                                                </span>
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Switch
+                                                    disabled={isPending}
+                                                    checked={field.value}
+                                                    onCheckedChange={(e) => {
+                                                        setEmailNoti(e);
 
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            defaultChecked={user.emailNoti}
-                                            type="checkbox"
-                                            disabled={isPending}
-                                            value={
-                                                user.emailNoti
-                                                    ? "true"
-                                                    : "false"
-                                            }
-                                            onChange={(e) => {
-                                                e.target.value = e.target
-                                                    .checked
-                                                    ? "true"
-                                                    : "false";
-                                                setEmailNoti(e.target.checked);
-                                                setChangedInputs(
-                                                    e.target.checked !==
-                                                        e.target.defaultChecked
-                                                        ? [
-                                                              ...changedInputs,
-                                                              e.target.name,
-                                                          ]
-                                                        : changedInputs.filter(
-                                                              (input) =>
-                                                                  input !==
-                                                                  e.target.name
-                                                          )
-                                                );
-                                            }}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="smsNoti"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <div className="flex justify-center gap-1">
-                                        <FormLabel className="flex justify-center py-2 text-center font-medium leading-4">
-                                            Kampanyalardan/indirimlerden
-                                            haberdar olmak için SMS almak
-                                            istiyorum.
-                                        </FormLabel>
-                                        {changedInputs.includes("smsNoti") && (
-                                            <span className="text-xs font-semibold text-red-400">
-                                                *
-                                            </span>
-                                        )}
-                                    </div>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            defaultChecked={user.smsNoti}
-                                            type="checkbox"
-                                            disabled={isPending}
-                                            value={
-                                                user.smsNoti ? "true" : "false"
-                                            }
-                                            onChange={(e) => {
-                                                e.target.value = e.target
-                                                    .checked
-                                                    ? "true"
-                                                    : "false";
-                                                setSmsNoti(e.target.checked);
-                                                setChangedInputs(
-                                                    e.target.checked !==
-                                                        e.target.defaultChecked
-                                                        ? [
-                                                              ...changedInputs,
-                                                              e.target.name,
-                                                          ]
-                                                        : changedInputs.filter(
-                                                              (input) =>
-                                                                  input !==
-                                                                  e.target.name
-                                                          )
-                                                );
-                                            }}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                                                        if (
+                                                            changedInputs.includes(
+                                                                "emailNoti"
+                                                            )
+                                                        ) {
+                                                            setChangedInputs(
+                                                                changedInputs.filter(
+                                                                    (input) =>
+                                                                        input !==
+                                                                        "emailNoti"
+                                                                )
+                                                            );
+                                                        } else {
+                                                            setChangedInputs([
+                                                                ...changedInputs,
+                                                                "emailNoti",
+                                                            ]);
+                                                        }
+
+                                                        field.onChange(e);
+                                                    }}
+                                                />
+                                            </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="smsNoti"
+                                    render={({ field }) => (
+                                        <FormItem className="flex w-1/2 flex-row items-center justify-between gap-4 rounded-lg border border-gray-800 p-3 shadow-sm">
+                                            <FormLabel className="flex gap-1">
+                                                SMS bildirimleri
+                                                <span
+                                                    className={`text-xs font-semibold text-red-400 ${
+                                                        !changedInputs.includes(
+                                                            "smsNoti"
+                                                        ) && "invisible"
+                                                    }`}
+                                                >
+                                                    *
+                                                </span>
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Switch
+                                                    disabled={isPending}
+                                                    checked={field.value}
+                                                    onCheckedChange={(e) => {
+                                                        setSmsNoti(e);
+                                                        if (
+                                                            changedInputs.includes(
+                                                                "smsNoti"
+                                                            )
+                                                        ) {
+                                                            setChangedInputs(
+                                                                changedInputs.filter(
+                                                                    (input) =>
+                                                                        input !==
+                                                                        "smsNoti"
+                                                                )
+                                                            );
+                                                        } else {
+                                                            setChangedInputs([
+                                                                ...changedInputs,
+                                                                "smsNoti",
+                                                            ]);
+                                                        }
+                                                        field.onChange(e);
+                                                    }}
+                                                />
+                                            </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                        </div>
 
                         <FormError message={error} />
                         <FormSuccess message={success} />

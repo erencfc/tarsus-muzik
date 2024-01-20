@@ -38,6 +38,9 @@ export default function ShoppingCartButton({
                     <span className="font-bold">
                         Sepetinizde <u>{cart?.size || 0} ürün</u> bulunmaktadır.
                     </span>
+                    <span className="text-sm text-gray-500">
+                        (İndirimler sepette hesaplanır.)
+                    </span>
                     {items.map((item, index) => (
                         <div
                             key={item.id}
@@ -88,7 +91,10 @@ export default function ShoppingCartButton({
                                     </span>
                                 </div>
 
-                                <CartRemoveItemButton itemId={item.id} />
+                                <CartRemoveItemButton
+                                    iconSize={32}
+                                    itemId={item.id}
+                                />
                             </div>
                         </div>
                     ))}

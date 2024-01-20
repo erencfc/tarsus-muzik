@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { prisma } from "./prisma";
-import { Prisma } from "@prisma/client";
+import { Dealer, Prisma } from "@prisma/client";
 import { currentUser } from "../auth";
 
 export type CartWithProducts = Prisma.CartGetPayload<{
@@ -8,7 +8,12 @@ export type CartWithProducts = Prisma.CartGetPayload<{
         items: {
             include: {
                 Product: {
-                    include: { Brand: true; Category: true; SubCategory: true };
+                    include: {
+                        DealerPrice: true;
+                        Brand: true;
+                        Category: true;
+                        SubCategory: true;
+                    };
                 };
             };
         };
@@ -18,7 +23,11 @@ export type CartWithProducts = Prisma.CartGetPayload<{
 
 export type CartItemWithProduct = Prisma.CartItemGetPayload<{
     include: {
-        Product: true;
+        Product: {
+            include: {
+                DealerPrice: true;
+            };
+        };
     };
 }>;
 
@@ -30,6 +39,14 @@ export type ShoppingCart = CartWithProducts & {
 
 export async function getCart(): Promise<ShoppingCart | null> {
     const user = await currentUser();
+    let dealer: Dealer | null = null;
+
+    if (user)
+        dealer = await prisma.dealer.findUnique({
+            where: {
+                userId: user.id,
+            },
+        });
 
     let cart: CartWithProducts | null = null;
 
@@ -40,6 +57,7 @@ export async function getCart(): Promise<ShoppingCart | null> {
             include: {
                 Product: {
                     include: {
+                        DealerPrice: true,
                         Brand: {
                             select: {
                                 name: true,
@@ -71,6 +89,8 @@ export async function getCart(): Promise<ShoppingCart | null> {
                   include,
               })
             : null;
+
+        if (localCart && !cart && localCart.userId !== user.id) return null;
 
         if (localCart && !cart) {
             await prisma.cart.update({
@@ -129,64 +149,60 @@ export async function getCart(): Promise<ShoppingCart | null> {
                   include,
               })
             : null;
+
+        if (cart?.userId) return null;
     }
 
     if (!cart) {
         return null;
     }
 
-    if (cart.Coupon) {
-        let discount = 0;
+    const size = cart.items.reduce((acc, item) => acc + item.quantity, 0);
 
-        const size = cart.items.reduce((acc, item) => acc + item.quantity, 0);
+    const subtotal = cart.items.reduce(
+        (acc, item) => acc + item.quantity * item.Product.price,
+        0
+    );
 
-        const subtotal = cart.items.reduce(
-            (acc, item) => acc + item.quantity * item.Product.price,
-            0
-        );
+    let discount = 0;
 
-        if (cart.Coupon.discountType === "PERCENT") {
-            discount = subtotal * (cart.Coupon.discount / 100);
-        } else if (cart.Coupon.discountType === "FIXED") {
-            discount = cart.Coupon.discount;
-        }
-
-        const total = subtotal + cart.shipping - discount;
-
-        await prisma.cart.update({
-            where: {
-                id: cart.id,
-            },
-            data: {
-                discount,
-            },
-        });
-
-        cart.discount = discount;
-
-        return {
-            ...cart,
-            size,
-            subtotal,
-            total,
-        };
-    } else {
-        const size = cart.items.reduce((acc, item) => acc + item.quantity, 0);
-
-        const subtotal = cart.items.reduce(
-            (acc, item) => acc + item.quantity * item.Product.price,
-            0
-        );
-
-        const total = subtotal + cart.shipping;
-
-        return {
-            ...cart,
-            size,
-            subtotal,
-            total,
-        };
+    if (cart.Coupon?.discountType === "PERCENT") {
+        discount = subtotal * (cart.Coupon.discount / 100);
+    } else if (cart.Coupon?.discountType === "FIXED") {
+        discount = cart.Coupon.discount;
     }
+
+    if (dealer) {
+        cart.items.forEach((item) => {
+            item.Product.DealerPrice.find((price) => {
+                if (price.dealerId === dealer?.id) {
+                    discount +=
+                        (item.Product.price - price.price) * item.quantity;
+                    return true;
+                }
+            });
+        });
+    }
+
+    await prisma.cart.update({
+        where: {
+            id: cart.id,
+        },
+        data: {
+            discount,
+        },
+    });
+
+    cart.discount = discount;
+
+    const total = subtotal + cart.shipping - discount;
+
+    return {
+        ...cart,
+        size,
+        subtotal,
+        total,
+    };
 }
 
 export async function createCart(): Promise<ShoppingCart> {

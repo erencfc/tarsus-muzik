@@ -68,9 +68,6 @@ export default function FormWrapper({
             <div className="mb-4 mt-2 flex w-full flex-row justify-between">
                 <div className="flex flex-row items-center gap-1">
                     <div className="relative">
-                        {/*
-                        //! TODO: Search
-                        */}
                         <i className="absolute left-2 top-1.5">
                             <MagnifyingGlassIcon width={20} height={20} />
                         </i>

@@ -1,7 +1,6 @@
 "use client";
 
 import { toast } from "sonner";
-// import { deleteDealer } from "./action";
 import { CheckBadgeIcon } from "@heroicons/react/24/outline";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";

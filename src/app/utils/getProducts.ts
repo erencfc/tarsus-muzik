@@ -71,6 +71,7 @@ export const getProducts = async ({
     else orderBy = { id: "desc" };
 
     let include = {
+        DealerPrice: true,
         Brand: true,
         Category: true,
         SubCategory: true,

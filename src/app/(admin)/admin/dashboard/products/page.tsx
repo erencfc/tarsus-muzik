@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import DeleteButton from "./DeleteButton";
+import ViewButton from "@/app/(admin)/components/ViewButton";
 
 export default async function ProductsPage({
     searchParams: { page, q },
@@ -79,10 +80,11 @@ export default async function ProductsPage({
                     <td>{product.stock}</td>
                     <td>{formatDate(product.createdAt)}</td>
                     <td>
-                        <div className="flex flex-row gap-3">
-                            <button className="btn btn-sm w-16 border-none bg-teal-700 text-white hover:bg-teal-700/70">
-                                İncele
-                            </button>
+                        <div className="flex flex-row items-center gap-3">
+                            <ViewButton
+                                url={`/admin/dashboard/products/${product.id}`}
+                                key={product.id}
+                            />
                             <DeleteButton id={product.id} />
                         </div>
                     </td>

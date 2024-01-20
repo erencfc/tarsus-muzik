@@ -26,6 +26,7 @@ export default function CategoryPageComponent({
     brands,
     totalItemCount,
     user,
+    dealerId,
 }: {
     oldQuery: {
         sirala?: string;
@@ -44,6 +45,7 @@ export default function CategoryPageComponent({
     page: string;
     products: Prisma.ProductGetPayload<{
         include: {
+            DealerPrice: true;
             Favorite: true;
             _count: {
                 select: {
@@ -55,6 +57,7 @@ export default function CategoryPageComponent({
     brands: { name: string; slug: string; count: number }[];
     totalItemCount: number;
     user: any;
+    dealerId: string;
 }) {
     const currentPage = parseInt(page);
     const itemsPerPage = 12;
@@ -458,6 +461,7 @@ export default function CategoryPageComponent({
                                     <ProductList
                                         products={products}
                                         user={user}
+                                        dealerId={dealerId}
                                     />
                                 </div>
                             </Suspense>

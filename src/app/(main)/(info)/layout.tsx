@@ -8,7 +8,7 @@ export default function InfoLayout({
 }) {
     return (
         <div className="mx-auto mb-24 flex max-w-6xl flex-col gap-4 px-4 py-6">
-            TODO: breadcrumb
+            {/* TODO: breadcrumb */}
             <div className="flex flex-row gap-8">
                 <div className="flex-1">
                     <Card className="text-gray-700 shadow-md dark:border-gray-200 dark:bg-base-100 dark:text-gray-700">

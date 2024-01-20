@@ -10,6 +10,8 @@ import Tabs from "./Tabs";
 import Loading from "@/app/loading";
 import Link from "next/link";
 import { currentUser } from "@/lib/auth";
+import { getDealerByUserId } from "@/lib/db/dealer";
+import { Dealer } from "@prisma/client";
 
 const getUserFavorites = cache(async (userId: string) => {
     const favorites = await prisma.favorite.findMany({
@@ -35,6 +37,12 @@ const getProduct = cache(async (modelSlug: string) => {
             modelSlug,
         },
         include: {
+            DealerPrice: {
+                select: {
+                    price: true,
+                    dealerId: true,
+                },
+            },
             Brand: true,
             SubCategory: true,
             Category: true,
@@ -75,6 +83,14 @@ export default async function ProductPage({
         },
     });
     const isFav = await isFavorite(product.id);
+
+    const user = await currentUser();
+    let dealer: Dealer | null = null;
+    if (user)
+        dealer = await getDealerByUserId({
+            userId: user.id,
+            select: { id: true },
+        });
 
     return (
         <div className="m-auto flex min-w-[300px] max-w-6xl flex-col gap-16 p-6">
@@ -123,7 +139,11 @@ export default async function ProductPage({
                 </div>
 
                 <Suspense fallback={<Loading />}>
-                    <ProductDetails product={product} isFavorite={isFav} />
+                    <ProductDetails
+                        dealerId={dealer?.id}
+                        product={product}
+                        isFavorite={isFav}
+                    />
                 </Suspense>
             </div>
 

@@ -41,10 +41,20 @@ export const getProducts = async ({
 
     if (q?.length > 0) {
         where = {
-            model: {
-                contains: q,
-                mode: "insensitive",
-            },
+            OR: [
+                {
+                    model: {
+                        contains: q,
+                        mode: "insensitive",
+                    },
+                },
+                {
+                    modelSlug: {
+                        contains: q,
+                        mode: "insensitive",
+                    },
+                },
+            ],
         };
     }
 
@@ -64,6 +74,40 @@ export const getProducts = async ({
         },
         skip: (currentPage - 1) * itemsPerPage,
         take: itemsPerPage,
+    });
+
+    return products;
+};
+
+export const searchProducts = async (q: string) => {
+    const role = await currentRole();
+
+    if (role !== Role.ADMIN) {
+        return [];
+    }
+
+    const products = await prisma.product.findMany({
+        where: {
+            OR: [
+                {
+                    model: {
+                        contains: q,
+                        mode: "insensitive",
+                    },
+                },
+                {
+                    modelSlug: {
+                        contains: q,
+                        mode: "insensitive",
+                    },
+                },
+            ],
+        },
+        include: {
+            Category: true,
+            SubCategory: true,
+            Brand: true,
+        },
     });
 
     return products;
@@ -93,6 +137,16 @@ export const fetchPopularProducts = async () => {
                     userId: true,
                 },
             },
+            DealerPrice: {
+                select: {
+                    Dealer: {
+                        select: {
+                            userId: true,
+                        },
+                    },
+                    price: true,
+                },
+            },
         },
     });
 
@@ -113,6 +167,16 @@ export const fetchNewProducts = async () => {
             Favorite: {
                 select: {
                     userId: true,
+                },
+            },
+            DealerPrice: {
+                select: {
+                    Dealer: {
+                        select: {
+                            userId: true,
+                        },
+                    },
+                    price: true,
                 },
             },
         },

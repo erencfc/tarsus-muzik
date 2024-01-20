@@ -15,12 +15,11 @@ export default async function Categories() {
                     Kategoriler
                 </h4>
             </div>
-            <Carousel autoplayDelay={5000}>
+            <Carousel>
                 {categories.map((category) => (
                     <CarouselItem
                         key={category.id}
-                        //? border verince en baştaki elemanın border'ı olmuyor o yüzden sağdaki elemanın da border'ını kaldırmak için 1px ekledim
-                        className="basis-[calc(33.33%+1px)] border p-4"
+                        className="basis-full border p-4 sm:basis-1/2 min-[850px]:basis-1/3"
                     >
                         <div
                             key={category.id}

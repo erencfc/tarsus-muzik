@@ -201,3 +201,13 @@ export const NewProductSchema = z
             }
         }
     );
+
+export const AddProductToDealerSchema = z.object({
+    dealerId: z.string(),
+    productId: z.string().min(1, { message: "Ürün modeli seçmelisin." }),
+    price: z
+        .string({ required_error: "Ürün fiyatını girmelisin." })
+        .refine((val) => !!Number(val), {
+            message: "Ürün fiyatını girmelisin.",
+        }),
+});

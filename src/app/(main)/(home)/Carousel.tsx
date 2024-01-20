@@ -26,18 +26,11 @@ const CarouselPrevious = dynamic(
 );
 import Autoplay from "embla-carousel-autoplay";
 import dynamic from "next/dynamic";
-import React, { Suspense } from "react";
 
-export default function Carousel({
-    children,
-    autoplayDelay = 8000,
-}: {
-    children: React.ReactNode;
-    autoplayDelay?: number;
-}) {
+export default function Carousel({ children }: { children: React.ReactNode }) {
     return (
         <EmblaCarousel
-            plugins={[Autoplay({ delay: autoplayDelay })]}
+            plugins={[Autoplay({ delay: 10000 })]}
             opts={{
                 align: "start",
                 loop: true,
@@ -46,9 +39,9 @@ export default function Carousel({
             }}
             className="p-2 text-white"
         >
-            <CarouselContent>{children}</CarouselContent>
-            <CarouselPrevious className="left-4 h-10 w-10 dark:opacity-60" />
-            <CarouselNext className="right-4 h-10 w-10 dark:opacity-60" />
+            <CarouselContent className="ml-0.5">{children}</CarouselContent>
+            <CarouselPrevious className="left-3.5 h-10 w-10 dark:opacity-60" />
+            <CarouselNext className="right-3 h-10 w-10 dark:opacity-60" />
         </EmblaCarousel>
     );
 }

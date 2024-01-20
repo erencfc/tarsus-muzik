@@ -10,7 +10,13 @@ import {
     StarIcon,
 } from "@heroicons/react/24/outline";
 import { StarIcon as StarIconFilled } from "@heroicons/react/24/solid";
-import type { Product, Brand, SubCategory, Category } from "@prisma/client";
+import type {
+    Product,
+    Brand,
+    SubCategory,
+    Category,
+    Prisma,
+} from "@prisma/client";
 import { Suspense, useState, useTransition } from "react";
 import ToggleFavoriteButton from "../ToggleFavoriteButton";
 import CreateCommentModal from "./CreateCommentModal";
@@ -22,13 +28,23 @@ import { DEFAULT_LOGIN_PATH } from "@/routes";
 
 export default function ProductDetails({
     product,
+    dealerId,
     isFavorite,
 }: {
-    product: Product & {
-        Brand: Brand;
-        Category: Category;
-        SubCategory: SubCategory;
-    };
+    product: Prisma.ProductGetPayload<{
+        include: {
+            DealerPrice: {
+                select: {
+                    price: true;
+                    dealerId: true;
+                };
+            };
+            Brand: true;
+            SubCategory: true;
+            Category: true;
+        };
+    }>;
+    dealerId: string;
     isFavorite: boolean;
 }) {
     const router = useRouter();
@@ -90,6 +106,10 @@ export default function ProductDetails({
         return <div className="flex">{stars}</div>;
     };
 
+    const dealerPrice = product.DealerPrice.find(
+        (dealerPrice) => dealerPrice.dealerId === dealerId
+    )?.price;
+
     return (
         <>
             {user && (
@@ -101,12 +121,14 @@ export default function ProductDetails({
                 </Suspense>
             )}
             <div className="flex w-full flex-col">
-                <Link
-                    href={`/marka/${product.Brand.slug}`}
-                    className="text-sm font-extrabold uppercase text-gray-900/40 transition-colors duration-200 hover:text-gray-900/80"
+                {/* <Link */}
+                {/* href={`/marka/${product.Brand.slug}`} */}
+                <p
+                    className="text-sm font-extrabold uppercase text-gray-900/40 transition-colors duration-200" //hover:text-gray-900/80
                 >
                     {product.Brand.name}
-                </Link>
+                    {/* </Link> */}
+                </p>
                 <h1 className="text-2xl font-semibold text-gray-900">
                     {product.model}
                 </h1>
@@ -114,7 +136,7 @@ export default function ProductDetails({
                     <div className="flex flex-row">
                         <span className="w-20">Stok Kodu</span>
                         <span className="uppercase before:mr-2 before:content-[':']">
-                            {product.id}
+                            {product.id.slice(-10)}
                         </span>
                     </div>
                     <div className="flex flex-row">
@@ -137,22 +159,37 @@ export default function ProductDetails({
                     </div>
                 )}
 
-                <div className="mt-12 flex text-2xl font-bold text-primary">
-                    <div className="flex flex-col gap-1">
-                        <span>{formatPrice(product.price)}</span>
-                        <span className="text-xs font-semibold text-gray-900/60">
-                            KDV Dahildir.
-                        </span>
+                <div className="mt-12 flex flex-row text-2xl font-bold text-primary">
+                    <div className="flex flex-col">
+                        {dealerPrice && (
+                            <span className="mr-1 text-xs text-gray-400 line-through">
+                                {formatPrice(product.price)}
+                            </span>
+                        )}
+                        <>
+                            <div className="flex flex-row items-center gap-2">
+                                <span>
+                                    {formatPrice(dealerPrice || product.price)}
+                                </span>
+                                {quantity > 1 && (
+                                    <span className="text-sm font-semibold text-gray-900/60">
+                                        (
+                                        {formatPrice(
+                                            Math.round(
+                                                (dealerPrice || product.price) *
+                                                    quantity *
+                                                    100
+                                            ) / 100
+                                        )}
+                                        )
+                                    </span>
+                                )}
+                            </div>
+                            <span className="text-xs font-semibold text-gray-900/60">
+                                KDV Dahildir.
+                            </span>
+                        </>
                     </div>
-                    {quantity > 1 && (
-                        <span className="ml-2 mt-1.5 text-sm font-semibold text-gray-900/60">
-                            (
-                            {formatPrice(
-                                Math.round(product.price * quantity * 100) / 100
-                            )}
-                            )
-                        </span>
-                    )}
                 </div>
 
                 <span className="ml-auto text-xs font-bold text-gray-900/80">

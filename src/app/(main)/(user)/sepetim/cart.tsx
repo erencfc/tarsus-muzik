@@ -68,6 +68,7 @@ export async function updateDiscount() {
                     include: {
                         Product: {
                             include: {
+                                DealerPrice: true,
                                 Brand: true,
                                 Category: true,
                                 SubCategory: true,

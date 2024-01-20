@@ -1,12 +1,13 @@
 "use client";
 
 import Carousel from "./Carousel";
-import { Prisma } from "@prisma/client";
+import { Prisma, Role } from "@prisma/client";
 import Link from "next/link";
 import Image from "next/image";
 import Rating from "./Ratings";
 import { CarouselItem } from "@/components/ui/carousel";
 import { formatPrice } from "@/lib/format";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 type ProductsProps = {
     products: Prisma.ProductGetPayload<{
@@ -21,13 +22,39 @@ type ProductsProps = {
                     userId: true;
                 };
             };
+            DealerPrice: {
+                select: {
+                    Dealer: {
+                        select: {
+                            userId: true;
+                        };
+                    };
+                    price: true;
+                };
+            };
         };
     }>[];
     title: string;
 };
 
 export default function Products({ products, title }: ProductsProps) {
+    const currentUser = useCurrentUser();
+
     if (!products) return <div>loading from Products.tsx</div>;
+
+    const prices = (product: any) => {
+        if (currentUser?.role !== Role.DEALER) return { price: product.price };
+
+        const dealerPrice = product.DealerPrice.find(
+            (dealerPrice) => dealerPrice.Dealer.userId === currentUser.id
+        )?.price;
+
+        return {
+            dealerPrice,
+            price: product.price,
+        };
+    };
+
     return (
         <div className="container mx-auto flex max-w-6xl flex-col gap-6">
             <div className="flex w-full flex-col gap-3">
@@ -36,12 +63,11 @@ export default function Products({ products, title }: ProductsProps) {
                 </h4>
             </div>
 
-            <Carousel autoplayDelay={5000}>
+            <Carousel>
                 {products.map((product) => (
                     <CarouselItem
                         key={product.id}
-                        //? border verince en baştaki elemanın border'ı olmuyor o yüzden sağdaki elemanın da border'ını kaldırmak için 1px ekledim
-                        className="basis-[calc(33.33%+1px)] p-0 py-2"
+                        className="basis-full p-0 py-2 sm:basis-1/2 min-[850px]:basis-1/3"
                     >
                         <Link
                             href={`/urun/${product.modelSlug}`}
@@ -60,7 +86,24 @@ export default function Products({ products, title }: ProductsProps) {
                                     {product.model}
                                 </span>
                                 <span className="text-lg font-extrabold text-gray-900">
-                                    {formatPrice(product.price)}
+                                    {currentUser?.role === Role.DEALER ? (
+                                        <>
+                                            {prices(product).dealerPrice && (
+                                                <span className="mr-1 text-sm text-gray-700 line-through">
+                                                    {formatPrice(
+                                                        prices(product).price
+                                                    )}
+                                                </span>
+                                            )}
+
+                                            {formatPrice(
+                                                prices(product)?.dealerPrice ||
+                                                    prices(product).price
+                                            )}
+                                        </>
+                                    ) : (
+                                        formatPrice(prices(product).price)
+                                    )}
                                 </span>
                                 <div className="flex items-center gap-2 text-gray-700">
                                     <Rating rating={product.rating} />-

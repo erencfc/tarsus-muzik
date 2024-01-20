@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import type { Metadata } from "next";
 
 import Loading from "@/app/loading";
-import ImageCarousel from "@/app/(main)/(home)/ImageCarousel";
+// import ImageCarousel from "@/app/(main)/(home)/ImageCarousel";
 
 import {
     ArrowUturnRightIcon,
@@ -16,65 +16,72 @@ import {
 } from "@heroicons/react/24/outline";
 
 import Categories from "./Categories";
-import { fetchCategories } from "@/app/utils/fetchCategories";
 
-const NewProducts = dynamic(() => import("./NewProducts"));
 import PopularProducts from "./PopularProducts";
+import NewProducts from "./NewProducts";
+import { auth } from "@/auth";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
     title: "Ana Sayfa",
 };
 
-export default function Home() {
+export default async function Home() {
+    const session = await auth();
     return (
-        <div className="flex flex-col gap-16 p-6">
-            <ImageCarousel />
-
-            <div className="container mx-auto flex max-w-6xl grid-cols-1 flex-col items-center gap-x-8 gap-y-6 py-4 sm:grid lg:grid-cols-4 [&>div]:flex [&>div]:w-[250px] [&>div]:flex-row [&>div]:items-center [&>div]:gap-3">
-                <div className="col-span-2 col-start-1 lg:col-span-1 lg:col-start-1">
-                    <div className="rounded-full bg-gray-200/70 p-3">
-                        <TruckIcon className="mb-0.5 h-7 w-7 text-gray-700" />
-                    </div>
-                    <span className="text-sm font-bold text-gray-700">
-                        Hızlı ve Sorunsuz Teslimat
-                    </span>
-                </div>
-                <div className="col-span-2 col-start-3 lg:col-span-1 lg:col-start-2">
-                    <div className="rounded-full bg-gray-200/70 p-3">
-                        <ArrowUturnRightIcon className="mb-0.5 h-7 w-7 text-gray-700" />
-                    </div>
-                    <span className="text-sm font-bold text-gray-700">
-                        İade ve Değişim
-                    </span>
-                </div>
-                <div className="col-span-2 col-start-1 row-start-2 lg:col-span-1 lg:col-start-3 lg:row-start-1">
-                    <div className="rounded-full bg-gray-200/70 p-3">
-                        <LockClosedIcon className="mb-0.5 h-7 w-7 text-gray-700" />
-                    </div>
-                    <span className="text-sm font-bold text-gray-700">
-                        Güvenli Ödeme
-                    </span>
-                </div>
-                <div className="col-start-3 row-start-2 lg:col-span-1 lg:col-start-4 lg:row-start-1">
-                    <div className="rounded-full bg-gray-200/70 p-3">
-                        <CreditCardIcon className="mb-0.5 h-7 w-7 text-gray-700" />
-                    </div>
-                    <span className="text-sm font-bold text-gray-700">
-                        Kredi Kartına Taksit
-                    </span>
-                </div>
-            </div>
+        <div className="mt-6 flex flex-col gap-16 p-6">
+            {/* <ImageCarousel /> */}
             <Suspense fallback={<Loading />}>
                 <Categories />
             </Suspense>
 
-            <Suspense fallback={<Loading />}>
-                <PopularProducts />
-            </Suspense>
+            <SessionProvider session={session}>
+                <Suspense fallback={<Loading />}>
+                    <PopularProducts />
+                </Suspense>
 
-            <Suspense fallback={<Loading />}>
-                <NewProducts />
-            </Suspense>
+                <Suspense fallback={<Loading />}>
+                    <NewProducts />
+                </Suspense>
+            </SessionProvider>
+
+            <div className="container mx-auto max-w-6xl px-6">
+                <div className="flex flex-row items-center justify-between gap-6">
+                    <div className="flex items-center gap-2">
+                        <div className="rounded-full bg-gray-200/70 p-3">
+                            <TruckIcon className="mb-0.5 h-7 w-7 text-gray-700" />
+                        </div>
+                        <span className="text-sm font-bold text-gray-700">
+                            Hızlı ve Sorunsuz Teslimat
+                        </span>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                        <div className="rounded-full bg-gray-200/70 p-3">
+                            <ArrowUturnRightIcon className="mb-0.5 h-7 w-7 text-gray-700" />
+                        </div>
+                        <span className="text-sm font-bold text-gray-700">
+                            İade ve Değişim
+                        </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <div className="rounded-full bg-gray-200/70 p-3">
+                            <LockClosedIcon className="mb-0.5 h-7 w-7 text-gray-700" />
+                        </div>
+                        <span className="text-sm font-bold text-gray-700">
+                            Güvenli Ödeme
+                        </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <div className="rounded-full bg-gray-200/70 p-3">
+                            <CreditCardIcon className="mb-0.5 h-7 w-7 text-gray-700" />
+                        </div>
+                        <span className="text-sm font-bold text-gray-700">
+                            Kredi Kartına Taksit
+                        </span>
+                    </div>
+                </div>
+            </div>
 
             <div className="container mx-auto my-14 flex max-w-6xl flex-col items-center">
                 <h2 className="text-2xl font-bold">
@@ -138,33 +145,4 @@ export default function Home() {
             </div>
         </div>
     );
-
-    // return (
-    //     <div className="flex min-h-screen flex-col">
-    //         <main className="flex-1">
-    //             <section className="bg-cover bg-center py-6 sm:py-12 md:py-24 lg:py-32 xl:py-48">
-    //                 <div className="container max-w-6xl py-8 md:px-6">
-    //                     <div className="flex h-full flex-col justify-center space-y-4">
-    //                         <div className="space-y-2">
-    //                             <h1 className="text-3xl font-bold tracking-tighter text-black sm:text-5xl xl:text-6xl/none">
-    //                                 Lorem ipsum dolor sit amet
-    //                             </h1>
-    //                             <p className="max-w-[600px] py-3 text-lg text-gray-500 md:text-xl">
-    //                                 Lorem ipsum dolor sit amet consectetur
-    //                                 adipisicing elit. Explicabo eius doloribus
-    //                                 consecrator obcaecati militia vero
-    //                                 inventor, ulam assumenda.
-    //                             </p>
-    //                         </div>
-    //                         <div className="flex gap-2 min-[400px]:flex-row">
-    //                             <button className="btn btn-primary text-white">
-    //                                 Satın Al
-    //                             </button>
-    //                         </div>
-    //                     </div>
-    //                 </div>
-    //             </section>
-    //         </main>
-    //     </div>
-    // );
 }

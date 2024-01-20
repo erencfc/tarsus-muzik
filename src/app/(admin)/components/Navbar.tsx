@@ -43,7 +43,7 @@ const titles = [
 
 export default function Navbar() {
     const pathname = usePathname().split("/admin/dashboard")[1];
-    console.log(pathname);
+
     return (
         <div className="flex flex-row items-center justify-between rounded-lg border border-gray-800 bg-gray-900 p-6">
             <h1 className="font-semibold text-gray-400">

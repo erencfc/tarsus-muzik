@@ -16,8 +16,8 @@ type DeleteDealerProps = {
     deleteUser?: boolean;
 };
 
-type GetDealerByIdProps = {
-    id: string;
+type GetDealerByUserIdProps = {
+    userId: string;
     select?: Prisma.DealerSelect;
     include?: Prisma.DealerInclude;
 };
@@ -127,36 +127,30 @@ export const getDealers = async ({
     return dealers;
 };
 
-// export const getDealerById = async ({
-//     id,
-//     select,
-//     include,
-// }: GetDealerByIdProps) => {
-//     const role = await currentRole();
+export const getDealerByUserId = async ({
+    userId,
+    select,
+    include,
+}: GetDealerByUserIdProps) => {
+    let args: Prisma.DealerFindUniqueArgs = { where: { userId } };
 
-//     if (role !== Role.ADMIN) {
-//         return null;
-//     }
+    if (select) {
+        args = { ...args, select };
+    }
+    if (include) {
+        args = { ...args, include };
+    }
 
-//     let args: Prisma.DealerFindUniqueArgs = { where: { id } };
+    try {
+        const dealer = await prisma.dealer.findUnique({ ...args });
 
-//     if (select) {
-//         args = { ...args, select };
-//     }
-//     if (include) {
-//         args = { ...args, include };
-//     }
+        return dealer;
+    } catch (error: any) {
+        console.error(error);
 
-//     try {
-//         const dealer = await prisma.dealer.findUnique({ ...args });
-
-//         return dealer;
-//     } catch (error: any) {
-//         console.error(error);
-
-//         return null;
-//     }
-// };
+        return null;
+    }
+};
 
 export const deleteDealer = async ({
     id,

@@ -5,6 +5,7 @@ import { deleteProduct } from "./action";
 import { CheckBadgeIcon } from "@heroicons/react/24/outline";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 export default function DeleteButton({ id }: { id: string }) {
     const [isPending, setIsPending] = useState(false);
@@ -46,8 +47,9 @@ export default function DeleteButton({ id }: { id: string }) {
     };
 
     return (
-        <button
-            className="btn btn-sm w-16 border-none bg-red-500 text-white hover:bg-red-800/70"
+        <Button
+            variant="destructive"
+            size="sm"
             disabled={isPending}
             onClick={handleClick}
         >
@@ -56,6 +58,6 @@ export default function DeleteButton({ id }: { id: string }) {
             ) : (
                 <span>Sil</span>
             )}
-        </button>
+        </Button>
     );
 }

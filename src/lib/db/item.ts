@@ -2,6 +2,7 @@
 
 import { updateDiscount } from "@/app/(main)/(user)/sepetim/cart";
 import { prisma } from "./prisma";
+import { revalidatePath } from "next/cache";
 
 export async function removeItemFromCart(itemId: string) {
     await prisma.cartItem.delete({
@@ -11,4 +12,6 @@ export async function removeItemFromCart(itemId: string) {
     });
 
     await updateDiscount();
+
+    revalidatePath("/sepetim");
 }

@@ -25,7 +25,7 @@ export default function MainLayout({
             </header>
 
             {/* Main */}
-            <main>
+            <main className="min-h-[300px]">
                 {children}
                 <Suspense>
                     <ToastContainer />

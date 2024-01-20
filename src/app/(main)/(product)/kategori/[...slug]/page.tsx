@@ -3,8 +3,10 @@
 import { getProducts } from "@/app/utils/getProducts";
 import CategoryPageComponent from "@/components/CategoryPageComponent";
 import { currentUser } from "@/lib/auth";
+import { getDealerByUserId } from "@/lib/db/dealer";
 import { prisma } from "@/lib/db/prisma";
 import { formatSlug } from "@/lib/format";
+import { Dealer } from "@prisma/client";
 import { notFound } from "next/navigation";
 
 export const generateMetadata = async ({
@@ -57,6 +59,13 @@ export default async function CategoryPage({
     };
 }) {
     const user = await currentUser();
+    let dealer: Dealer | null = null;
+    if (user) {
+        dealer = await getDealerByUserId({
+            userId: user.id,
+            select: { id: true },
+        });
+    }
 
     const category_slug = params.slug[0];
     const sub_category_slug = params.slug[1];
@@ -185,6 +194,7 @@ export default async function CategoryPage({
                 sub_category_slug={sub_category_slug}
                 totalItemCount={products.totalItemCount}
                 user={user}
+                dealerId={dealer?.id}
             />
         </div>
     );

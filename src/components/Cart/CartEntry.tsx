@@ -1,32 +1,37 @@
-"use client";
-
 import { CartItemWithProduct } from "@/lib/db/cart";
 import Image from "next/image";
-import CartRemoveItemButton from "../Header/CartRemoveItemButton";
-import { useTransition } from "react";
 import { formatPrice } from "@/lib/format";
 import Link from "next/link";
+import QuantitySelect from "./QuantitySelect";
+import { getDealerByUserId } from "@/lib/db/dealer";
+import { currentUser } from "@/lib/auth";
+
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { TrashIcon } from "@heroicons/react/24/outline";
+import CartRemoveItemButton from "../Header/CartRemoveItemButton";
+import { Dealer } from "@prisma/client";
 
 type CartEntryProps = {
     cartItem: CartItemWithProduct;
-    setProductQuantity: (productId: string, quantity: number) => Promise<void>;
 };
 
-export default function CartEntry({
-    cartItem,
-    setProductQuantity,
-}: CartEntryProps) {
-    const [isPending, startTransition] = useTransition();
-
-    const quantityOptions: JSX.Element[] = [];
-
-    for (let i = 1; i <= 99; i++) {
-        quantityOptions.push(
-            <option key={i} value={i}>
-                {i}
-            </option>
-        );
-    }
+export default async function CartEntry({ cartItem }: CartEntryProps) {
+    const user = await currentUser();
+    let dealer: Dealer | null = null;
+    if (user)
+        dealer = await getDealerByUserId({
+            userId: user.id,
+            select: { id: true },
+        });
 
     return (
         <div className="flex flex-col after:my-2 after:h-[1px] after:w-full after:bg-gray-400/30 after:content-['']">
@@ -49,44 +54,45 @@ export default function CartEntry({
                             {cartItem.Product.model}
                         </Link>
                     </div>
-                    <CartRemoveItemButton
-                        itemId={cartItem.id}
-                        direction="row"
-                    />
+
+                    <CartRemoveItemButton iconSize={20} itemId={cartItem.id} />
                 </div>
-                <div className="flex items-center text-sm font-extrabold text-gray-700">
-                    {formatPrice(cartItem.Product.price)}
+                <div className="flex min-w-[102px] flex-col items-center justify-center text-sm font-extrabold text-gray-700">
+                    {cartItem.Product.DealerPrice.find(
+                        (dealerPrice) => dealerPrice.dealerId === dealer?.id
+                    )?.price && (
+                        <span className="mr-1 text-xs text-gray-400 line-through">
+                            {formatPrice(cartItem.Product.price)}
+                        </span>
+                    )}
+                    <span>
+                        {formatPrice(
+                            cartItem.Product.DealerPrice.find(
+                                (dealerPrice) =>
+                                    dealerPrice.dealerId === dealer?.id
+                            )?.price || cartItem.Product.price
+                        )}
+                    </span>
                 </div>
                 <div className="flex w-[80px] flex-col items-center justify-center">
-                    {isPending ? (
-                        <span className="loading loading-spinner text-accent" />
-                    ) : (
-                        <select
-                            className="select select-bordered w-full max-w-[80px] focus:border-primary focus:outline-none"
-                            defaultValue={cartItem.quantity}
-                            onChange={(e) => {
-                                const newQuantity = parseInt(
-                                    e.currentTarget.value
-                                );
-                                startTransition(async () => {
-                                    await setProductQuantity(
-                                        cartItem.productId,
-                                        newQuantity
-                                    );
-                                });
-                            }}
-                        >
-                            {quantityOptions}
-                        </select>
-                    )}
+                    <QuantitySelect cartItem={cartItem} />
                 </div>
 
-                <div className="flex flex-col items-center justify-center">
-                    <div className="text-sm font-extrabold text-gray-700">
-                        {formatPrice(
-                            cartItem.Product.price * cartItem.quantity
-                        )}
-                    </div>
+                <div className="flex min-w-[102px] flex-col items-center justify-center text-sm font-extrabold text-gray-700">
+                    {cartItem.Product.DealerPrice.find(
+                        (dealerPrice) => dealerPrice.dealerId === dealer?.id
+                    )?.price && (
+                        <span className="text-xs text-gray-400 line-through">
+                            {formatPrice(
+                                cartItem.Product.price * cartItem.quantity
+                            )}
+                        </span>
+                    )}
+                    {formatPrice(
+                        (cartItem.Product.DealerPrice.find(
+                            (dealerPrice) => dealerPrice.dealerId === dealer?.id
+                        )?.price || cartItem.Product.price) * cartItem.quantity
+                    )}
                 </div>
             </div>
         </div>

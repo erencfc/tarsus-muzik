@@ -4,11 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: any) {
     try {
-        const data = await prisma.product.updateMany({
-            data: {
-                rating: 0,
-            },
-        });
+        const data = await prisma.cart.deleteMany({});
 
         return NextResponse.json({
             data,

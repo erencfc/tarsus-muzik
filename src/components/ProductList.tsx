@@ -13,9 +13,11 @@ import ToggleFavoriteButton from "./ToggleFavoriteButton";
 export default function ProductList({
     products,
     user,
+    dealerId,
 }: {
     products: Prisma.ProductGetPayload<{
         include: {
+            DealerPrice: true;
             Favorite: true;
             _count: {
                 select: {
@@ -25,6 +27,7 @@ export default function ProductList({
         };
     }>[];
     user: any;
+    dealerId: string;
 }) {
     const [isPending, startTransition] = useTransition();
     const [success, setSuccess] = useState(false);
@@ -130,7 +133,21 @@ export default function ProductList({
                                     </span>
                                 </div>
                                 <p className="items-end text-center text-lg font-bold">
-                                    {formatPrice(product.price)}
+                                    {product.DealerPrice.find(
+                                        (dealerPrice) =>
+                                            dealerPrice.dealerId === dealerId
+                                    )?.price && (
+                                        <span className="mr-1 text-sm text-gray-400 line-through">
+                                            {formatPrice(product.price)}
+                                        </span>
+                                    )}
+                                    {formatPrice(
+                                        product.DealerPrice.find(
+                                            (dealerPrice) =>
+                                                dealerPrice.dealerId ===
+                                                dealerId
+                                        )?.price || product.price
+                                    )}
                                 </p>
                             </div>
 
