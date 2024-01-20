@@ -3,7 +3,7 @@ import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendVerificationEmail = async (email: string, token: string) => {
-    const confirmLink = `http://localhost:3000/auth/new-verification?token=${token}`;
+    const confirmLink = `https://hesapli-muzik-aletleri-git-main-erencfcs-projects.vercel.app/auth/new-verification?token=${token}`;
 
     await resend.emails.send({
         from: "Hesaplı Müzik Aletleri <hesaplimuzikaletleri@resend.dev>",
@@ -18,7 +18,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
 };
 
 export const sendPasswordResetEmail = async (email: string, token: string) => {
-    const confirmLink = `http://localhost:3000/auth/new-password?token=${token}`;
+    const confirmLink = `https://hesapli-muzik-aletleri-git-main-erencfcs-projects.vercel.app/auth/new-password?token=${token}`;
 
     await resend.emails.send({
         from: "Hesaplı Müzik Aletleri <hesaplimuzikaletleri@resend.dev>",
