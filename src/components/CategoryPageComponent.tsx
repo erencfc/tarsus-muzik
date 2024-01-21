@@ -179,7 +179,7 @@ export default function CategoryPageComponent({
                                     href={
                                         sub_category
                                             ? getPath(category.slug)
-                                            : "/kategoriler"
+                                            : "/"
                                     }
                                     className={
                                         sub_category
@@ -196,7 +196,7 @@ export default function CategoryPageComponent({
                                     <span className="label-text font-bold transition-colors duration-150 ease-in-out group-hover:text-accent">
                                         {sub_category
                                             ? category.name
-                                            : "Tüm Kategoriler"}
+                                            : "Ana Sayfa"}
                                     </span>
                                 </Link>
                             </div>
@@ -537,7 +537,7 @@ export default function CategoryPageComponent({
                                     href={
                                         sub_category
                                             ? getPath(category.slug)
-                                            : "/kategoriler"
+                                            : "/"
                                     }
                                     className={
                                         sub_category
@@ -554,7 +554,7 @@ export default function CategoryPageComponent({
                                     <span className="label-text font-bold transition-colors duration-150 ease-in-out group-hover:text-accent">
                                         {sub_category
                                             ? category.name
-                                            : "Tüm Kategoriler"}
+                                            : "Ana Sayfa"}
                                     </span>
                                 </Link>
                             </div>

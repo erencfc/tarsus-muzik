@@ -32,6 +32,10 @@ export const generateMetadata = async ({
         },
     });
 
+    if (!category) {
+        return;
+    }
+
     const subCategory = category.SubCategory.find(
         (sub) => sub.slug === sub_category_slug
     );
