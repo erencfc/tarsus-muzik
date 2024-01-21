@@ -42,7 +42,7 @@ export const addProductToDealer = async (
             },
         });
 
-        revalidatePath("/admin/dashboard/dealers/[id]");
+        revalidatePath("/admin/dashboard/dealers/[id]", "page");
 
         return { success: "Ürün başarıyla eklendi." };
     } catch (error) {

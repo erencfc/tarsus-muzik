@@ -3,10 +3,9 @@
 import { TCategory } from "@/types/TCategory";
 import {
     Bars3Icon,
-    ChevronDownIcon,
     ChevronRightIcon,
-    ChevronUpIcon,
     MagnifyingGlassIcon,
+    UserIcon,
     XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
@@ -15,15 +14,24 @@ import ShoppingCartButton from "./ShoppingCartButton";
 import { ShoppingCart } from "@/lib/db/cart";
 import Link from "next/link";
 
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from "@/components/ui/accordion";
+import { User } from "next-auth";
+
 export default function HamburgerMenu({
     categories,
     cart,
+    user,
 }: {
     categories: TCategory[];
     cart: ShoppingCart | null;
+    user: User | null;
 }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [dropdowns, setDropdowns] = useState<string[]>([]);
 
     return (
         <div className="sticky top-0 z-[1111] m-auto flex h-20 w-full min-w-[290px] items-center justify-between bg-black px-4 text-white xl:hidden">
@@ -38,97 +46,85 @@ export default function HamburgerMenu({
                 </button>
 
                 {/* Menu */}
-                <ul
+                <div
                     className={`${
                         isMenuOpen ? "flex" : "hidden"
                     } absolute left-0 top-20 max-h-screen w-full flex-col overflow-y-auto bg-black`}
                 >
-                    {categories.map((category) => (
-                        <li
-                            key={category.slug}
-                            onClick={() =>
-                                dropdowns.find((d) => d === category.slug)
-                                    ? setDropdowns((prev) =>
-                                          prev.filter(
-                                              (d) => d !== category.slug
-                                          )
-                                      )
-                                    : setDropdowns((prev) => [
-                                          ...prev,
-                                          category.slug,
-                                      ])
-                            }
-                            className={`${
-                                dropdowns.find((d) => d === category.slug)
-                                    ? "bg-gray-400/10"
-                                    : ""
-                            } relative flex w-full cursor-pointer flex-col justify-between rounded-lg py-2 after:absolute after:top-0 after:h-[1px] after:w-full after:bg-zinc-800 after:p-0 after:content-['']`}
-                        >
-                            <div className="flex">
-                                <a
-                                    className="px-4 py-1"
-                                    onClick={(e) => e.preventDefault()}
-                                >
-                                    {category.name}
-                                </a>
-
-                                <button className="ml-auto">
-                                    {dropdowns.find(
-                                        (d) => d === category.slug
-                                    ) ? (
-                                        <ChevronUpIcon
-                                            height={24}
-                                            width={24}
-                                            className="mr-4"
-                                        />
-                                    ) : (
-                                        <ChevronDownIcon
-                                            height={24}
-                                            width={24}
-                                            className="mr-4"
-                                        />
-                                    )}
-                                </button>
-                            </div>
-
-                            <ul
-                                className={`${
-                                    dropdowns.find((d) => d === category.slug)
-                                        ? "flex"
-                                        : "hidden"
-                                } mt-2 w-full flex-col bg-black`}
+                    <Link
+                        href="/hesabim"
+                        className="flex flex-row items-center gap-2 border-b border-b-zinc-800 p-4"
+                    >
+                        <UserIcon width={28} height={28} />
+                        <span className="inline-block">
+                            {user ? (
+                                <p className="font-medium">Hesabım</p>
+                            ) : (
+                                <p className="font-medium">
+                                    Giriş Yap <br /> veya Üye Ol
+                                </p>
+                            )}
+                        </span>
+                    </Link>
+                    <Accordion type="single" collapsible className="w-full">
+                        {categories.map((category) => (
+                            <AccordionItem
+                                key={category.id}
+                                value={category.id}
+                                className="px-4"
                             >
-                                <li className="relative flex w-full flex-col justify-end rounded-lg py-1.5 text-sm after:absolute after:top-0 after:h-[1px] after:w-full after:bg-zinc-800 after:p-0 after:content-['']">
-                                    <Link
-                                        className="px-4 py-1 font-bold"
-                                        href={`/kategori/${category.slug}`}
-                                    >
-                                        {category.name} Kategorisi Ana Sayfa
-                                    </Link>
-                                </li>
-                                {category.SubCategory.map((subCategory) => (
-                                    <li
-                                        key={subCategory.slug}
-                                        className="relative flex w-full flex-col justify-end rounded-lg py-1.5 text-sm after:absolute after:top-0 after:h-[1px] after:w-full after:bg-zinc-800 after:p-0 after:content-['']"
-                                    >
-                                        <Link
-                                            className="flex px-8 py-1"
-                                            href={`/kategori/${category.slug}/${subCategory.slug}`}
+                                <AccordionTrigger>
+                                    {category.name}
+                                </AccordionTrigger>
+                                <AccordionContent>
+                                    <ul>
+                                        <li
+                                            key={category.id + 11}
+                                            className="relative flex w-full flex-col justify-end rounded-lg py-1.5 text-sm font-bold after:absolute after:top-0 after:h-[1px] after:w-full after:bg-zinc-800 after:p-0 after:content-['']"
                                         >
-                                            <ChevronRightIcon
-                                                width={20}
-                                                height={20}
-                                                className="mr-1.5"
-                                            />
-
-                                            {subCategory.name}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </li>
-                    ))}
-                </ul>
+                                            <Link
+                                                className="px-4 py-1 font-bold"
+                                                href={`/kategori/${category.slug}`}
+                                                key={category.id + 11}
+                                                onClick={() =>
+                                                    setIsMenuOpen(false)
+                                                }
+                                            >
+                                                {category.name} Kategorisi Ana
+                                                Sayfa
+                                            </Link>
+                                        </li>
+                                        {category.SubCategory.map(
+                                            (subCategory) => (
+                                                <li
+                                                    key={subCategory.id}
+                                                    className=" relative flex w-full flex-col justify-end rounded-lg py-1.5 text-sm after:absolute after:top-0 after:h-[1px] after:w-full after:bg-zinc-800 after:p-0 after:content-['']"
+                                                >
+                                                    <Link
+                                                        className="px-8 py-1 font-bold"
+                                                        href={`/kategori/${category.slug}/${subCategory.slug}`}
+                                                        key={subCategory.id}
+                                                        onClick={() =>
+                                                            setIsMenuOpen(false)
+                                                        }
+                                                    >
+                                                        <div className="flex flex-row items-center gap-2">
+                                                            <ChevronRightIcon
+                                                                width={20}
+                                                                height={20}
+                                                            />
+                                                            {subCategory.name}
+                                                        </div>
+                                                    </Link>
+                                                </li>
+                                            )
+                                        )}
+                                    </ul>
+                                </AccordionContent>
+                            </AccordionItem>
+                        ))}
+                    </Accordion>
+                </div>
             </div>
 
             {/* Logo */}

@@ -19,7 +19,7 @@ export default async function HeaderTop() {
 
     return (
         <div className="flex items-center justify-between p-6 py-3">
-            <div className="pb-3 ">
+            <div className="pb-3">
                 <Link href="/">
                     <Image
                         src="/desktoptest.png"
@@ -32,7 +32,7 @@ export default async function HeaderTop() {
                 </Link>
             </div>
             {/* SEARCH INPUT START */}
-            <div className="inline-block w-2/4 px-4 md:px-0 lg:px-0 xl:px-0 2xl:px-0">
+            <div className="inline-block w-2/4 px-4 md:px-0">
                 <div className="relative flex">
                     <SearchInput />
                 </div>
@@ -44,9 +44,9 @@ export default async function HeaderTop() {
                     href="/hesabim"
                     className="flex items-center gap-2 rounded-lg border border-transparent px-2 py-1 transition duration-300 ease-in-out hover:translate-y-1 hover:cursor-pointer hover:border-gray-600 hover:text-primary hover:shadow-lg"
                 >
-                    <div className="flex w-full flex-row-reverse items-center gap-2  md:flex-row lg:flex-row xl:flex-row 2xl:flex-row">
+                    <div className="flex w-full flex-row items-center gap-2">
                         <UserIcon width={28} height={28} />
-                        <div className="hidden md:inline-block lg:inline-block xl:inline-block 2xl:inline-block">
+                        <div className="inline-block">
                             {user ? (
                                 <span className="font-medium">Hesabım</span>
                             ) : (

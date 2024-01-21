@@ -11,47 +11,14 @@ const cardList = [
         footer: (
             <>
                 Son haftadan{" "}
-                <span className="font-semibold text-green-500">%12</span> daha
+                <span className="font-semibold text-green-500">%0</span> daha
                 fazla
             </>
         ),
     },
-    {
-        icon: UsersIcon,
-        header: "Toplam Kullanıcı",
-        content: 0,
-        footer: (
-            <>
-                Son haftadan{" "}
-                <span className="font-semibold text-green-500">%12</span> daha
-                fazla
-            </>
-        ),
-    },
-    {
-        icon: UsersIcon,
-        header: "Toplam Kullanıcı",
-        content: 0,
-        footer: (
-            <>
-                Son haftadan{" "}
-                <span className="font-semibold text-green-500">%12</span> daha
-                fazla
-            </>
-        ),
-    },
-    {
-        icon: UsersIcon,
-        header: "Toplam Kullanıcı",
-        content: 0,
-        footer: (
-            <>
-                Son haftadan{" "}
-                <span className="font-semibold text-green-500">%12</span> daha
-                fazla
-            </>
-        ),
-    },
+    null,
+    null,
+    null,
 ];
 
 export default async function Dashboard() {

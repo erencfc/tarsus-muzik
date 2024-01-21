@@ -96,7 +96,12 @@ export default async function DealerDetails({
                                     alt=""
                                     className="h-16 w-16 object-contain"
                                 />
-                                <span>{dealerPrice.Product.model}</span>
+                                <span
+                                    className="line-clamp-1"
+                                    title={dealerPrice.Product.model}
+                                >
+                                    {dealerPrice.Product.model}
+                                </span>
                             </div>
                         </Link>
                     </td>
