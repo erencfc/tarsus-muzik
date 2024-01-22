@@ -309,34 +309,39 @@ model PasswordResetToken {
 }
 
 model Address {
-  id          String      @id @default(auto()) @map("_id") @db.ObjectId
-  alias       String      @unique
-  firstName   String
-  lastName    String
-  tel         String
-  city        String
-  town        String
-  district    String
-  details     String
-  zipCode     String
-  billing     Boolean     @default(false)
-  billingType BillingType
-  nationalId  String?
-  companyName String?
-  taxOffice   String?
-  taxNumber   String?
-  isCompany   Boolean     @default(false)
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  User        User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      String      @db.ObjectId
-  Order       Order[]
+  id String @id @default(auto()) @map("_id") @db.ObjectId
 
+  alias         String
+  firstName     String
+  lastName      String
+  tel           String
+  city          String
+  town          String
+  district      String
+  details       String
+  zipCode       String
+  billing       Boolean     @default(false)
+  billingType   BillingType
+  nationalId    String?
+  corporateName String?
+  taxOffice     String?
+  taxNumber     String?
+  isCompany     Boolean     @default(false)
+
+  User   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String  @db.ObjectId
+  Order  Order[]
+
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, alias])
   @@map("addresses")
 }
 
 enum BillingType {
-  PERSONAL
+  INDIVIDUAL
   CORPORATE
 }
 

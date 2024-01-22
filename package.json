@@ -49,6 +49,7 @@
         "next-themes": "^0.2.1",
         "prettier": "^3.1.1",
         "prettier-plugin-tailwindcss": "^0.5.9",
+        "randombytes": "^2.1.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-dropzone": "^14.2.3",
@@ -69,6 +70,7 @@
     "devDependencies": {
         "@types/bcryptjs": "^2.4.6",
         "@types/node": "^20",
+        "@types/randombytes": "^2.0.3",
         "@types/react": "^18",
         "@types/react-dom": "^18",
         "@types/uuid": "^9.0.7",

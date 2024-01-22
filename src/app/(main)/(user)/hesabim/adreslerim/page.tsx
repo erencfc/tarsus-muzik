@@ -1,40 +1,25 @@
-"use server";
+import CreateAddressButton from "./CreateAddressButton";
+import UpdateAddressButton from "./UpdateAddressButton";
+import DeleteAddressButton from "./DeleteAddressButton";
 
-import { Suspense } from "react";
-import { UserPayload } from "@/types/UserPayload";
-import { prisma } from "@/lib/db/prisma";
+import { getAddressesByUserId } from "@/lib/db/address";
+import { currentUser } from "@/lib/auth";
 
-import CreateAddressButton from "./ButtonCreate";
-import CreateAddressModal from "./ModalCreate";
+export default async function AddressesPage() {
+    const user = await currentUser();
 
-import UpdateAddressModal from "./ModalUpdate";
-import UpdateAddressButton from "./ButtonUpdate";
-import DeleteAddressButton from "./ButtonDelete";
-
-export default async function Addresses({ user }: { user: UserPayload }) {
-    const addresses = await prisma.address.findMany({
-        where: {
-            userId: user.id,
-        },
-    });
+    const addresses = await getAddressesByUserId({ userId: user.id });
 
     return (
-        <div className="flex flex-col">
-            <Suspense>
-                <CreateAddressModal userId={user.id} />
-            </Suspense>
+        <div className="mx-auto mt-6 flex min-h-[600px] max-w-6xl flex-col p-6">
             <h1 className="text-center text-xl font-bold">Adreslerim</h1>
             <CreateAddressButton />
-            <div className="flex flex-col">
+            <ul>
                 {addresses.map((address) => (
-                    <div
+                    <li
                         key={address.id}
                         className="mb-4 flex flex-col rounded-lg border border-gray-200 p-4"
                     >
-                        <UpdateAddressModal
-                            userId={user.id}
-                            address={address}
-                        />
                         <div className="flex justify-between">
                             <div className="flex flex-col">
                                 <span className="font-bold">
@@ -45,7 +30,7 @@ export default async function Addresses({ user }: { user: UserPayload }) {
                                 </span>
                             </div>
                             <div className="flex flex-col gap-2">
-                                <UpdateAddressButton />
+                                <UpdateAddressButton address={address} />
                                 <DeleteAddressButton addressId={address.id} />
                             </div>
                         </div>
@@ -61,7 +46,7 @@ export default async function Addresses({ user }: { user: UserPayload }) {
                                 Telefon: {address.tel}
                             </span>
                         </div>
-                    </div>
+                    </li>
                 ))}
 
                 {addresses.length === 0 && (
@@ -71,7 +56,7 @@ export default async function Addresses({ user }: { user: UserPayload }) {
                         </span>
                     </div>
                 )}
-            </div>
+            </ul>
         </div>
     );
 }

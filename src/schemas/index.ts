@@ -211,3 +211,120 @@ export const AddProductToDealerSchema = z.object({
             message: "Ürün fiyatını girmelisin.",
         }),
 });
+
+export const AddressSchema = z
+    .object({
+        firstName: z
+            .string({ required_error: "Lütfen adınızı giriniz." })
+            .min(1, {
+                message: "Lütfen adınızı giriniz.",
+            })
+            .trim(),
+        lastName: z
+            .string({ required_error: "Lütfen soyadınızı giriniz." })
+            .min(1, {
+                message: "Lütfen soyadınızı giriniz.",
+            })
+            .trim(),
+        tel: z
+            .string({ required_error: "Lütfen telefon numarası giriniz." })
+            .trim()
+            .refine(
+                (val) =>
+                    val.startsWith("0") && val.length === 11 && !!Number(val),
+                {
+                    message: "Telefon numarası geçerli değil.",
+                }
+            ),
+        city: z
+            .string({ required_error: "Lütfen il giriniz." })
+            .min(1, {
+                message: "Lütfen il giriniz.",
+            })
+            .trim(),
+        town: z
+            .string({ required_error: "Lütfen ilçe giriniz." })
+            .min(1, {
+                message: "Lütfen ilçe giriniz.",
+            })
+            .trim(),
+        district: z
+            .string({ required_error: "Lütfen semt/mahalle giriniz." })
+            .min(1, {
+                message: "Lütfen semt/mahalle giriniz.",
+            })
+            .trim(),
+        details: z
+            .string({ required_error: "Lütfen adres giriniz." })
+            .min(1, {
+                message: "Lütfen adres giriniz.",
+            })
+            .trim(),
+        alias: z
+            .string({ required_error: "Lütfen adres başlığı giriniz." })
+            .min(1, {
+                message: "Lütfen adres başlığı giriniz.",
+            })
+            .trim(),
+        zipCode: z
+            .string({ required_error: "Lütfen posta kodu giriniz." })
+            .trim()
+            .refine((val) => !!Number(val), {
+                message: "Posta kodu geçerli değil.",
+            }),
+        billingType: z.enum(["INDIVIDUAL", "CORPORATE"]),
+        nationalId: z.string(),
+        corporateName: z.string(),
+        taxOffice: z.string(),
+        taxNumber: z.string(),
+    })
+    .superRefine(
+        (
+            { billingType, nationalId, corporateName, taxNumber, taxOffice },
+            ctx
+        ) => {
+            if (billingType === "INDIVIDUAL") {
+                if (
+                    !nationalId ||
+                    nationalId.length !== 11 ||
+                    isNaN(Number(nationalId))
+                ) {
+                    ctx.addIssue({
+                        code: "custom",
+                        path: ["nationalId"],
+
+                        message: "T.C. kimlik numarası geçerli değil.",
+                    });
+                }
+            } else {
+                if (!corporateName) {
+                    ctx.addIssue({
+                        code: "custom",
+                        path: ["corporateName"],
+
+                        message: "Şirket adı girmelisin.",
+                    });
+                }
+                if (
+                    !taxNumber ||
+                    taxNumber.length !== 10 ||
+                    !Number(taxNumber)
+                ) {
+                    ctx.addIssue({
+                        code: "custom",
+                        path: ["taxNumber"],
+
+                        message: "Vergi numarası geçerli değil.",
+                    });
+                }
+                if (!taxOffice) {
+                    ctx.addIssue({
+                        code: "custom",
+                        path: ["taxOffice"],
+
+                        message: "Vergi dairesi girmelisin.",
+                    });
+                }
+            }
+        }
+    );

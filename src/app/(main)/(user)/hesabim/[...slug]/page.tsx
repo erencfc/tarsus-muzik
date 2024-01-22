@@ -8,12 +8,6 @@ import { redirect } from "next/navigation";
 import { getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
 
-const Addresses = dynamic(
-    () => import("@/app/(main)/(user)/hesabim/[...slug]/(addresses)/Addresses"),
-    {
-        loading: () => <Loading />,
-    }
-);
 const Coupons = dynamic(
     () => import("@/app/(main)/(user)/hesabim/[...slug]/Coupons"),
     {
@@ -56,46 +50,41 @@ export default async function AccountSlugPage({
 }: {
     params: { slug: string[] };
 }) {
-    const sessionUser = await currentUser();
-    const user = await getUserById({
-        id: sessionUser?.id,
-        select: {
-            id: true,
-            email: true,
-            firstName: true,
-            lastName: true,
-            smsNoti: true,
-            emailNoti: true,
-            tel: true,
-            emailVerified: true,
-        },
-    });
-
-    if (!user) return null;
-
-    const { slug } = params;
-    const page = slug[0];
-
-    const components: { [key: string]: React.ElementType } = {
-        bilgilerim: PersonalInformation,
-        // siparislerim: Orders,
-        adreslerim: Addresses,
-        // kuponlarim: Coupons,
-        favorilerim: Favorites,
-        "sifre-degistir": ChangePassword,
-    };
-
-    const ComponentToRender = components[page];
-
-    if (ComponentToRender) {
-        return (
-            <div className="m-auto my-6 min-h-[672px] min-w-[300px] max-w-6xl p-6">
-                <Suspense fallback={<Loading />}>
-                    <ComponentToRender user={user} />
-                </Suspense>
-            </div>
-        );
-    } else {
-        redirect("/hesabim");
-    }
+    // const sessionUser = await currentUser();
+    // const user = await getUserById({
+    //     id: sessionUser?.id,
+    //     select: {
+    //         id: true,
+    //         email: true,
+    //         firstName: true,
+    //         lastName: true,
+    //         smsNoti: true,
+    //         emailNoti: true,
+    //         tel: true,
+    //         emailVerified: true,
+    //     },
+    // });
+    // if (!user) return null;
+    // const { slug } = params;
+    // const page = slug[0];
+    // const components: { [key: string]: React.ElementType } = {
+    //     bilgilerim: PersonalInformation,
+    //     // siparislerim: Orders,
+    //     adreslerim: PersonalInformation,
+    //     // kuponlarim: Coupons,
+    //     favorilerim: Favorites,
+    //     "sifre-degistir": ChangePassword,
+    // };
+    // const ComponentToRender = components[page];
+    // if (ComponentToRender) {
+    //     return (
+    //         <div className="m-auto my-6 min-h-[672px] min-w-[300px] max-w-6xl p-6">
+    //             <Suspense fallback={<Loading />}>
+    //                 <ComponentToRender user={user} />
+    //             </Suspense>
+    //         </div>
+    //     );
+    // } else {
+    //     redirect("/hesabim");
+    // }
 }

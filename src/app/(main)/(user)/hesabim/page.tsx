@@ -1,23 +1,28 @@
 const IdentificationIcon = dynamic(
-    () => import("@heroicons/react/24/outline/IdentificationIcon")
+    () => import("@heroicons/react/24/outline/IdentificationIcon"),
+    { loading: () => null }
 );
-const CalendarIcon = dynamic(
-    () => import("@heroicons/react/24/outline/CalendarIcon")
-);
+// const CalendarIcon = dynamic(
+//     () => import("@heroicons/react/24/outline/CalendarIcon")
+// );
 const MapPinIcon = dynamic(
-    () => import("@heroicons/react/24/outline/MapPinIcon")
+    () => import("@heroicons/react/24/outline/MapPinIcon"),
+    { loading: () => null }
 );
-const ReceiptPercentIcon = dynamic(
-    () => import("@heroicons/react/24/outline/ReceiptPercentIcon")
-);
+// const ReceiptPercentIcon = dynamic(
+//     () => import("@heroicons/react/24/outline/ReceiptPercentIcon")
+// );
 const HeartIcon = dynamic(
-    () => import("@heroicons/react/24/outline/HeartIcon")
+    () => import("@heroicons/react/24/outline/HeartIcon"),
+    { loading: () => null }
 );
 const LockClosedIcon = dynamic(
-    () => import("@heroicons/react/24/outline/LockClosedIcon")
+    () => import("@heroicons/react/24/outline/LockClosedIcon"),
+    { loading: () => null }
 );
 const UsersIcon = dynamic(
-    () => import("@heroicons/react/24/outline/UsersIcon")
+    () => import("@heroicons/react/24/outline/UsersIcon"),
+    { loading: () => null }
 );
 
 import { currentRole } from "@/lib/auth";
