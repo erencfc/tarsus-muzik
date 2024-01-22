@@ -2,6 +2,7 @@
 
 import { fetchCategories } from "@/app/utils/fetchCategories";
 import { formatSlug, getPath } from "@/lib/format";
+import Link from "next/link";
 
 export default async function NavLinks() {
     const categories = await fetchCategories();
@@ -11,12 +12,12 @@ export default async function NavLinks() {
             {categories.map((category) => (
                 <li className="px-5" key={formatSlug(category.name)}>
                     <div className="group text-left">
-                        <a
+                        <Link
                             className="relative inline-block whitespace-nowrap after:absolute after:left-2/4 after:top-[1.60rem] after:z-[1] after:h-[2px] after:w-0 after:-translate-x-2/4 after:bg-white after:duration-300 after:content-[''] group-hover:after:w-full"
                             href={getPath(category.slug)}
                         >
                             {category.name}
-                        </a>
+                        </Link>
                         <div>
                             <div className="absolute top-[2.15rem] hidden hover:block group-hover:block">
                                 <div className="py-3">
@@ -28,7 +29,7 @@ export default async function NavLinks() {
                                             key={formatSlug(subCategory.name)}
                                             className="my-3 text-sm text-white"
                                         >
-                                            <a
+                                            <Link
                                                 href={getPath(
                                                     category.slug,
                                                     subCategory.slug
@@ -36,7 +37,7 @@ export default async function NavLinks() {
                                                 className="transition-colors duration-150 hover:text-primary"
                                             >
                                                 {subCategory.name}
-                                            </a>
+                                            </Link>
                                         </div>
                                     ))}
                                 </div>

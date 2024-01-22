@@ -29,7 +29,6 @@ export default function PaginationComponent({
     href: string;
 }) {
     const searchParams = useSearchParams();
-
     const totalPages = Math.ceil(totalItems / itemsPerPage);
 
     const maxPage = Math.min(totalPages, Math.max(currentPage + 2, 3));
@@ -54,8 +53,8 @@ export default function PaginationComponent({
     const getSearchParams = (page: number) => {
         const newSearchParams = new URLSearchParams(searchParams);
         if (page === 1) {
-            newSearchParams.delete("page");
-        } else newSearchParams.set("page", `${page}`);
+            newSearchParams.delete("sayfa");
+        } else newSearchParams.set("sayfa", `${page}`);
         return newSearchParams.toString();
     };
 
@@ -70,7 +69,7 @@ export default function PaginationComponent({
                 />
                 {minPage !== 1 && (
                     <DropdownMenu>
-                        <DropdownMenuTrigger>
+                        <DropdownMenuTrigger className="hidden sm:flex">
                             <PaginationEllipsis />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="min-w-fit list-none">
@@ -97,6 +96,9 @@ export default function PaginationComponent({
                     <PaginationLink
                         key={page}
                         href={`${href}?${getSearchParams(page)}`}
+                        className={`${
+                            currentPage === page ? "text-gray-200" : ""
+                        } hidden sm:inline-flex`}
                         isActive={currentPage === page}
                     >
                         {page}
@@ -104,7 +106,7 @@ export default function PaginationComponent({
                 ))}
                 {maxPage !== totalPages && (
                     <DropdownMenu>
-                        <DropdownMenuTrigger>
+                        <DropdownMenuTrigger className="hidden sm:flex">
                             <PaginationEllipsis />
                         </DropdownMenuTrigger>
 

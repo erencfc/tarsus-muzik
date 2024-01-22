@@ -10,7 +10,13 @@ export const formatPrice = (price: number) => {
 };
 
 export const formatSlug = (category: string) => {
-    const lower = category.toLowerCase();
+    let lower = category.toLowerCase();
+    lower = lower.replace(/ç/g, "c");
+    lower = lower.replace(/ğ/g, "g");
+    lower = lower.replace(/ı/g, "i");
+    lower = lower.replace(/ö/g, "o");
+    lower = lower.replace(/ş/g, "s");
+    lower = lower.replace(/ü/g, "u");
     const allowed = "abcdefghijklmnopqrstuvwxyz0123456789";
     let slug = "";
 

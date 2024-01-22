@@ -119,7 +119,6 @@ export default function ProductList({
                                                 aspectRatio: "200/200",
                                                 objectFit: "cover",
                                             }}
-                                            priority={false}
                                         />
                                     </div>
                                 </div>

@@ -184,3 +184,30 @@ export const fetchNewProducts = async () => {
 
     return newProducts;
 };
+
+export const getProductCountBySlug = async ({
+    categorySlug,
+    subCategorySlug,
+    filter,
+}: {
+    categorySlug?: string | null;
+    subCategorySlug?: string | null;
+    filter?: Prisma.ProductWhereInput;
+}) => {
+    let count: number = 0;
+
+    let where: Prisma.ProductWhereInput = {};
+
+    if (subCategorySlug) {
+        where = { SubCategory: { slug: subCategorySlug } };
+    } else if (categorySlug) where = { Category: { slug: categorySlug } };
+
+    count = await prisma.product.count({
+        where: {
+            ...where,
+            ...filter,
+        },
+    });
+
+    return count;
+};
