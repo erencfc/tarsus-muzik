@@ -36,7 +36,11 @@ export default function ProductDetails({
             DealerPrice: {
                 select: {
                     price: true;
-                    dealerId: true;
+                    Dealer: {
+                        select: {
+                            userId: true;
+                        };
+                    };
                 };
             };
             Brand: true;
@@ -107,7 +111,7 @@ export default function ProductDetails({
     };
 
     const dealerPrice = product.DealerPrice.find(
-        (dealerPrice) => dealerPrice.dealerId === dealerId
+        (dealerPrice) => dealerPrice.Dealer?.userId === user?.id
     )?.price;
 
     return (
@@ -219,7 +223,10 @@ export default function ProductDetails({
                         <ToggleDiscountAlert product={product} user={user} />
                     </div>
                     <div className="flex cursor-pointer flex-row items-center justify-center gap-2 transition-colors duration-150 hover:text-primary">
-                        <ToggleFavoriteButton user={user} product={product}>
+                        <ToggleFavoriteButton
+                            user={user}
+                            product={product as any}
+                        >
                             <div className="flex flex-row items-center gap-2">
                                 {!isFavorite ? (
                                     <>
