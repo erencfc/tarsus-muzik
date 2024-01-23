@@ -29,7 +29,7 @@ export default auth((req) => {
     // console.log("IS API AUTH ROUTE: ", isApiAuthRoute);
     // console.log("IS PUBLIC ROUTE: ", isPublicRoute);
     // console.log("IS AUTH ROUTE: ", isAuthRoute);
-    // console.log("IS ADMIN ROUTE: ", isAdminRoute);
+    /// console.log("IS ADMIN ROUTE: ", isAdminRoute);
 
     if (isAdminRoute) {
         if (userRole !== Role.ADMIN) {
