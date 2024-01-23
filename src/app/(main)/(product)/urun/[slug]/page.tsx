@@ -40,7 +40,11 @@ const getProduct = cache(async (modelSlug: string) => {
             DealerPrice: {
                 select: {
                     price: true,
-                    dealerId: true,
+                    Dealer: {
+                        select: {
+                            userId: true,
+                        },
+                    },
                 },
             },
             Brand: true,
