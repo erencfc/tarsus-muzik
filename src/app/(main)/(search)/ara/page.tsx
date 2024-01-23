@@ -14,6 +14,12 @@ type SearchPageProps = {
     };
 };
 
+export const generateMetadata = ({ searchParams: { q } }: SearchPageProps) => {
+    return {
+        title: `'${q}' arama sonuçları`,
+    };
+};
+
 export default function SearchPage({
     searchParams: { q, kategori, sayfa, sirala, marka, min, max },
 }: SearchPageProps) {

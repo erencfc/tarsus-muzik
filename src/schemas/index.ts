@@ -67,6 +67,15 @@ export const NewPasswordSchema = z.object({
     }),
 });
 
+export const UpdatePasswordSchema = z.object({
+    currentPassword: z.string().min(1, {
+        message: "Lütfen eski şifrenizi giriniz.",
+    }),
+    newPassword: z.string().min(6, {
+        message: "Şifreniz en az 6 karakter olmalıdır.",
+    }),
+});
+
 export const PersonalInformationSchema = z.object({
     firstName: z.string({ required_error: "Lütfen adınızı giriniz." }).min(1, {
         message: "Lütfen adınızı giriniz.",

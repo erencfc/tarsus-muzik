@@ -4,7 +4,7 @@ import { ToggleFavorite } from "@/lib/db/user";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { Product } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { DEFAULT_LOGIN_PATH } from "@/routes";
 
 export default function ToggleFavoriteButton({
@@ -13,7 +13,26 @@ export default function ToggleFavoriteButton({
     children,
 }: {
     user: any;
-    product: Product;
+    product: Prisma.ProductGetPayload<{
+        select: {
+            id: true;
+            model: true;
+            modelSlug: true;
+            images: true;
+            price: true;
+            DealerPrice: {
+                select: {
+                    Dealer: {
+                        select: {
+                            userId: true;
+                        };
+                    };
+                    productId: true;
+                    price: true;
+                };
+            };
+        };
+    }>;
     children?: React.ReactNode;
 }) {
     const router = useRouter();
