@@ -38,7 +38,7 @@ export default function ShoppingCartButton({
                     <span className="font-bold">
                         Sepetinizde <u>{cart?.size || 0} ürün</u> bulunmaktadır.
                     </span>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-red-500">
                         (İndirimler sepette hesaplanır.)
                     </span>
                     {items.map((item, index) => (
