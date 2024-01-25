@@ -243,6 +243,12 @@ export const newProduct = async (values: z.infer<typeof NewProductSchema>) => {
 export const uploadImage = async (
     formData: FormData
 ): Promise<{ success?: string; error?: string; imageUrl?: string }> => {
+    const userRole = await currentRole();
+
+    if (userRole !== "ADMIN") {
+        return { error: "Bu işlemi yapmak için yetkiniz yok." };
+    }
+
     const file = formData.get("image") as File;
 
     if (!file) {
@@ -286,6 +292,12 @@ export const uploadImage = async (
 export const deleteImage = async (
     imageUrl: string
 ): Promise<{ success?: string; error?: string }> => {
+    const userRole = await currentRole();
+
+    if (userRole !== "ADMIN") {
+        return { error: "Bu işlemi yapmak için yetkiniz yok." };
+    }
+
     try {
         const fileName = imageUrl.split("/")[2];
 
