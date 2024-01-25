@@ -29,7 +29,7 @@ export default function CategoryFilter({
                     inputMode="search"
                     type="text"
                     placeholder="Kategori Ara"
-                    className="h-8 rounded-lg dark:border-gray-300 dark:bg-base-100 dark:ring-offset-primary dark:focus:ring-0"
+                    className="h-8 rounded-lg border-gray-300 bg-base-100 ring-offset-primary focus:ring-0 dark:border-gray-300 dark:bg-base-100 dark:ring-offset-primary dark:focus:ring-0"
                     onChange={(e) => setSearchCategory(e.target.value)}
                 />
             </div>

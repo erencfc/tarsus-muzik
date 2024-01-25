@@ -38,7 +38,7 @@ export default function MainLayout({
                 <div className="bg-black/90">
                     <div className="mx-auto min-w-[300px] max-w-6xl p-6">
                         <div className="flex w-full shrink-0 flex-col items-center gap-2 px-4 py-6 sm:flex-row md:px-6">
-                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                            <p className="text-xs text-gray-400 dark:text-gray-400">
                                 © Hesaplı Müzik Aletleri. Tüm hakları saklıdır.
                             </p>
                             {/* <nav className="flex gap-4 sm:ml-auto sm:gap-6">

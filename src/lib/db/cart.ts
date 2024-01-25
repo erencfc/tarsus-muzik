@@ -1,7 +1,8 @@
 import { cookies } from "next/headers";
-import { prisma } from "./prisma";
+import { prisma } from "@/lib/db/prisma";
 import { Dealer, Prisma } from "@prisma/client";
-import { currentUser } from "../auth";
+import { currentUser } from "@/lib/auth";
+import { ObjectId } from "mongodb";
 
 export type CartWithProducts = Prisma.CartGetPayload<{
     include: {
@@ -50,7 +51,8 @@ export async function getCart(): Promise<ShoppingCart | null> {
 
     let cart: CartWithProducts | null = null;
 
-    const localCartId = cookies().get("localCartId")?.value;
+    let localCartId = cookies().get("localCartId")?.value;
+    if (!ObjectId.isValid(localCartId)) localCartId = null;
 
     const include = {
         items: {
@@ -72,31 +74,22 @@ export async function getCart(): Promise<ShoppingCart | null> {
         },
         Coupon: true,
     };
-    if (user) {
-        cart =
-            (await prisma.cart.findFirst({
-                where: {
-                    userId: user.id,
-                },
-                include,
-            })) ?? null;
 
-        const localCart = localCartId
-            ? await prisma.cart.findUnique({
-                  where: {
-                      id: localCartId,
-                  },
-                  include,
-              })
-            : null;
+    cart = await prisma.cart.findFirst({
+        where: user ? { userId: user.id } : { id: localCartId },
+        include,
+    });
 
-        if (localCart && !cart && localCart.userId !== user.id) return null;
+    if (!cart) {
+        const localCart = await prisma.cart.findFirst({
+            where: { id: localCartId },
+            select: { id: true },
+        });
+        if (!localCart) return null;
 
-        if (localCart && !cart) {
-            await prisma.cart.update({
-                where: {
-                    id: localCart.id,
-                },
+        if (user) {
+            cart = await prisma.cart.update({
+                where: { id: localCart.id },
                 data: {
                     User: {
                         connect: {
@@ -104,58 +97,11 @@ export async function getCart(): Promise<ShoppingCart | null> {
                         },
                     },
                 },
-            });
-
-            cart = await prisma.cart.findFirst({
-                where: {
-                    userId: user.id,
-                },
                 include,
             });
-        }
-
-        if (cart && localCart && cart.items.length === 0) {
-            if (localCart.items.length > 0) {
-                await prisma.cart.update({
-                    where: {
-                        id: cart.id,
-                    },
-                    data: {
-                        items: {
-                            createMany: {
-                                data: localCart.items.map((item) => ({
-                                    productId: item.productId,
-                                    quantity: item.quantity,
-                                })),
-                            },
-                        },
-                    },
-                });
-
-                cart = await prisma.cart.findFirst({
-                    where: {
-                        userId: user.id,
-                    },
-                    include,
-                });
-            }
-        }
-    } else {
-        cart = localCartId
-            ? await prisma.cart.findUnique({
-                  where: {
-                      id: localCartId,
-                  },
-                  include,
-              })
-            : null;
-
-        if (cart?.userId) return null;
+        } else return null;
     }
-
-    if (!cart) {
-        return null;
-    }
+    if (cart.userId && cart.userId !== user?.id) return null;
 
     const size = cart.items.reduce((acc, item) => acc + item.quantity, 0);
 
@@ -185,12 +131,8 @@ export async function getCart(): Promise<ShoppingCart | null> {
     }
 
     await prisma.cart.update({
-        where: {
-            id: cart.id,
-        },
-        data: {
-            discount,
-        },
+        where: { id: cart.id },
+        data: { discount },
     });
 
     cart.discount = discount;

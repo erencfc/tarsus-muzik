@@ -16,7 +16,7 @@ export default function CardComponent({
     const Icon = card?.icon;
 
     return (
-        <Card className="w-full hover:cursor-pointer dark:bg-gray-900">
+        <Card className="w-full bg-gray-900 hover:cursor-pointer dark:bg-gray-900">
             <CardContent className="mt-4 h-28">
                 {card && (
                     <div className="flex h-full flex-row gap-6">

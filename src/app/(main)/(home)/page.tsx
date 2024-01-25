@@ -45,7 +45,7 @@ export default async function Home() {
                 </Suspense>
             </SessionProvider>
 
-            <div className="container mx-auto max-w-6xl px-6">
+            {/* <div className="container mx-auto max-w-6xl px-6">
                 <div className="flex flex-row items-center justify-between gap-6">
                     <div className="flex items-center gap-2">
                         <div className="rounded-full bg-gray-200/70 p-3">
@@ -81,7 +81,7 @@ export default async function Home() {
                         </span>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             <div className="container mx-auto my-14 flex max-w-6xl flex-col items-center">
                 <h2 className="text-2xl font-bold">

@@ -8,7 +8,7 @@ export default function Header({
     return (
         <div className="flex w-full flex-col items-center justify-center gap-x-2 gap-y-4">
             {headerIcon}
-            <h1 className="text-white">{headerLabel}</h1>
+            <h1 className="text-white dark:text-white">{headerLabel}</h1>
         </div>
     );
 }

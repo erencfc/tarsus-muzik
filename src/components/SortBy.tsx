@@ -33,10 +33,10 @@ export default function SortBy() {
                     });
                 }}
             >
-                <SelectTrigger className="w-fit dark:border-gray-300 dark:bg-gray-50 dark:focus:ring-0">
+                <SelectTrigger className="w-fit border-gray-300 bg-gray-50 focus:ring-0 dark:border-gray-300 dark:bg-gray-50 dark:focus:ring-0">
                     <SelectValue placeholder="Sırala" />
                 </SelectTrigger>
-                <SelectContent className="text-gray-800 dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800">
+                <SelectContent className="border-gray-300 bg-gray-50 text-gray-800 dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800">
                     <SelectGroup>
                         <SelectItem value="yeni">En Yeni</SelectItem>
                         <SelectItem value="eski">En Eski</SelectItem>

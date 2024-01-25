@@ -80,7 +80,7 @@ export default function SideBar() {
             <div className="mb-12 flex items-center justify-center">
                 <Link href="/">
                     <Image
-                        src="/logotest.png"
+                        src="/images/mobile.png"
                         width={280}
                         height={110}
                         className="h-auto"

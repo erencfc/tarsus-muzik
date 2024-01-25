@@ -81,7 +81,7 @@ export default function CreateAddressButton() {
             <DialogTrigger asChild>
                 <Button
                     variant="outline"
-                    className="my-2 ml-auto w-fit dark:text-gray-200"
+                    className="my-2 ml-auto w-fit text-gray-200 dark:text-gray-200"
                 >
                     Yeni Adres Tanımla
                 </Button>

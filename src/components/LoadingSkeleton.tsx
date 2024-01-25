@@ -6,11 +6,11 @@ export default function LoadingSkeleton() {
         <div className="grid w-full lg:grid-cols-[280px_1fr]">
             <aside className="hidden h-96 rounded-lg border border-gray-300 p-6 lg:block">
                 <div className="space-y-4">
-                    <Skeleton className="h-3 w-[200px] dark:bg-gray-300" />
-                    <Skeleton className="h-3 w-[160px] dark:bg-gray-300" />
-                    <Skeleton className="h-3 w-[160px] dark:bg-gray-300" />
-                    <Skeleton className="h-3 w-[160px] dark:bg-gray-300" />
-                    <Skeleton className="h-3 w-[160px] dark:bg-gray-300" />
+                    <Skeleton className="h-3 w-[200px] bg-gray-300 dark:bg-gray-300" />
+                    <Skeleton className="h-3 w-[160px] bg-gray-300 dark:bg-gray-300" />
+                    <Skeleton className="h-3 w-[160px] bg-gray-300 dark:bg-gray-300" />
+                    <Skeleton className="h-3 w-[160px] bg-gray-300 dark:bg-gray-300" />
+                    <Skeleton className="h-3 w-[160px] bg-gray-300 dark:bg-gray-300" />
                 </div>
             </aside>
             <main className="flex flex-col gap-8 px-6">
@@ -22,14 +22,14 @@ export default function LoadingSkeleton() {
                     {Array.from({ length: 6 }).map((_, i) => (
                         <Card
                             key={i}
-                            className="space-y-6 dark:border-none dark:bg-base-100 dark:text-gray-800"
+                            className="space-y-6 border-none bg-base-100 text-gray-800 dark:border-none dark:bg-base-100 dark:text-gray-800"
                         >
-                            <Skeleton className="mx-auto h-3 w-[180px] dark:bg-gray-300" />
+                            <Skeleton className="mx-auto h-3 w-[180px] bg-gray-300 dark:bg-gray-300" />
 
-                            <Skeleton className="h-48 w-full dark:bg-gray-300" />
+                            <Skeleton className="h-48 w-full bg-gray-300 dark:bg-gray-300" />
                             <div className="flex flex-col items-center justify-center gap-6">
-                                <Skeleton className="h-3 w-[180px] dark:bg-gray-300" />
-                                <Skeleton className="h-3 w-[120px] dark:bg-gray-300" />
+                                <Skeleton className="h-3 w-[180px] bg-gray-300 dark:bg-gray-300" />
+                                <Skeleton className="h-3 w-[120px] bg-gray-300 dark:bg-gray-300" />
                             </div>
                         </Card>
                     ))}

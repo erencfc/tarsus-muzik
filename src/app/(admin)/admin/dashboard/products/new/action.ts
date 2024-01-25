@@ -7,6 +7,8 @@ import { prisma } from "@/lib/db/prisma";
 import { formatSlug } from "@/lib/format";
 import { Brand, Category, SubCategory } from "@prisma/client";
 import { currentRole } from "@/lib/auth";
+import { mkdir, readdir, unlink, writeFile } from "fs/promises";
+import { join } from "path";
 
 async function checkProduct(model: string) {
     const existingProduct = await prisma.product.findFirst({
@@ -225,7 +227,71 @@ export const newProduct = async (values: z.infer<typeof NewProductSchema>) => {
             },
         });
 
-        return { success: "Ürün başarıyla eklendi." };
+        const productUrl =
+            process.env.NEXT_PUBLIC_SITE_URL + `/urun/${formatSlug(model)}`;
+
+        return {
+            success: "Ürün başarıyla eklendi.",
+            productUrl,
+        };
+    } catch (error) {
+        console.log(error);
+        return { error: "Bir hata oluştu. Tekrar deneyin." };
+    }
+};
+
+export const uploadImage = async (
+    formData: FormData
+): Promise<{ success?: string; error?: string; imageUrl?: string }> => {
+    const file = formData.get("image") as File;
+
+    if (!file) {
+        return { error: "Lütfen bir resim seçin." };
+    }
+
+    if (!file.type.startsWith("image")) {
+        return { error: "Lütfen bir resim seçin." };
+    }
+
+    if (file.size > 1024 * 1024 * 10) {
+        return { error: "Lütfen 10 MB'dan küçük bir resim seçin." };
+    }
+
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = new Uint8Array(arrayBuffer);
+
+    try {
+        await readdir(join(process.cwd(), "public", "uploads"));
+    } catch (error) {
+        await mkdir(join(process.cwd(), "public", "uploads"));
+    }
+
+    try {
+        const fileName = Date.now().toString() + "_" + file.name;
+
+        await writeFile(
+            join(process.cwd(), "public", "uploads", fileName),
+            buffer
+        );
+
+        const imageUrl = `/uploads/${fileName}`;
+
+        return { success: "Resim başarıyla yüklendi.", imageUrl };
+    } catch (error) {
+        console.log(error);
+        return { error: "Bir hata oluştu. Tekrar deneyin." };
+    }
+};
+
+export const deleteImage = async (
+    imageUrl: string
+): Promise<{ success?: string; error?: string }> => {
+    try {
+        const fileName = imageUrl.split("/")[2];
+
+        await unlink(join(process.cwd(), "public", "uploads", fileName));
+
+        return { success: "Resim başarıyla silindi." };
     } catch (error) {
         console.log(error);
         return { error: "Bir hata oluştu. Tekrar deneyin." };

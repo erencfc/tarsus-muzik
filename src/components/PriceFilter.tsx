@@ -30,7 +30,7 @@ export default function PriceFilter() {
                     onChange={(e) =>
                         setPrices({ ...prices, min: Number(e.target.value) })
                     }
-                    className="h-10 rounded-lg text-gray-800 dark:border-gray-300 dark:bg-base-100 dark:ring-offset-primary dark:focus:ring-0"
+                    className="h-10 rounded-lg border-gray-300 bg-base-100 text-gray-800 ring-offset-primary focus:ring-0 dark:border-gray-300 dark:bg-base-100 dark:ring-offset-primary dark:focus:ring-0"
                 />
                 <Input
                     type="number"
@@ -39,12 +39,12 @@ export default function PriceFilter() {
                     onChange={(e) =>
                         setPrices({ ...prices, max: Number(e.target.value) })
                     }
-                    className="h-10 rounded-lg text-gray-800 dark:border-gray-300 dark:bg-base-100 dark:ring-offset-primary dark:focus:ring-0"
+                    className="h-10 rounded-lg border-gray-300 bg-base-100 text-gray-800 ring-offset-primary focus:ring-0 dark:border-gray-300 dark:bg-base-100 dark:ring-offset-primary dark:focus:ring-0"
                 />
             </div>
             <Button
                 variant="outline"
-                className="mt-3 w-full text-white dark:border-gray-300 dark:bg-primary"
+                className="mt-3 w-full border-gray-300 bg-primary text-white dark:border-gray-300 dark:bg-primary"
                 onClick={() => {
                     const newSearchParams = new URLSearchParams(searchParams);
 

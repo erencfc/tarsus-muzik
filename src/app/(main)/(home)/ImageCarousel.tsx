@@ -53,8 +53,8 @@ export default function ImageCarousel() {
                     </CarouselItem>
                 ))}
             </CarouselContent>
-            <CarouselPrevious className="left-4 h-10 w-10 dark:opacity-60" />
-            <CarouselNext className="right-4 h-10 w-10 dark:opacity-60" />
+            <CarouselPrevious className="left-4 h-10 w-10 bg-gray-800 opacity-60 dark:opacity-60" />
+            <CarouselNext className="right-4 h-10 w-10 bg-gray-800 opacity-60 dark:opacity-60" />
         </Carousel>
     );
 }

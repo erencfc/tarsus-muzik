@@ -130,10 +130,10 @@ export default function HamburgerMenu({
             {/* Logo */}
             <Link href="/">
                 <Image
-                    src="/logotest.png"
+                    src="/images/mobile.png"
                     alt="logo"
-                    width={180}
-                    height={80}
+                    width={190}
+                    height={30}
                     className="h-auto"
                 />
             </Link>

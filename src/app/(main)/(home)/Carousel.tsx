@@ -40,8 +40,8 @@ export default function Carousel({ children }: { children: React.ReactNode }) {
             className="p-2 text-white"
         >
             <CarouselContent className="ml-0.5">{children}</CarouselContent>
-            <CarouselPrevious className="left-3.5 h-10 w-10 dark:opacity-60" />
-            <CarouselNext className="right-3 h-10 w-10 dark:opacity-60" />
+            <CarouselPrevious className="left-3.5 h-10 w-10 bg-gray-800 opacity-60 dark:opacity-60" />
+            <CarouselNext className="right-3 h-10 w-10 bg-gray-800 opacity-60 dark:opacity-60" />
         </EmblaCarousel>
     );
 }

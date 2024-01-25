@@ -57,7 +57,7 @@ export default function AddToCartButton({
     return (
         <Button
             variant="outline"
-            className="dark:text-gray-200"
+            className="text-gray-200 dark:text-gray-200"
             onClick={handleAddToCart}
             disabled={isPending}
         >

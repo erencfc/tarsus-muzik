@@ -31,7 +31,9 @@ export const CardWrapper = ({
             <CardHeader>
                 <Header headerIcon={headerIcon} headerLabel={headerLabel} />
             </CardHeader>
-            <CardContent className="text-white">{children}</CardContent>
+            <CardContent className="text-white dark:text-white">
+                {children}
+            </CardContent>
             {backButtonLabel && backButtonHref && (
                 <CardFooter>
                     <BackButton label={backButtonLabel} href={backButtonHref} />

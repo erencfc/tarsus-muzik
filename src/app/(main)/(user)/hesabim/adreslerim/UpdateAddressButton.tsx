@@ -105,7 +105,7 @@ export default function UpdateAddressButton({
             <DialogTrigger asChild>
                 <Button
                     variant="outline"
-                    className="ml-auto w-fit dark:text-gray-200"
+                    className="ml-auto w-fit text-gray-200 dark:text-gray-200"
                 >
                     Düzenle
                 </Button>

@@ -21,8 +21,8 @@ import { Button } from "@/components/ui/button";
 import { FormError } from "@/components/Form/form-error";
 import { FormSuccess } from "@/components/Form/form-success";
 import { CardWrapper } from "@/components/auth/CardWrapper";
-import { CheckBadgeIcon, SquaresPlusIcon } from "@heroicons/react/24/outline";
-import { newProduct } from "./action";
+import { SquaresPlusIcon } from "@heroicons/react/24/outline";
+import { newProduct, uploadImage } from "./action";
 import { Brand, Prisma } from "@prisma/client";
 import { fetchCategories } from "@/app/utils/fetchCategories";
 import {
@@ -36,25 +36,18 @@ import { fetchBrands } from "@/app/utils/fetchBrands";
 import { formatSlug } from "@/lib/format";
 import Editor from "@/components/ui/editor/editor";
 import { Label } from "@/components/ui/label";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
+import DeleteImageButton from "./DeleteImageButton";
 
 export default function NewProductForm() {
+    const [uploading, setUploading] = useState<boolean>(false);
     const [images, setImages] = useState<string[]>([]);
 
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
+    const [url, setUrl] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
 
     const [categories, setCategories] = useState<
@@ -154,8 +147,32 @@ export default function NewProductForm() {
             newProduct(values).then((data) => {
                 setError(data?.error);
                 setSuccess(data?.success);
+                setUrl(data?.productUrl);
             });
         });
+    };
+
+    const handleUploadImage = async (file: File) => {
+        setUploading(true);
+        try {
+            if (!file) return;
+            const formData = new FormData();
+            formData.append("image", file);
+
+            const data = await uploadImage(formData);
+
+            const { success, error, imageUrl } = data;
+
+            if (success) {
+                toast.success(success);
+                setImages([...images, imageUrl]);
+            }
+            if (error) toast.error(error);
+        } catch (error) {
+            toast.error(error);
+        } finally {
+            setUploading(false);
+        }
     };
 
     return (
@@ -483,20 +500,11 @@ export default function NewProductForm() {
                                                     </p>
                                                 </div>
                                             </Link>
-                                            <Button
-                                                variant="outline"
-                                                type="button"
-                                                onClick={() => {
-                                                    setImages(
-                                                        images.filter(
-                                                            (_, i) =>
-                                                                i !== index
-                                                        )
-                                                    );
-                                                }}
-                                            >
-                                                Sil
-                                            </Button>
+                                            <DeleteImageButton
+                                                images={images}
+                                                setImages={setImages}
+                                                index={index}
+                                            />
                                         </div>
                                     ))}
                                 </div>
@@ -505,8 +513,44 @@ export default function NewProductForm() {
                     </div>
                     <FormError message={error} />
                     <FormSuccess message={success} />
-                    <div className="flex w-full flex-row gap-4">
-                        <Dialog>
+                    {url && (
+                        <Link href={url} passHref target="_blank">
+                            <Button variant="outline" className="w-full">
+                                Ürüne Git
+                            </Button>
+                        </Link>
+                    )}
+
+                    <div className="flex w-full flex-row gap-4 ">
+                        <Button
+                            variant="default"
+                            type="button"
+                            className="w-full p-0"
+                            disabled={uploading}
+                        >
+                            <Label
+                                htmlFor="input-file"
+                                className="w-full cursor-pointer p-4"
+                            >
+                                Resim Yükle
+                            </Label>
+                            <Input
+                                id="input-file"
+                                type="file"
+                                className="hidden"
+                                accept="image/png, image/jpeg, image/jpg, image/webp"
+                                onChange={async ({ target }) => {
+                                    if (target.files) {
+                                        const file = target.files[0];
+                                        if (file) {
+                                            await handleUploadImage(file);
+                                        }
+                                    }
+                                }}
+                            />
+                        </Button>
+
+                        {/* <Dialog>
                             <DialogTrigger asChild>
                                 <Button
                                     variant="ghost"
@@ -583,7 +627,7 @@ export default function NewProductForm() {
                                     </Button>
                                 </DialogFooter>
                             </DialogContent>
-                        </Dialog>
+                        </Dialog> */}
                         <Button
                             type="submit"
                             variant="ghost"

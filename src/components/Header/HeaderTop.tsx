@@ -22,11 +22,11 @@ export default async function HeaderTop() {
             <div className="pb-3">
                 <Link href="/">
                     <Image
-                        src="/desktoptest.png"
+                        src="/images/desktop.png"
                         alt="logo"
-                        className=""
-                        width={179}
-                        height={52}
+                        className="h-auto"
+                        width={190}
+                        height={30}
                         priority
                     />
                 </Link>

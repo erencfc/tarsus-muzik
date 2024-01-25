@@ -165,7 +165,7 @@ export default async function SearchProducts({
     return (
         <div className="grid w-full lg:grid-cols-[280px_1fr]">
             <aside className="hidden h-fit rounded-lg border border-gray-300 lg:block">
-                <Card className="dark:border-none dark:bg-base-100 dark:text-gray-800">
+                <Card className="border-none bg-base-100 text-gray-800 dark:border-none dark:bg-base-100 dark:text-gray-800">
                     <CardHeader className="pb-3">
                         <CardTitle className="text-xl font-bold">
                             Kategoriler
@@ -200,7 +200,7 @@ export default async function SearchProducts({
                                 </DrawerTrigger>
                                 <DrawerContent>
                                     <DrawerHeader>
-                                        <div className="space-y-6 dark:text-gray-300">
+                                        <div className="space-y-6 text-gray-300 dark:text-gray-300">
                                             <BrandFilter brands={brandCount} />
                                             <PriceFilter />
                                         </div>

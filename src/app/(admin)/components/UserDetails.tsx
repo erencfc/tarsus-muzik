@@ -123,7 +123,7 @@ export default function UserDetails({
                         )}
                     </div>
                     <div className="flex w-full flex-col items-center justify-center">
-                        {user.Cart ? (
+                        {user.Cart && user.Cart.length > 0 ? (
                             <Button
                                 variant="outline"
                                 size="sm"
