@@ -102,12 +102,12 @@ export default function ShoppingCartButton({
                     <span className="text-xl font-extrabold">
                         {formatPrice(cart?.subtotal || 0)}
                     </span>
-                    <Link
+                    <a
                         href="/sepetim"
                         className="btn btn-primary btn-block mt-4 text-white"
                     >
                         Ödeme Yap
-                    </Link>
+                    </a>
                 </div>
             </div>
         </div>

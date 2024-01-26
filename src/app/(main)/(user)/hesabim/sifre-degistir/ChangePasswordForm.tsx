@@ -20,8 +20,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { updatePassword } from "./action";
+import { Checkbox } from "@/components/ui/checkbox";
+import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 
 export default function ChangePasswordForm({ userId }: { userId: string }) {
+    const [showPasswords, setShowPasswords] = useState({
+        currentPassword: false,
+        newPassword: false,
+    });
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
@@ -53,6 +59,9 @@ export default function ChangePasswordForm({ userId }: { userId: string }) {
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="flex flex-col space-y-3"
                 >
+                    <FormLabel className="py-2 text-center text-xl font-semibold text-gray-200">
+                        Şifre Değiştir
+                    </FormLabel>
                     <FormField
                         control={form.control}
                         name="currentPassword"
@@ -60,12 +69,44 @@ export default function ChangePasswordForm({ userId }: { userId: string }) {
                             <FormItem>
                                 <FormLabel>Mevcut Şifre</FormLabel>
                                 <FormControl>
-                                    <Input
-                                        {...field}
-                                        placeholder="Mevcut Şifre"
-                                        type="password"
-                                        disabled={isPending}
-                                    />
+                                    <div className="relative">
+                                        <Input
+                                            {...field}
+                                            placeholder="Mevcut Şifre"
+                                            id="currentPassword"
+                                            type={
+                                                showPasswords.currentPassword
+                                                    ? "text"
+                                                    : "password"
+                                            }
+                                            disabled={isPending}
+                                        />
+
+                                        <Button
+                                            variant="link"
+                                            className=" absolute right-0 top-0 text-gray-300 underline dark:text-gray-300"
+                                            type="button"
+                                            onClick={() => {
+                                                setShowPasswords({
+                                                    ...showPasswords,
+                                                    currentPassword:
+                                                        !showPasswords.currentPassword,
+                                                });
+                                            }}
+                                        >
+                                            {showPasswords.currentPassword ? (
+                                                <EyeClosedIcon
+                                                    width={24}
+                                                    height={24}
+                                                />
+                                            ) : (
+                                                <EyeOpenIcon
+                                                    width={24}
+                                                    height={24}
+                                                />
+                                            )}
+                                        </Button>
+                                    </div>
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -78,12 +119,44 @@ export default function ChangePasswordForm({ userId }: { userId: string }) {
                             <FormItem>
                                 <FormLabel>Yeni Şifre</FormLabel>
                                 <FormControl>
-                                    <Input
-                                        {...field}
-                                        placeholder="Yeni Şifre"
-                                        type="password"
-                                        disabled={isPending}
-                                    />
+                                    <div className="relative">
+                                        <Input
+                                            {...field}
+                                            placeholder="Yeni Şifre"
+                                            id="password"
+                                            type={
+                                                showPasswords.newPassword
+                                                    ? "text"
+                                                    : "password"
+                                            }
+                                            disabled={isPending}
+                                        />
+
+                                        <Button
+                                            variant="link"
+                                            className=" absolute right-0 top-0 text-gray-300 underline dark:text-gray-300"
+                                            type="button"
+                                            onClick={() => {
+                                                setShowPasswords({
+                                                    ...showPasswords,
+                                                    newPassword:
+                                                        !showPasswords.newPassword,
+                                                });
+                                            }}
+                                        >
+                                            {showPasswords.newPassword ? (
+                                                <EyeClosedIcon
+                                                    width={24}
+                                                    height={24}
+                                                />
+                                            ) : (
+                                                <EyeOpenIcon
+                                                    width={24}
+                                                    height={24}
+                                                />
+                                            )}
+                                        </Button>
+                                    </div>
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -91,7 +164,9 @@ export default function ChangePasswordForm({ userId }: { userId: string }) {
                     />
                     <FormSuccess message={success} />
                     <FormError message={error} />
-                    <Button type="submit">Kaydet</Button>
+                    <Button type="submit" disabled={isPending}>
+                        Kaydet
+                    </Button>
                 </form>
             </Form>
         </div>

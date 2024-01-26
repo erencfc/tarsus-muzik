@@ -60,7 +60,7 @@ export default async function FavoritesPage() {
                                                     src={product.images[0]}
                                                     width={80}
                                                     height={80}
-                                                    className="mix-blend-darken"
+                                                    className="min-h-[60px] min-w-[60px] mix-blend-darken"
                                                     alt={product.model}
                                                 />
                                             </Link>
@@ -75,7 +75,7 @@ export default async function FavoritesPage() {
                                             </Link>
                                         </td>
 
-                                        <td className="max-w-xs break-words text-sm">
+                                        <td className="max-w-xs text-center text-sm">
                                             <span className="font-bold">
                                                 {product.DealerPrice.find(
                                                     (dealerPrice) =>

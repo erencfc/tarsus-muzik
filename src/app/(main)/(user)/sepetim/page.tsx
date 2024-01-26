@@ -20,25 +20,30 @@ export default async function CartPage() {
 
     return (
         <Suspense fallback={<Loading />}>
-            <div className="m-auto grid min-w-[300px] max-w-6xl grid-cols-4 grid-rows-2 gap-4 p-6">
+            <div className="mx-auto flex max-w-6xl flex-col gap-4 p-6 min-[1120px]:flex-row">
                 {cart && cart.items.length > 0 ? (
                     <>
-                        <div className="col-span-3 mb-6 rounded-md border border-solid border-[#dadada] p-6">
-                            <h1 className="flex flex-col text-lg font-semibold uppercase text-gray-900 after:my-2 after:h-[1px] after:w-full after:bg-[#dadada] after:content-['']">
-                                Sepet Detayı
-                            </h1>
+                        <div className="flex-[3]">
+                            <div className="col-span-4 mb-6 rounded-md border border-solid border-[#dadada] p-6 min-[1120px]:col-span-3">
+                                <h1 className="flex flex-col text-lg font-semibold uppercase text-gray-900 after:my-2 after:h-[1px] after:w-full after:bg-[#dadada] after:content-['']">
+                                    Sepet Detayı
+                                </h1>
 
-                            {cart &&
-                                cart.items.map((item) => (
-                                    <CartEntry cartItem={item} key={item.id} />
-                                ))}
+                                {cart &&
+                                    cart.items.map((item) => (
+                                        <CartEntry
+                                            cartItem={item}
+                                            key={item.id}
+                                        />
+                                    ))}
 
-                            <BackButton />
+                                <BackButton />
+                            </div>
+                            <div className="col-span-4 col-start-1 row-start-2 mb-6 h-fit rounded-md border border-solid border-[#dadada] p-6 min-[1120px]:col-span-3">
+                                <Discount />
+                            </div>
                         </div>
-                        <div className="col-span-3 col-start-1 row-start-2 mb-6 h-fit rounded-md border border-solid border-[#dadada] p-6">
-                            <Discount />
-                        </div>
-                        <div className="col-start-4 row-span-2 row-start-1 mb-6 h-fit rounded-md border border-solid border-[#dadada] p-6">
+                        <div className="sticky bottom-0 col-span-4 row-start-3 mb-6 h-fit flex-1 rounded-md border border-solid border-[#dadada] bg-base-100 p-6 min-[1120px]:col-start-4 min-[1120px]:row-start-1">
                             <h1 className="flex w-full flex-col text-lg font-semibold uppercase text-gray-900 after:my-2 after:h-[1px] after:w-full after:bg-[#dadada] after:content-['']">
                                 SEPET ÖZETİ
                             </h1>

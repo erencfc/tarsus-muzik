@@ -115,7 +115,7 @@ export default function PersonalInformationForm({
                             control={form.control}
                             name="firstName"
                             render={({ field }) => (
-                                <FormItem>
+                                <FormItem className="w-full">
                                     <FormLabel>Adınız</FormLabel>{" "}
                                     {changedInputs.includes("firstName") && (
                                         <span className="text-xs font-semibold text-red-400">
@@ -142,7 +142,7 @@ export default function PersonalInformationForm({
                             control={form.control}
                             name="lastName"
                             render={({ field }) => (
-                                <FormItem>
+                                <FormItem className="w-full">
                                     <FormLabel>Soyadınız</FormLabel>{" "}
                                     {changedInputs.includes("lastName") && (
                                         <span className="text-xs font-semibold text-red-400">
@@ -169,7 +169,7 @@ export default function PersonalInformationForm({
                             control={form.control}
                             name="email"
                             render={({ field }) => (
-                                <FormItem>
+                                <FormItem className="w-full">
                                     <FormLabel>Email Adresiniz</FormLabel>{" "}
                                     {changedInputs.includes("email") && (
                                         <span className="text-xs font-semibold text-red-400">
@@ -196,7 +196,7 @@ export default function PersonalInformationForm({
                             control={form.control}
                             name="tel"
                             render={({ field }) => (
-                                <FormItem>
+                                <FormItem className="w-full">
                                     <FormLabel>Telefon Numaranız</FormLabel>{" "}
                                     {changedInputs.includes("tel") && (
                                         <span className="text-xs font-semibold text-red-400">
@@ -225,12 +225,12 @@ export default function PersonalInformationForm({
                             <Label>
                                 Kampanyalardan/indirimlerden haberdar olmak için
                             </Label>
-                            <div className="flex w-full flex-row gap-4">
+                            <div className="flex w-full flex-col gap-4 sm:flex-row">
                                 <FormField
                                     control={form.control}
                                     name="emailNoti"
                                     render={({ field }) => (
-                                        <FormItem className="flex w-1/2 flex-row items-center justify-between gap-4 rounded-lg border border-gray-800 p-3 shadow-sm">
+                                        <FormItem className="flex w-full flex-row items-center justify-between gap-4 rounded-lg border border-gray-800 p-3 shadow-sm">
                                             <FormLabel className="flex gap-1">
                                                 E-posta bildirimleri
                                                 <span
@@ -280,7 +280,7 @@ export default function PersonalInformationForm({
                                     control={form.control}
                                     name="smsNoti"
                                     render={({ field }) => (
-                                        <FormItem className="flex w-1/2 flex-row items-center justify-between gap-4 rounded-lg border border-gray-800 p-3 shadow-sm">
+                                        <FormItem className="flex w-full flex-row items-center justify-between gap-4 rounded-lg border border-gray-800 p-3 shadow-sm">
                                             <FormLabel className="flex gap-1">
                                                 SMS bildirimleri
                                                 <span

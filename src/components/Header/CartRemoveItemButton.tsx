@@ -69,7 +69,7 @@ export default function CartRemoveItemButton({
                         İptal
                     </AlertDialogCancel>
                     <AlertDialogAction
-                        className="w-16"
+                        className="w-full sm:w-fit"
                         onClick={handleClick}
                         disabled={isPending}
                     >

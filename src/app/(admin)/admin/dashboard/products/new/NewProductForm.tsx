@@ -158,6 +158,7 @@ export default function NewProductForm() {
             if (!file) return;
             const formData = new FormData();
             formData.append("image", file);
+            formData.append("modelSlug", formatSlug(form.getValues("model")));
 
             const data = await uploadImage(formData);
 
@@ -515,7 +516,11 @@ export default function NewProductForm() {
                     <FormSuccess message={success} />
                     {url && (
                         <Link href={url} passHref target="_blank">
-                            <Button variant="outline" className="w-full">
+                            <Button
+                                variant="default"
+                                type="button"
+                                className="w-full"
+                            >
                                 Ürüne Git
                             </Button>
                         </Link>

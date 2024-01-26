@@ -29,7 +29,7 @@ export default function BrandFilter({
                     inputMode="search"
                     type="text"
                     placeholder="Marka Ara"
-                    className="h-8 rounded-lg border-gray-300 bg-base-100 ring-offset-primary focus:ring-0 dark:border-gray-300 dark:bg-base-100 dark:ring-offset-primary dark:focus:ring-0"
+                    className="h-8 rounded-lg border-gray-300 bg-base-100 text-gray-800 ring-offset-primary focus:ring-0 dark:border-gray-300 dark:bg-base-100 dark:text-gray-800 dark:ring-offset-primary dark:focus:ring-0"
                     onChange={(e) => setSearchBrand(e.target.value)}
                 />
             </div>

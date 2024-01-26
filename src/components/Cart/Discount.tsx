@@ -32,7 +32,7 @@ export default function Discount() {
     };
 
     return (
-        <div className="flex flex-col">
+        <div className="flex w-full flex-col">
             <h1 className="flex w-full flex-col text-lg font-semibold uppercase text-gray-900 after:my-2 after:h-[1px] after:w-full after:bg-[#dadada] after:content-['']">
                 İNDİRİM KUPONU
             </h1>

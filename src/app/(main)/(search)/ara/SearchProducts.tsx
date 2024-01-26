@@ -18,6 +18,8 @@ import { Dealer, Prisma } from "@prisma/client";
 import { Suspense } from "react";
 import CategoryFilter from "./CategoryFilter";
 import PaginationComponent from "@/components/PaginationNew";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 
 type SearchProductsProps = {
     q: string;
@@ -196,11 +198,24 @@ export default async function SearchProducts({
                             <SortBy />
                             <Drawer>
                                 <DrawerTrigger className="ml-auto w-fit lg:hidden">
-                                    Filtrele
+                                    <Button
+                                        variant="link"
+                                        className="text-gray-900 underline dark:text-gray-900"
+                                    >
+                                        Filtrele
+                                    </Button>
                                 </DrawerTrigger>
                                 <DrawerContent>
                                     <DrawerHeader>
                                         <div className="space-y-6 text-gray-300 dark:text-gray-300">
+                                            <div className="space-y-3">
+                                                <Label className="text-xl font-bold">
+                                                    Kategoriler
+                                                </Label>
+                                                <CategoryFilter
+                                                    categories={categoryCount}
+                                                />
+                                            </div>
                                             <BrandFilter brands={brandCount} />
                                             <PriceFilter />
                                         </div>

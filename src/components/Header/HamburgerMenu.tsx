@@ -20,7 +20,19 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import {
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerDescription,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
+} from "@/components/ui/drawer";
 import { User } from "next-auth";
+import { Input } from "@/components/ui/input";
 
 export default function HamburgerMenu({
     categories,
@@ -32,6 +44,7 @@ export default function HamburgerMenu({
     user: User | null;
 }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState<string>("");
 
     return (
         <div className="sticky top-0 z-[1111] m-auto flex h-20 w-full min-w-[290px] items-center justify-between bg-black px-4 text-white xl:hidden">
@@ -140,9 +153,53 @@ export default function HamburgerMenu({
 
             {/* Right Side */}
             <div className="flex items-center gap-2">
-                <Link href="/ara">
-                    <MagnifyingGlassIcon width={24} height={24} />
-                </Link>
+                <Drawer>
+                    <DrawerTrigger asChild>
+                        <Button
+                            variant="ghost"
+                            className="p-0 hover:bg-black dark:hover:bg-black"
+                        >
+                            <MagnifyingGlassIcon width={24} height={24} />
+                        </Button>
+                    </DrawerTrigger>
+                    <DrawerContent>
+                        <div className="mx-auto w-full max-w-sm">
+                            <DrawerHeader>
+                                <DrawerTitle className="text-gray-300 dark:text-gray-300">
+                                    Ürün Ara
+                                </DrawerTitle>
+                                <DrawerDescription className="mt-1">
+                                    Aramak istediğiniz ürünü giriniz.
+                                </DrawerDescription>
+                            </DrawerHeader>
+                            <div className="px-4">
+                                <Input
+                                    type="text"
+                                    placeholder="Ara..."
+                                    className="text-gray-300 dark:text-gray-300"
+                                    onChange={(e) =>
+                                        setSearchQuery(e.target.value)
+                                    }
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter") {
+                                            window.location.href = `/ara?q=${searchQuery}`;
+                                        }
+                                    }}
+                                />
+                            </div>
+                            <DrawerFooter>
+                                <Link
+                                    prefetch={false}
+                                    href={`/ara?q=${searchQuery}`}
+                                    passHref
+                                    className="w-full"
+                                >
+                                    <Button className="w-full">Ara</Button>
+                                </Link>
+                            </DrawerFooter>
+                        </div>
+                    </DrawerContent>
+                </Drawer>
                 <ShoppingCartButton cart={cart} width={24} height={24} />
             </div>
         </div>

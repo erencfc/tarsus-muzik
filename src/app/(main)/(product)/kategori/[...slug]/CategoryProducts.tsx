@@ -27,6 +27,7 @@ import { currentUser } from "@/lib/auth";
 import { getDealerByUserId } from "@/lib/db/dealer";
 import PaginationComponent from "@/components/PaginationNew";
 import { Suspense } from "react";
+import { Button } from "@/components/ui/button";
 
 type CategoryProductsProps = {
     categorySlug: string;
@@ -252,7 +253,12 @@ export default async function CategoryProducts({
                             <SortBy />
                             <Drawer>
                                 <DrawerTrigger className="ml-auto w-fit lg:hidden">
-                                    Filtrele
+                                    <Button
+                                        variant="link"
+                                        className="text-gray-900 underline dark:text-gray-900"
+                                    >
+                                        Filtrele
+                                    </Button>
                                 </DrawerTrigger>
                                 <DrawerContent>
                                     <DrawerHeader>

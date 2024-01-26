@@ -87,11 +87,17 @@ export default async function AccountPage() {
     }
 
     return (
-        <div className="m-auto min-w-[300px] max-w-6xl p-6">
+        <div className="m-auto min-w-[280px] max-w-6xl p-6">
             <div className="p-6 pt-0">
                 <h2 className="mt-6 text-xl font-bold">Hesabınız</h2>
-
-                <ul className="mt-6 grid grid-cols-3 items-center gap-8 font-bold">
+                <style>
+                    {`
+                    .grid {
+                        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                    }
+                    `}
+                </style>
+                <ul className="mt-6 grid items-center gap-8 font-bold">
                     {pages.map((page) => (
                         <li className="w-full" key={page.slug}>
                             <Link

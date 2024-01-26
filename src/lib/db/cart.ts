@@ -54,6 +54,8 @@ export async function getCart(): Promise<ShoppingCart | null> {
     let localCartId = cookies().get("localCartId")?.value;
     if (!ObjectId.isValid(localCartId)) localCartId = null;
 
+    if (!user && !localCartId) return null;
+
     const include = {
         items: {
             include: {
@@ -75,31 +77,37 @@ export async function getCart(): Promise<ShoppingCart | null> {
         Coupon: true,
     };
 
-    cart = await prisma.cart.findFirst({
-        where: user ? { userId: user.id } : { id: localCartId },
-        include,
-    });
+    if (user) {
+        cart = await prisma.cart.findFirst({
+            where: { userId: user.id },
+            include,
+        });
+    } else if (localCartId) {
+        cart = await prisma.cart.findFirst({
+            where: { id: localCartId },
+            include,
+        });
+    } else return null;
 
-    if (!cart) {
+    if (user && !cart) {
+        if (!localCartId) return null;
         const localCart = await prisma.cart.findFirst({
             where: { id: localCartId },
             select: { id: true },
         });
         if (!localCart) return null;
 
-        if (user) {
-            cart = await prisma.cart.update({
-                where: { id: localCart.id },
-                data: {
-                    User: {
-                        connect: {
-                            id: user.id,
-                        },
+        cart = await prisma.cart.update({
+            where: { id: localCart.id },
+            data: {
+                User: {
+                    connect: {
+                        id: user.id,
                     },
                 },
-                include,
-            });
-        } else return null;
+            },
+            include,
+        });
     }
     if (cart.userId && cart.userId !== user?.id) return null;
 

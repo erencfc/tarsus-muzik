@@ -250,6 +250,7 @@ export const uploadImage = async (
     }
 
     const file = formData.get("image") as File;
+    const modelSlug = formData.get("modelSlug") as string;
 
     if (!file) {
         return { error: "Lütfen bir resim seçin." };
@@ -273,7 +274,7 @@ export const uploadImage = async (
     }
 
     try {
-        const fileName = Date.now().toString() + "_" + file.name;
+        const fileName = Date.now().toString() + "_" + modelSlug + ".jpg";
 
         await writeFile(
             join(process.cwd(), "public", "uploads", fileName),

@@ -3,6 +3,15 @@
 import { setProductQuantity } from "@/app/(main)/(user)/sepetim/cart";
 import { CartItemWithProduct } from "@/lib/db/cart";
 import { useTransition } from "react";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 
 export default function QuantitySelect({
     cartItem,
@@ -15,9 +24,9 @@ export default function QuantitySelect({
 
     for (let i = 1; i <= 99; i++) {
         quantityOptions.push(
-            <option key={i} value={i}>
+            <SelectItem value={i.toString()} key={i}>
                 {i}
-            </option>
+            </SelectItem>
         );
     }
 
@@ -26,11 +35,9 @@ export default function QuantitySelect({
             {isPending ? (
                 <span className="loading loading-spinner text-accent" />
             ) : (
-                <select
-                    className="select select-bordered w-full max-w-[80px] focus:border-primary focus:outline-none"
-                    defaultValue={cartItem.quantity}
-                    onChange={(e) => {
-                        const newQuantity = parseInt(e.currentTarget.value);
+                <Select
+                    onValueChange={(selected) => {
+                        const newQuantity = parseInt(selected);
                         startTransition(async () => {
                             await setProductQuantity(
                                 cartItem.productId,
@@ -38,9 +45,19 @@ export default function QuantitySelect({
                             );
                         });
                     }}
+                    value={cartItem.quantity.toString()}
                 >
-                    {quantityOptions}
-                </select>
+                    <SelectTrigger className="w-[60px] bg-base-100 dark:bg-base-100">
+                        <SelectValue className="text-gray-300 dark:text-gray-300">
+                            {cartItem.quantity}
+                        </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectGroup className="text-gray-300 dark:text-gray-300">
+                            {quantityOptions}
+                        </SelectGroup>
+                    </SelectContent>
+                </Select>
             )}
         </>
     );
