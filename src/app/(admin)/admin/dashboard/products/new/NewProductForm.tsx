@@ -148,6 +148,10 @@ export default function NewProductForm() {
                 setError(data?.error);
                 setSuccess(data?.success);
                 setUrl(data?.productUrl);
+                if (data?.success) {
+                    form.reset();
+                    setImages([]);
+                }
             });
         });
     };
@@ -212,14 +216,18 @@ export default function NewProductForm() {
                                         <SelectItem value="newCategory">
                                             Yeni Kategori Ekle
                                         </SelectItem>
-                                        {categories.map((category) => (
-                                            <SelectItem
-                                                value={category.id}
-                                                key={category.id}
-                                            >
-                                                {category.name}
-                                            </SelectItem>
-                                        ))}
+                                        {categories
+                                            .sort((a, b) =>
+                                                a.name.localeCompare(b.name)
+                                            )
+                                            .map((category) => (
+                                                <SelectItem
+                                                    value={category.id}
+                                                    key={category.id}
+                                                >
+                                                    {category.name}
+                                                </SelectItem>
+                                            ))}
                                     </SelectContent>
                                 </Select>
                                 <FormMessage />
@@ -270,7 +278,10 @@ export default function NewProductForm() {
                                             .find(
                                                 (c) => c.id === selectedCategory
                                             )
-                                            ?.SubCategory.map((subCategory) => (
+                                            ?.SubCategory.sort((a, b) =>
+                                                a.name.localeCompare(b.name)
+                                            )
+                                            .map((subCategory) => (
                                                 <SelectItem
                                                     value={subCategory.id}
                                                     key={subCategory.id}
@@ -324,14 +335,18 @@ export default function NewProductForm() {
                                         <SelectItem value="newBrand">
                                             Yeni Marka Ekle
                                         </SelectItem>
-                                        {brands.map((brand) => (
-                                            <SelectItem
-                                                value={brand.id}
-                                                key={brand.id}
-                                            >
-                                                {brand.name}
-                                            </SelectItem>
-                                        ))}
+                                        {brands
+                                            .sort((a, b) =>
+                                                a.name.localeCompare(b.name)
+                                            )
+                                            .map((brand) => (
+                                                <SelectItem
+                                                    value={brand.id}
+                                                    key={brand.id}
+                                                >
+                                                    {brand.name}
+                                                </SelectItem>
+                                            ))}
                                     </SelectContent>
                                 </Select>
                                 <FormMessage />
