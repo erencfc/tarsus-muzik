@@ -188,7 +188,7 @@ export async function createCart(): Promise<ShoppingCart> {
         cookies().set("localCartId", newCart.id, {
             httpOnly: true,
             maxAge: 60 * 60 * 24 * 365,
-            secure: false,
+            secure: process.env.NODE_ENV === "production",
         });
     }
 
