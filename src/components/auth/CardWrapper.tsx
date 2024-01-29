@@ -34,11 +34,11 @@ export const CardWrapper = ({
             <CardContent className="text-white dark:text-white">
                 {children}
             </CardContent>
-            {backButtonLabel && backButtonHref && (
+            {backButtonLabel && backButtonHref ? (
                 <CardFooter>
                     <BackButton label={backButtonLabel} href={backButtonHref} />
                 </CardFooter>
-            )}
+            ) : null}
         </Card>
     );
 };

@@ -117,11 +117,11 @@ export default function PersonalInformationForm({
                             render={({ field }) => (
                                 <FormItem className="w-full">
                                     <FormLabel>Adınız</FormLabel>{" "}
-                                    {changedInputs.includes("firstName") && (
+                                    {changedInputs.includes("firstName") ? (
                                         <span className="text-xs font-semibold text-red-400">
                                             *
                                         </span>
-                                    )}
+                                    ) : null}
                                     <FormControl>
                                         <Input
                                             {...field}
@@ -144,11 +144,11 @@ export default function PersonalInformationForm({
                             render={({ field }) => (
                                 <FormItem className="w-full">
                                     <FormLabel>Soyadınız</FormLabel>{" "}
-                                    {changedInputs.includes("lastName") && (
+                                    {changedInputs.includes("lastName") ? (
                                         <span className="text-xs font-semibold text-red-400">
                                             *
                                         </span>
-                                    )}
+                                    ) : null}
                                     <FormControl>
                                         <Input
                                             {...field}
@@ -171,11 +171,11 @@ export default function PersonalInformationForm({
                             render={({ field }) => (
                                 <FormItem className="w-full">
                                     <FormLabel>Email Adresiniz</FormLabel>{" "}
-                                    {changedInputs.includes("email") && (
+                                    {changedInputs.includes("email") ? (
                                         <span className="text-xs font-semibold text-red-400">
                                             *
                                         </span>
-                                    )}
+                                    ) : null}
                                     <FormControl>
                                         <Input
                                             {...field}
@@ -198,11 +198,11 @@ export default function PersonalInformationForm({
                             render={({ field }) => (
                                 <FormItem className="w-full">
                                     <FormLabel>Telefon Numaranız</FormLabel>{" "}
-                                    {changedInputs.includes("tel") && (
+                                    {changedInputs.includes("tel") ? (
                                         <span className="text-xs font-semibold text-red-400">
                                             *
                                         </span>
-                                    )}
+                                    ) : null}
                                     <FormControl>
                                         <Input
                                             {...field}
@@ -237,7 +237,9 @@ export default function PersonalInformationForm({
                                                     className={`text-xs font-semibold text-red-400 ${
                                                         !changedInputs.includes(
                                                             "emailNoti"
-                                                        ) && "invisible"
+                                                        )
+                                                            ? "invisible"
+                                                            : null
                                                     }`}
                                                 >
                                                     *
@@ -287,7 +289,9 @@ export default function PersonalInformationForm({
                                                     className={`text-xs font-semibold text-red-400 ${
                                                         !changedInputs.includes(
                                                             "smsNoti"
-                                                        ) && "invisible"
+                                                        )
+                                                            ? "invisible"
+                                                            : null
                                                     }`}
                                                 >
                                                     *

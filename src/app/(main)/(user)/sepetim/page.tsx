@@ -29,13 +29,14 @@ export default async function CartPage() {
                                     Sepet Detayı
                                 </h1>
 
-                                {cart &&
-                                    cart.items.map((item) => (
-                                        <CartEntry
-                                            cartItem={item}
-                                            key={item.id}
-                                        />
-                                    ))}
+                                {cart
+                                    ? cart.items.map((item) => (
+                                          <CartEntry
+                                              cartItem={item}
+                                              key={item.id}
+                                          />
+                                      ))
+                                    : null}
 
                                 <BackButton />
                             </div>
@@ -77,7 +78,7 @@ export default async function CartPage() {
                                             {formatPrice(cart.discount)}
                                         </span>
                                     </div>
-                                    {cart.Coupon && (
+                                    {cart.Coupon ? (
                                         <div className="flex flex-col before:my-2 before:h-[1px] before:w-full before:bg-[#dadada] before:content-['']">
                                             <div className="flex w-fit max-w-full flex-row items-center gap-1 bg-blue-400/50 p-1">
                                                 <TagIcon
@@ -93,7 +94,7 @@ export default async function CartPage() {
                                                 />
                                             </div>
                                         </div>
-                                    )}
+                                    ) : null}
                                 </div>
 
                                 <div className="flex flex-row items-center">

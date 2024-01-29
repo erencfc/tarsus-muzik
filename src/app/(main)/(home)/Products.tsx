@@ -88,13 +88,13 @@ export default function Products({ products, title }: ProductsProps) {
                                 <span className="text-lg font-extrabold text-gray-900">
                                     {currentUser?.role === Role.DEALER ? (
                                         <>
-                                            {prices(product).dealerPrice && (
+                                            {prices(product).dealerPrice ? (
                                                 <span className="mr-1 text-sm text-gray-700 line-through">
                                                     {formatPrice(
                                                         prices(product).price
                                                     )}
                                                 </span>
-                                            )}
+                                            ) : null}
 
                                             {formatPrice(
                                                 prices(product)?.dealerPrice ||

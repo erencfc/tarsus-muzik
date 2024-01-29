@@ -80,7 +80,7 @@ export default function AddProductToDealerForm({
         (e: ChangeEvent<HTMLInputElement>) => {
             const params = new URLSearchParams(searchParams);
             if (e.target.value) {
-                e.target.value.length > 2 && params.set("q", e.target.value);
+                if (e.target.value.length > 2) params.set("q", e.target.value);
             } else {
                 params.delete("q");
             }
@@ -156,7 +156,7 @@ export default function AddProductToDealerForm({
                                     </FormItem>
                                 )}
                             />
-                            {product && (
+                            {product ? (
                                 <>
                                     <div className="flex flex-row gap-4">
                                         <Image
@@ -225,7 +225,7 @@ export default function AddProductToDealerForm({
                                         İndirimli Ürünü Ekle
                                     </Button>
                                 </>
-                            )}
+                            ) : null}
                         </>
                     ) : (
                         <p className="text-center text-gray-500">

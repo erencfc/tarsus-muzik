@@ -46,7 +46,7 @@ export default function FormWrapper({
         (e: ChangeEvent<HTMLInputElement>) => {
             const params = new URLSearchParams(searchParams);
             if (e.target.value) {
-                e.target.value.length > 2 && params.set("q", e.target.value);
+                if (e.target.value.length > 2) params.set("q", e.target.value);
             } else {
                 params.delete("q");
             }
@@ -98,14 +98,14 @@ export default function FormWrapper({
                         </i>
                     </Button>
                 </div>
-                {buttonHref && buttonTitle && (
+                {buttonHref && buttonTitle ? (
                     <Link
                         href={buttonHref}
                         className="btn btn-sm border-none bg-primary/70 text-white hover:bg-primary/40"
                     >
                         {buttonTitle}
                     </Link>
-                )}
+                ) : null}
             </div>
             <div className="overflow-x-auto">
                 <table className="table">

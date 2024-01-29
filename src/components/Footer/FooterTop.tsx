@@ -56,16 +56,23 @@ export default async function FooterTop() {
                             Kategoriler
                         </h4>
                         <div className="mt-6 flex flex-col gap-3">
-                            {categories.map((category) => (
-                                <Link
-                                    href={`/kategori/${category.slug}`}
-                                    key={category.id}
-                                >
-                                    <span className="block text-sm text-white hover:underline">
-                                        {category.name}
-                                    </span>
-                                </Link>
-                            ))}
+                            {categories
+                                .sort((a, b) => {
+                                    // order değerine göre sırala (eğer 0 ise en alta at)
+                                    if (a.order === 0) return 1;
+                                    if (b.order === 0) return -1;
+                                    return a.order - b.order;
+                                })
+                                .map((category) => (
+                                    <Link
+                                        href={`/kategori/${category.slug}`}
+                                        key={category.id}
+                                    >
+                                        <span className="block text-sm text-white hover:underline">
+                                            {category.name}
+                                        </span>
+                                    </Link>
+                                ))}
                         </div>
                     </div>
                     <div className="flex w-1/2 flex-col min-[700px]:w-1/3">

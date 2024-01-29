@@ -54,11 +54,11 @@ export default async function CartEntry({ cartItem }: CartEntryProps) {
                     <div className="hidden flex-col items-center justify-center text-center text-sm font-extrabold text-gray-700 min-[850px]:flex">
                         {cartItem.Product.DealerPrice.find(
                             (dealerPrice) => dealerPrice.dealerId === dealer?.id
-                        )?.price && (
+                        )?.price ? (
                             <span className="mr-1 text-xs text-gray-400 line-through">
                                 {formatPrice(cartItem.Product.price)}
                             </span>
-                        )}
+                        ) : null}
                         <span>
                             {formatPrice(
                                 cartItem.Product.DealerPrice.find(
@@ -75,13 +75,13 @@ export default async function CartEntry({ cartItem }: CartEntryProps) {
                     <div className="flex flex-col items-center justify-center text-center text-sm font-extrabold text-gray-700">
                         {cartItem.Product.DealerPrice.find(
                             (dealerPrice) => dealerPrice.dealerId === dealer?.id
-                        )?.price && (
+                        )?.price ? (
                             <span className="text-xs text-gray-400 line-through">
                                 {formatPrice(
                                     cartItem.Product.price * cartItem.quantity
                                 )}
                             </span>
-                        )}
+                        ) : null}
                         {formatPrice(
                             (cartItem.Product.DealerPrice.find(
                                 (dealerPrice) =>
@@ -126,13 +126,13 @@ export default async function CartEntry({ cartItem }: CartEntryProps) {
                     <div className="flex flex-col items-center justify-center text-center text-xs font-extrabold text-gray-700 min-[500px]:text-sm ">
                         {cartItem.Product.DealerPrice.find(
                             (dealerPrice) => dealerPrice.dealerId === dealer?.id
-                        )?.price && (
+                        )?.price ? (
                             <span className="text-xs text-gray-400 line-through">
                                 {formatPrice(
                                     cartItem.Product.price * cartItem.quantity
                                 )}
                             </span>
-                        )}
+                        ) : null}
                         {formatPrice(
                             (cartItem.Product.DealerPrice.find(
                                 (dealerPrice) =>

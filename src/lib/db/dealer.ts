@@ -66,7 +66,6 @@ export const getDealers = async ({
                     User: {
                         firstName: {
                             contains: q,
-                            mode: "insensitive",
                         },
                     },
                 },
@@ -74,7 +73,6 @@ export const getDealers = async ({
                     User: {
                         lastName: {
                             contains: q,
-                            mode: "insensitive",
                         },
                     },
                 },
@@ -82,7 +80,6 @@ export const getDealers = async ({
                     User: {
                         email: {
                             contains: q,
-                            mode: "insensitive",
                         },
                     },
                 },
@@ -90,7 +87,6 @@ export const getDealers = async ({
                     User: {
                         tel: {
                             contains: q,
-                            mode: "insensitive",
                         },
                     },
                 },
@@ -225,7 +221,6 @@ export const getDealerPrices = async ({
                         User: {
                             firstName: {
                                 contains: q,
-                                mode: "insensitive",
                             },
                         },
                     },
@@ -235,7 +230,6 @@ export const getDealerPrices = async ({
                         User: {
                             lastName: {
                                 contains: q,
-                                mode: "insensitive",
                             },
                         },
                     },
@@ -245,7 +239,6 @@ export const getDealerPrices = async ({
                         User: {
                             email: {
                                 contains: q,
-                                mode: "insensitive",
                             },
                         },
                     },
@@ -255,7 +248,6 @@ export const getDealerPrices = async ({
                         User: {
                             tel: {
                                 contains: q,
-                                mode: "insensitive",
                             },
                         },
                     },

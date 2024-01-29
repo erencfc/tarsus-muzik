@@ -63,11 +63,13 @@ export default function PaginationComponent({
             <PaginationContent>
                 <PaginationPrevious
                     className={
-                        currentPage === 1 && "pointer-events-none opacity-40"
+                        currentPage === 1
+                            ? "pointer-events-none opacity-40"
+                            : null
                     }
                     href={`${href}?${getSearchParams(currentPage - 1)}`}
                 />
-                {minPage !== 1 && (
+                {minPage !== 1 ? (
                     <DropdownMenu>
                         <DropdownMenuTrigger className="hidden sm:flex">
                             <PaginationEllipsis />
@@ -91,7 +93,7 @@ export default function PaginationComponent({
                             ))}
                         </DropdownMenuContent>
                     </DropdownMenu>
-                )}
+                ) : null}
                 {pages.map((page) => (
                     <PaginationLink
                         key={page}
@@ -104,7 +106,7 @@ export default function PaginationComponent({
                         {page}
                     </PaginationLink>
                 ))}
-                {maxPage !== totalPages && (
+                {maxPage !== totalPages ? (
                     <DropdownMenu>
                         <DropdownMenuTrigger className="hidden sm:flex">
                             <PaginationEllipsis />
@@ -131,11 +133,12 @@ export default function PaginationComponent({
                             </ScrollArea>
                         </DropdownMenuContent>
                     </DropdownMenu>
-                )}
+                ) : null}
                 <PaginationNext
                     className={
-                        (currentPage === totalPages || totalPages < 1) &&
-                        "pointer-events-none opacity-40"
+                        currentPage === totalPages || totalPages < 1
+                            ? "pointer-events-none opacity-40"
+                            : null
                     }
                     href={`${
                         currentPage === totalPages || totalPages < 1

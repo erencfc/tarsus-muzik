@@ -34,7 +34,7 @@ export default function CreateCommentModal({
             starsList.push(
                 <div
                     className={`flex cursor-pointer ${
-                        pending && "pointer-events-none opacity-40"
+                        pending ? "pointer-events-none opacity-40" : null
                     }`}
                     key={i}
                     onClick={(e) => {
@@ -163,7 +163,7 @@ export default function CreateCommentModal({
                     </div>
 
                     <div className="flex w-full justify-end">
-                        {!pending && (success || !success) && (
+                        {!pending && (success || !success) ? (
                             <div className="mx-auto flex items-center font-semibold">
                                 <span
                                     className={`${
@@ -175,7 +175,7 @@ export default function CreateCommentModal({
                                     {message}
                                 </span>
                             </div>
-                        )}
+                        ) : null}
                         <button
                             className="btn btn-primary btn-sm gap-1 text-white"
                             disabled={pending}

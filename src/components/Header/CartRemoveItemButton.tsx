@@ -49,7 +49,9 @@ export default function CartRemoveItemButton({
     return (
         <AlertDialog>
             <AlertDialogTrigger
-                className={`${isPending && "pointer-events-none opacity-50"}`}
+                className={`${
+                    isPending ? "pointer-events-none opacity-50" : null
+                }`}
                 asChild
             >
                 <TrashIcon

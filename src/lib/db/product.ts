@@ -45,13 +45,11 @@ export const getProducts = async ({
                 {
                     model: {
                         contains: q,
-                        mode: "insensitive",
                     },
                 },
                 {
                     modelSlug: {
                         contains: q,
-                        mode: "insensitive",
                     },
                 },
             ],
@@ -92,13 +90,11 @@ export const searchProducts = async (q: string) => {
                 {
                     model: {
                         contains: q,
-                        mode: "insensitive",
                     },
                 },
                 {
                     modelSlug: {
                         contains: q,
-                        mode: "insensitive",
                     },
                 },
             ],

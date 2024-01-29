@@ -116,14 +116,14 @@ export default function ProductDetails({
 
     return (
         <>
-            {user && (
+            {user ? (
                 <Suspense>
                     <CreateCommentModal
                         productId={product.id}
                         userId={user?.id}
                     />
                 </Suspense>
-            )}
+            ) : null}
             <div className="flex w-full flex-col">
                 {/* <Link */}
                 {/* href={`/marka/${product.Brand.slug}`} */}
@@ -154,28 +154,28 @@ export default function ProductDetails({
                     </div>
                 </div>
 
-                {product.rating > 0 && (
+                {product.rating > 0 ? (
                     <div className="mt-4 flex items-center gap-3">
                         {getRatingStars(product.rating)}
                         <span className="text-sm text-gray-700/60">
                             {product.rating} Puan
                         </span>
                     </div>
-                )}
+                ) : null}
 
                 <div className="mt-12 flex flex-row text-2xl font-bold text-primary">
                     <div className="flex flex-col">
-                        {dealerPrice && (
+                        {dealerPrice ? (
                             <span className="mr-1 text-xs text-gray-400 line-through">
                                 {formatPrice(product.price)}
                             </span>
-                        )}
+                        ) : null}
                         <>
                             <div className="flex flex-row items-center gap-2">
                                 <span>
                                     {formatPrice(dealerPrice || product.price)}
                                 </span>
-                                {quantity > 1 && (
+                                {quantity > 1 ? (
                                     <span className="text-sm font-semibold text-gray-900/60">
                                         (
                                         {formatPrice(
@@ -187,7 +187,7 @@ export default function ProductDetails({
                                         )}
                                         )
                                     </span>
-                                )}
+                                ) : null}
                             </div>
                             <span className="text-xs font-semibold text-gray-900/60">
                                 KDV Dahildir.
@@ -362,24 +362,24 @@ export default function ProductDetails({
                             onClick={handleAddToCart}
                         >
                             Sepete Ekle{" "}
-                            {quantity > 1 && (
+                            {quantity > 1 ? (
                                 <span className="font-bold">({quantity})</span>
-                            )}
+                            ) : null}
                         </button>
                     </div>
 
                     <div className="flex flex-col gap-2 text-center text-xs font-semibold text-gray-900/60">
-                        {isPending && (
+                        {isPending ? (
                             <div className="my-2 flex justify-center">
                                 <span className="loading loading-ball loading-lg"></span>
                             </div>
-                        )}
-                        {!isPending && success && (
+                        ) : null}
+                        {!isPending && success ? (
                             <span className="my-2 flex w-full items-center justify-center text-center text-2xl font-bold text-green-500">
                                 {quantity > 1 ? `${quantity} ` : ""}Ürün Sepete
                                 Eklendi!
                             </span>
-                        )}
+                        ) : null}
                         <span>
                             3D Secure güvenli ödeme yöntemi ile kredi kartınızla
                             ödeme yapabilirsiniz.

@@ -71,13 +71,13 @@ export default async function DealerDetails({
                 "",
             ]}
         >
-            {dealerPrices.length === 0 && (
+            {dealerPrices.length === 0 ? (
                 <tr>
                     <td colSpan={6} className="text-center text-gray-400">
                         Görüntülenecek kayıt bulunamadı.
                     </td>
                 </tr>
-            )}
+            ) : null}
             {dealerPrices.map((dealerPrice) => (
                 <tr
                     className="transition-colors duration-150 ease-in-out hover:bg-gray-950/30"
@@ -108,8 +108,9 @@ export default async function DealerDetails({
 
                     <td>
                         {dealerPrice.Product.Category.name}
-                        {dealerPrice.Product.SubCategory &&
-                            ` / ${dealerPrice.Product.SubCategory.name}`}
+                        {dealerPrice.Product.SubCategory
+                            ? ` / ${dealerPrice.Product.SubCategory.name}`
+                            : null}
                     </td>
                     <td>{formatPrice(dealerPrice.Product.price)}</td>
                     <td>

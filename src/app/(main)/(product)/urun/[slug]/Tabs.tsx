@@ -105,19 +105,19 @@ const getContent = cache(
                         </div>
                     </div>
                     <div>
-                        {comment.title && (
+                        {comment.title ? (
                             <h2 className="text-xl font-bold text-gray-700">
                                 {comment.title}
                             </h2>
-                        )}
-                        {comment.title && comment.content && (
+                        ) : null}
+                        {comment.title && comment.content ? (
                             <hr className="my-3" />
-                        )}
-                        {comment.content && (
+                        ) : null}
+                        {comment.content ? (
                             <span className="text-sm text-gray-600">
                                 {comment.content}
                             </span>
-                        )}
+                        ) : null}
                     </div>
                 </div>
             ));

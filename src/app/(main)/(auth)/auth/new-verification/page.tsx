@@ -52,12 +52,12 @@ export default function NewVerificationPage() {
             backButtonLabel="Giriş Sayfasına Dön"
         >
             <div className="mx-auto flex h-full w-fit max-w-6xl items-center justify-center p-6">
-                {!success && !error && (
+                {!success && !error ? (
                     <span className="loading loading-bars mx-auto text-primary" />
-                )}
+                ) : null}
                 <div className="flex justify-center">
                     <FormSuccess message={success} />
-                    {!success && <FormError message={error} />}
+                    {!success ? <FormError message={error} /> : null}
                 </div>
             </div>
         </CardWrapper>

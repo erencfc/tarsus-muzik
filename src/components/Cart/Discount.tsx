@@ -56,7 +56,7 @@ export default function Discount() {
                         <span>Kullan</span>
                     )}
                 </button>
-                {!isPending && message && (
+                {!isPending && message ? (
                     <span
                         className={`text-center text-sm ${
                             message.success ? "text-green-500" : "text-red-500"
@@ -64,7 +64,7 @@ export default function Discount() {
                     >
                         {message.message}
                     </span>
-                )}
+                ) : null}
             </div>
         </div>
     );

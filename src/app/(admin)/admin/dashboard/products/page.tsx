@@ -41,13 +41,13 @@ export default async function ProductsPage({
                 "",
             ]}
         >
-            {products.length === 0 && (
+            {products.length === 0 ? (
                 <tr>
                     <td colSpan={6} className="text-center text-gray-400">
                         Görüntülenecek kayıt bulunamadı.
                     </td>
                 </tr>
-            )}
+            ) : null}
             {products.map((product) => (
                 <tr
                     className="transition-colors duration-150 ease-in-out hover:bg-gray-950/30"
@@ -73,8 +73,9 @@ export default async function ProductsPage({
 
                     <td>
                         {product.Category.name}
-                        {product.SubCategory &&
-                            ` / ${product.SubCategory.name}`}
+                        {product.SubCategory
+                            ? ` / ${product.SubCategory.name}`
+                            : null}
                     </td>
                     <td>{formatPrice(product.price)}</td>
                     <td>{product.stock}</td>

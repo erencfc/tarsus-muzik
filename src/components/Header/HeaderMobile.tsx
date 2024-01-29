@@ -10,9 +10,7 @@ export default async function HeaderMobile() {
 
     const user = await currentUser();
 
-    return (
-        categories.length && (
-            <HamburgerMenu user={user} cart={cart} categories={categories} />
-        )
-    );
+    return categories.length ? (
+        <HamburgerMenu user={user} cart={cart} categories={categories} />
+    ) : null;
 }

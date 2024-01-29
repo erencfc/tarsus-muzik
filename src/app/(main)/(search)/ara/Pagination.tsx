@@ -40,7 +40,7 @@ export default function Pagination({
                 {numberedPageItems}
             </div>
             <div className="join flex justify-center md:hidden">
-                {currentPage > 1 && (
+                {currentPage > 1 ? (
                     <Link
                         className="btn btn-accent join-item text-white"
                         href={`/ara?${CreateQueryString(
@@ -50,11 +50,11 @@ export default function Pagination({
                     >
                         «
                     </Link>
-                )}
+                ) : null}
                 <button className="btn join-item pointer-events-none border-blue-700 bg-blue-700 text-white">
                     Sayfa {currentPage}
                 </button>
-                {currentPage < totalPages && (
+                {currentPage < totalPages ? (
                     <Link
                         className="btn btn-accent join-item text-white"
                         href={`/ara?${CreateQueryString(
@@ -64,7 +64,7 @@ export default function Pagination({
                     >
                         »
                     </Link>
-                )}
+                ) : null}
             </div>
         </>
     );

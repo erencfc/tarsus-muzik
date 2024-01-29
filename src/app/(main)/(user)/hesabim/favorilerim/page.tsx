@@ -81,13 +81,13 @@ export default async function FavoritesPage() {
                                                     (dealerPrice) =>
                                                         dealerPrice.Dealer
                                                             .userId === user.id
-                                                )?.price && (
+                                                )?.price ? (
                                                     <span className="mr-1 text-xs text-gray-400 line-through">
                                                         {formatPrice(
                                                             product.price
                                                         )}
                                                     </span>
-                                                )}
+                                                ) : null}
                                                 <span>
                                                     {formatPrice(
                                                         product.DealerPrice.find(

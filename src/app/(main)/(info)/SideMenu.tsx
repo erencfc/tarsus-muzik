@@ -57,15 +57,17 @@ export default function SideMenu() {
                     <Link
                         href={item.href}
                         className={`${
-                            pathname === `${item.href}` &&
-                            "font-bold text-primary"
+                            pathname === `${item.href}`
+                                ? "font-bold text-primary"
+                                : null
                         } group`}
                     >
                         <div className="flex flex-row items-center gap-2">
                             <ChevronRightIcon
                                 className={`h-4 w-4 text-gray-500 transition-all duration-300  ease-out group-hover:text-primary ${
-                                    pathname === `${item.href}` &&
-                                    "font-bold text-primary"
+                                    pathname === `${item.href}`
+                                        ? "font-bold text-primary"
+                                        : null
                                 } `}
                             />
 

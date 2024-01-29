@@ -234,7 +234,7 @@ export default function NewProductForm() {
                             </FormItem>
                         )}
                     />
-                    {selectedCategory === "newCategory" && (
+                    {selectedCategory === "newCategory" ? (
                         <FormField
                             control={form.control}
                             name="newCategory"
@@ -253,7 +253,7 @@ export default function NewProductForm() {
                                 </FormItem>
                             )}
                         />
-                    )}
+                    ) : null}
                     <FormField
                         control={form.control}
                         name="subCategory"
@@ -295,7 +295,7 @@ export default function NewProductForm() {
                             </FormItem>
                         )}
                     />
-                    {selectedSubCategory === "newSubCategory" && (
+                    {selectedSubCategory === "newSubCategory" ? (
                         <FormField
                             control={form.control}
                             name="newSubCategory"
@@ -314,7 +314,7 @@ export default function NewProductForm() {
                                 </FormItem>
                             )}
                         />
-                    )}
+                    ) : null}
                     <FormField
                         control={form.control}
                         name="brand"
@@ -353,7 +353,7 @@ export default function NewProductForm() {
                             </FormItem>
                         )}
                     />
-                    {selectedBrand === "newBrand" && (
+                    {selectedBrand === "newBrand" ? (
                         <FormField
                             control={form.control}
                             name="newBrand"
@@ -372,7 +372,7 @@ export default function NewProductForm() {
                                 </FormItem>
                             )}
                         />
-                    )}
+                    ) : null}
                     <FormField
                         control={form.control}
                         name="model"
@@ -493,7 +493,7 @@ export default function NewProductForm() {
                     </div>
 
                     <div className="flex flex-col gap-3">
-                        {images.length > 0 && (
+                        {images.length > 0 ? (
                             <div className="mt-2 flex flex-col gap-2">
                                 <Label>Eklenen Resimler</Label>
                                 <div className="mt-3 flex flex-col gap-6">
@@ -525,11 +525,11 @@ export default function NewProductForm() {
                                     ))}
                                 </div>
                             </div>
-                        )}
+                        ) : null}
                     </div>
                     <FormError message={error} />
                     <FormSuccess message={success} />
-                    {url && (
+                    {url ? (
                         <Link href={url} passHref target="_blank">
                             <Button
                                 variant="default"
@@ -539,7 +539,7 @@ export default function NewProductForm() {
                                 Ürüne Git
                             </Button>
                         </Link>
-                    )}
+                    ) : null}
 
                     <div className="flex w-full flex-row gap-4 ">
                         <Button

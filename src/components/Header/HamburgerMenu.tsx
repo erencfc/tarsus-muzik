@@ -53,8 +53,12 @@ export default function HamburgerMenu({
                 {/* Menu Toggle Button */}
                 <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
                     <>
-                        {isMenuOpen && <XMarkIcon width={32} height={32} />}
-                        {!isMenuOpen && <Bars3Icon width={32} height={32} />}
+                        {isMenuOpen ? (
+                            <XMarkIcon width={32} height={32} />
+                        ) : null}
+                        {!isMenuOpen ? (
+                            <Bars3Icon width={32} height={32} />
+                        ) : null}
                     </>
                 </button>
 

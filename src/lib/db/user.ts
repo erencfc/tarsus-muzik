@@ -100,25 +100,21 @@ export const getUsers = async ({
                 {
                     firstName: {
                         contains: q,
-                        mode: "insensitive",
                     },
                 },
                 {
                     lastName: {
                         contains: q,
-                        mode: "insensitive",
                     },
                 },
                 {
                     email: {
                         contains: q,
-                        mode: "insensitive",
                     },
                 },
                 {
                     tel: {
                         contains: q,
-                        mode: "insensitive",
                     },
                 },
             ],

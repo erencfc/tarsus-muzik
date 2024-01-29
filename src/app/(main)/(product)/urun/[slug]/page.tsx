@@ -101,7 +101,7 @@ export default async function ProductPage({
             <div className="flex flex-col gap-6 sm:flex-row">
                 <div className="max-w-sm">
                     <div className="carousel w-full">
-                        {product.images.map((image, index) => (
+                        {(product.images as string[]).map((image, index) => (
                             <div
                                 id={`item${index + 1}`}
                                 key={index + 1}
@@ -122,7 +122,7 @@ export default async function ProductPage({
                         ))}
                     </div>
                     <div className="flex gap-2 py-2">
-                        {product.images.map((image, index) => (
+                        {(product.images as string[]).map((image, index) => (
                             <Link
                                 href={`#item${index + 1}`}
                                 key={index + 1}

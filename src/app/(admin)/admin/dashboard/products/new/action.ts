@@ -64,10 +64,12 @@ export const newProduct = async (values: z.infer<typeof NewProductSchema>) => {
         }
 
         const isNewCategory =
-            category === "newCategory" && newCategory.length > 0;
+            category === "newCategory" ? newCategory.length > 0 : false;
         const isNewSubCategory =
-            subCategory === "newSubCategory" && newSubCategory.length > 0;
-        const isNewBrand = brand === "newBrand" && newBrand.length > 0;
+            subCategory === "newSubCategory"
+                ? newSubCategory.length > 0
+                : false;
+        const isNewBrand = brand === "newBrand" ? newBrand.length > 0 : false;
 
         let cat: Category | null = null;
         let subCat: SubCategory | null = null;

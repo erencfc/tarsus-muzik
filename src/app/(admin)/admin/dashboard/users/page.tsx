@@ -41,13 +41,13 @@ export default async function UsersPage({
                 "",
             ]}
         >
-            {users.length === 0 && (
+            {users.length === 0 ? (
                 <tr>
                     <td colSpan={6} className="text-center text-gray-400">
                         Görüntülenecek kayıt bulunamadı.
                     </td>
                 </tr>
-            )}
+            ) : null}
             {users.map((user) => (
                 <tr
                     className="transition-colors duration-150 ease-in-out hover:bg-gray-950/30"

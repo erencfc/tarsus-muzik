@@ -49,13 +49,13 @@ export default async function AddressesPage() {
                     </li>
                 ))}
 
-                {addresses.length === 0 && (
+                {addresses.length === 0 ? (
                     <div className="flex flex-col">
                         <span className="text-center text-sm text-gray-500">
                             Henüz adres tanımlamadınız.
                         </span>
                     </div>
-                )}
+                ) : null}
             </ul>
         </div>
     );

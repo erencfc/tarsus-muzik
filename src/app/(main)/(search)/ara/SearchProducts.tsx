@@ -57,13 +57,11 @@ export default async function SearchProducts({
             {
                 model: {
                     contains: q,
-                    mode: "insensitive",
                 },
             },
             {
                 modelSlug: {
                     contains: q,
-                    mode: "insensitive",
                 },
             },
         ],
@@ -101,13 +99,13 @@ export default async function SearchProducts({
 
     let orderBy = {};
 
-    if (sort === "yeni") orderBy = { id: "desc" };
-    else if (sort === "eski") orderBy = { id: "asc" };
+    if (sort === "yeni") orderBy = { createdAt: "desc" };
+    else if (sort === "eski") orderBy = { createdAt: "asc" };
     else if (sort === "dusuk") orderBy = { price: "asc" };
     else if (sort === "yuksek") orderBy = { price: "desc" };
     else if (sort === "az") orderBy = { model: "asc" };
     else if (sort === "za") orderBy = { model: "desc" };
-    else orderBy = { id: "desc" };
+    else orderBy = { createdAt: "desc" };
 
     const products = await prisma.product.findMany({
         where: {
@@ -140,13 +138,11 @@ export default async function SearchProducts({
             {
                 model: {
                     contains: q,
-                    mode: "insensitive",
                 },
             },
             {
                 modelSlug: {
                     contains: q,
-                    mode: "insensitive",
                 },
             },
         ],
@@ -197,7 +193,10 @@ export default async function SearchProducts({
                         <div className="flex flex-col justify-between ">
                             <SortBy />
                             <Drawer>
-                                <DrawerTrigger className="ml-auto w-fit lg:hidden">
+                                <DrawerTrigger
+                                    asChild
+                                    className="ml-auto w-fit lg:hidden"
+                                >
                                     <Button
                                         variant="link"
                                         className="text-gray-900 underline dark:text-gray-900"
@@ -241,14 +240,14 @@ export default async function SearchProducts({
                     </Suspense>
                 </div>
 
-                {totalItemCount > 0 && (
+                {totalItemCount > 0 ? (
                     <PaginationComponent
                         currentPage={currentPage}
                         itemsPerPage={itemsPerPage}
                         totalItems={totalItemCount}
                         href="/ara"
                     />
-                )}
+                ) : null}
             </main>
         </div>
     );

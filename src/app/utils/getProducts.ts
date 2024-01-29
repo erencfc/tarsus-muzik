@@ -62,13 +62,13 @@ export const getProducts = async ({
 
     let orderBy = {};
 
-    if (sort === "yeni") orderBy = { id: "desc" };
-    else if (sort === "eski") orderBy = { id: "asc" };
+    if (sort === "yeni") orderBy = { createdAt: "desc" };
+    else if (sort === "eski") orderBy = { createdAt: "asc" };
     else if (sort === "dusuk") orderBy = { price: "asc" };
     else if (sort === "yuksek") orderBy = { price: "desc" };
     else if (sort === "az") orderBy = { model: "asc" };
     else if (sort === "za") orderBy = { model: "desc" };
-    else orderBy = { id: "desc" };
+    else orderBy = { createdAt: "desc" };
 
     let include = {
         DealerPrice: true,

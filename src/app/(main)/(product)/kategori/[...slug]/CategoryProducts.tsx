@@ -86,13 +86,13 @@ export default async function CategoryProducts({
 
     let orderBy = {};
 
-    if (sort === "yeni") orderBy = { id: "desc" };
-    else if (sort === "eski") orderBy = { id: "asc" };
+    if (sort === "yeni") orderBy = { createdAt: "desc" };
+    else if (sort === "eski") orderBy = { createdAt: "asc" };
     else if (sort === "dusuk") orderBy = { price: "asc" };
     else if (sort === "yuksek") orderBy = { price: "desc" };
     else if (sort === "az") orderBy = { model: "asc" };
     else if (sort === "za") orderBy = { model: "desc" };
-    else orderBy = { id: "desc" };
+    else orderBy = { createdAt: "desc" };
 
     const category = await getCategoryBySlug({
         categorySlug,
@@ -178,35 +178,36 @@ export default async function CategoryProducts({
                     </CardHeader>
                     <CardContent className="space-y-6">
                         <ul>
-                            {!subCategory &&
-                                category.SubCategory.map((subCategory) => (
-                                    <li
-                                        className="group"
-                                        key={subCategory.slug}
-                                    >
-                                        <Link
-                                            href={getPath(
-                                                category.slug,
-                                                subCategory.slug
-                                            )}
-                                            className="flex flex-row items-center"
-                                        >
-                                            <label className="label flex cursor-pointer justify-start gap-2 pl-0 text-primary">
-                                                <ChevronDoubleRightIcon
-                                                    width={16}
-                                                    height={16}
-                                                />
-                                            </label>
-                                            <span
-                                                className={
-                                                    "label-text font-medium transition-colors duration-150 ease-in-out group-hover:text-primary"
-                                                }
-                                            >
-                                                {subCategory.name}
-                                            </span>
-                                        </Link>
-                                    </li>
-                                ))}
+                            {!subCategory
+                                ? category.SubCategory.map((subCategory) => (
+                                      <li
+                                          className="group"
+                                          key={subCategory.slug}
+                                      >
+                                          <Link
+                                              href={getPath(
+                                                  category.slug,
+                                                  subCategory.slug
+                                              )}
+                                              className="flex flex-row items-center"
+                                          >
+                                              <label className="label flex cursor-pointer justify-start gap-2 pl-0 text-primary">
+                                                  <ChevronDoubleRightIcon
+                                                      width={16}
+                                                      height={16}
+                                                  />
+                                              </label>
+                                              <span
+                                                  className={
+                                                      "label-text font-medium transition-colors duration-150 ease-in-out group-hover:text-primary"
+                                                  }
+                                              >
+                                                  {subCategory.name}
+                                              </span>
+                                          </Link>
+                                      </li>
+                                  ))
+                                : null}
 
                             <li className="flex flex-col before:mt-2 before:h-[1px] before:w-full before:rounded-lg before:bg-zinc-300 before:content-[''] after:h-[1px] after:w-full after:rounded-lg after:bg-zinc-300 after:content-['']">
                                 <Link
@@ -252,7 +253,10 @@ export default async function CategoryProducts({
                         <div className="flex flex-col justify-between ">
                             <SortBy />
                             <Drawer>
-                                <DrawerTrigger className="ml-auto w-fit lg:hidden">
+                                <DrawerTrigger
+                                    asChild
+                                    className="ml-auto w-fit lg:hidden"
+                                >
                                     <Button
                                         variant="link"
                                         className="text-gray-900 underline dark:text-gray-900"

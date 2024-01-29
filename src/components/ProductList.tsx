@@ -135,11 +135,11 @@ export default function ProductList({
                                     {product.DealerPrice.find(
                                         (dealerPrice) =>
                                             dealerPrice.dealerId === dealerId
-                                    )?.price && (
+                                    )?.price ? (
                                         <span className="mr-1 text-sm text-gray-400 line-through">
                                             {formatPrice(product.price)}
                                         </span>
-                                    )}
+                                    ) : null}
                                     {formatPrice(
                                         product.DealerPrice.find(
                                             (dealerPrice) =>
@@ -207,14 +207,11 @@ export default function ProductList({
 
                         {isPending && pendingProduct === product.id ? (
                             <span className="loading loading-spinner loading-sm mt-4 text-primary"></span>
-                        ) : (
-                            success &&
-                            addedProducts.includes(product.id) && (
-                                <span className="mt-4 text-green-500">
-                                    Sepete Eklendi!
-                                </span>
-                            )
-                        )}
+                        ) : success && addedProducts.includes(product.id) ? (
+                            <span className="mt-4 text-green-500">
+                                Sepete Eklendi!
+                            </span>
+                        ) : null}
                     </div>
                 );
             })}

@@ -18,7 +18,7 @@ export default function CardComponent({
     return (
         <Card className="w-full bg-gray-900 hover:cursor-pointer dark:bg-gray-900">
             <CardContent className="mt-4 h-28">
-                {card && (
+                {card ? (
                     <div className="flex h-full flex-row gap-6">
                         <span className="badge badge-primary badge-ghost h-6 w-6 rounded-full bg-white">
                             <Icon
@@ -34,14 +34,14 @@ export default function CardComponent({
                             <p className="font-bold text-white">
                                 {Number(card.content).toLocaleString("tr-TR")}
                             </p>
-                            {card.footer && (
+                            {card.footer ? (
                                 <span className="text-xs font-medium">
                                     {card.footer}
                                 </span>
-                            )}
+                            ) : null}
                         </div>
                     </div>
-                )}
+                ) : null}
             </CardContent>
         </Card>
     );
