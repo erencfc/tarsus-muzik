@@ -103,14 +103,14 @@ export default async function Home() {
                             </div>
                         </div>
                     </Link>
-                    <Link href="mailto:hesaplimuzikaletleri@hotmail.com">
+                    <Link href="mailto:iletisim@hesaplimuzikaletleri.com.tr">
                         <div className="group flex flex-col items-center gap-4">
                             <i className="transition-colors duration-300 ease-in-out group-hover:text-primary">
                                 <EnvelopeIcon className="h-8 w-8" />
                             </i>
                             <div className="flex flex-col items-center gap-1 [&>span]:transition-colors [&>span]:duration-300 [&>span]:ease-in-out [&>span]:group-hover:text-primary">
                                 <span className="text-center text-sm font-semibold text-gray-700">
-                                    hesaplimuzikaletleri@hotmail.com
+                                    iletisim@hesaplimuzikaletleri.com.tr
                                 </span>
                                 <span className="text-xs font-semibold text-gray-500 opacity-70">
                                     E-MAİL
