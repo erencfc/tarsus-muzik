@@ -137,12 +137,12 @@ export default function ProductDetails({
                     {product.model}
                 </h1>
                 <div className="mt-4 flex flex-col gap-2 text-xs font-semibold text-gray-900/60">
-                    <div className="flex flex-row">
+                    {/* <div className="flex flex-row">
                         <span className="w-20">Stok Kodu</span>
                         <span className="uppercase before:mr-2 before:content-[':']">
                             {product.id.slice(-10)}
                         </span>
-                    </div>
+                    </div> */}
                     <div className="flex flex-row">
                         <span className="w-20">Kategori</span>
                         <Link

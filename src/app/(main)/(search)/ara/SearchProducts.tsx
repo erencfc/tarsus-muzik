@@ -126,7 +126,16 @@ export default async function SearchProducts({
                 },
             },
         },
-        orderBy,
+        orderBy: [
+            {
+                SubCategory: {
+                    order: "asc",
+                },
+            },
+            {
+                ...orderBy,
+            },
+        ],
         skip: (currentPage - 1) * itemsPerPage,
         take: itemsPerPage,
     });

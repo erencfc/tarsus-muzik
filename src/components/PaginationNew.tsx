@@ -74,23 +74,26 @@ export default function PaginationComponent({
                         <DropdownMenuTrigger className="hidden sm:flex">
                             <PaginationEllipsis />
                         </DropdownMenuTrigger>
+
                         <DropdownMenuContent className="min-w-fit list-none">
-                            {previousPages.reverse().map((page) => (
-                                <DropdownMenuItem
-                                    key={page}
-                                    className="cursor-pointer rounded-md p-0"
-                                >
-                                    <PaginationLink
-                                        key={`prev-${page}`}
-                                        href={`${href}?${getSearchParams(
-                                            page
-                                        )}`}
-                                        isActive={currentPage === page}
+                            <ScrollArea className="h-[250px]">
+                                {previousPages.reverse().map((page) => (
+                                    <DropdownMenuItem
+                                        key={page}
+                                        className="cursor-pointer rounded-md p-0"
                                     >
-                                        {page}
-                                    </PaginationLink>
-                                </DropdownMenuItem>
-                            ))}
+                                        <PaginationLink
+                                            key={`prev-${page}`}
+                                            href={`${href}?${getSearchParams(
+                                                page
+                                            )}`}
+                                            isActive={currentPage === page}
+                                        >
+                                            {page}
+                                        </PaginationLink>
+                                    </DropdownMenuItem>
+                                ))}
+                            </ScrollArea>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 ) : null}
