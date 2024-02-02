@@ -88,14 +88,14 @@ export default async function Home() {
                     Soru ve Talepleriniz İçin
                 </h2>
                 <div className="mt-8 flex flex-col justify-between gap-8 sm:flex-row sm:gap-12 md:flex-row md:gap-36  lg:flex-row lg:gap-64">
-                    <Link href="tel:01234567890">
+                    <Link href="tel:05343742585">
                         <div className="group flex flex-col items-center gap-4">
                             <i className="transition-colors duration-300 ease-in-out group-hover:text-primary">
                                 <PhoneIcon className="h-8 w-8" />
                             </i>
                             <div className="flex flex-col items-center gap-1 [&>span]:transition-colors [&>span]:duration-300 [&>span]:ease-in-out [&>span]:group-hover:text-primary">
                                 <span className="text-center text-sm font-semibold text-gray-700">
-                                    (0123) 456 78 90
+                                    (0534) 374 25 85
                                 </span>
                                 <span className="text-xs font-semibold text-gray-500 opacity-70">
                                     TELEFON
@@ -103,14 +103,14 @@ export default async function Home() {
                             </div>
                         </div>
                     </Link>
-                    <Link href="mailto:mail@mail.com">
+                    <Link href="mailto:hesaplimuzikaletleri@hotmail.com">
                         <div className="group flex flex-col items-center gap-4">
                             <i className="transition-colors duration-300 ease-in-out group-hover:text-primary">
                                 <EnvelopeIcon className="h-8 w-8" />
                             </i>
                             <div className="flex flex-col items-center gap-1 [&>span]:transition-colors [&>span]:duration-300 [&>span]:ease-in-out [&>span]:group-hover:text-primary">
                                 <span className="text-center text-sm font-semibold text-gray-700">
-                                    mail@mail.com
+                                    hesaplimuzikaletleri@hotmail.com
                                 </span>
                                 <span className="text-xs font-semibold text-gray-500 opacity-70">
                                     E-MAİL
@@ -118,7 +118,7 @@ export default async function Home() {
                             </div>
                         </div>
                     </Link>
-                    <Link href="https://wa.me/905012345678">
+                    <Link href="https://wa.me/905343742585">
                         <div className="group flex flex-col items-center gap-4">
                             <i className="transition-colors duration-300 ease-in-out group-hover:text-primary">
                                 <svg
@@ -133,7 +133,7 @@ export default async function Home() {
                             </i>
                             <div className="flex flex-col items-center gap-1 [&>span]:transition-colors [&>span]:duration-300 [&>span]:ease-in-out [&>span]:group-hover:text-primary">
                                 <span className="text-center text-sm font-semibold text-gray-700">
-                                    0501 234 56 78
+                                    0534 374 25 85
                                 </span>
                                 <span className="text-xs font-semibold text-gray-500 opacity-70">
                                     WHATSAPP
