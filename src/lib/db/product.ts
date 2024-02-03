@@ -72,6 +72,9 @@ export const getProducts = async ({
         },
         skip: (currentPage - 1) * itemsPerPage,
         take: itemsPerPage,
+        orderBy: {
+            createdAt: "desc",
+        },
     });
 
     return products;

@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/drawer";
 import { User } from "next-auth";
 import { Input } from "@/components/ui/input";
+import SignOutButton from "../SignOutButton";
 
 export default function HamburgerMenu({
     categories,
@@ -68,7 +69,7 @@ export default function HamburgerMenu({
                         isMenuOpen ? "flex" : "hidden"
                     } absolute left-0 top-20 max-h-screen w-full flex-col overflow-y-auto bg-black`}
                 >
-                    <Link
+                    <a
                         href="/hesabim"
                         className="flex flex-row items-center gap-2 border-b border-b-zinc-800 p-4"
                     >
@@ -82,7 +83,12 @@ export default function HamburgerMenu({
                                 </p>
                             )}
                         </span>
-                    </Link>
+                    </a>
+                    {user ? (
+                        <div className="flex border-b border-b-zinc-800 p-2">
+                            <SignOutButton />
+                        </div>
+                    ) : null}
                     <Accordion type="single" collapsible className="w-full">
                         {categories.map((category) => (
                             <AccordionItem

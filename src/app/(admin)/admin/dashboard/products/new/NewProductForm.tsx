@@ -80,9 +80,9 @@ export default function NewProductForm() {
             newSubCategory: "",
             newBrand: "",
             description: "",
-            deliveryTimeMaxDay: "",
-            deliveryTimeMinDay: "",
-            stock: "",
+            deliveryTimeMaxDay: "3",
+            deliveryTimeMinDay: "1",
+            stock: "99",
             images: [],
         },
     });

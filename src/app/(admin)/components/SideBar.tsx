@@ -24,7 +24,7 @@ const menuItems = [
                 icon: <DashboardIcon height={iconSize} width={iconSize} />,
             },
             {
-                title: "Siparişler",
+                title: "Siparişler (Yakında)",
                 path: "#",
                 icon: <BanknotesIcon height={iconSize} width={iconSize} />,
             },
@@ -44,7 +44,7 @@ const menuItems = [
                 icon: <UserGroupIcon height={iconSize} width={iconSize} />,
             },
             {
-                title: "Kuponlar",
+                title: "Kuponlar (Yakında)",
                 path: "#",
                 icon: <ReceiptPercentIcon height={iconSize} width={iconSize} />,
             },
@@ -54,17 +54,17 @@ const menuItems = [
         title: "Analizler",
         list: [
             {
-                title: "Lorem1",
+                title: "(Yakında) 1",
                 path: "#",
                 icon: <DashboardIcon height={iconSize} width={iconSize} />,
             },
             {
-                title: "Lorem2",
+                title: "(Yakında) 2",
                 path: "#",
                 icon: <DashboardIcon height={iconSize} width={iconSize} />,
             },
             {
-                title: "Lorem3",
+                title: "(Yakında) 3",
                 path: "#",
                 icon: <DashboardIcon height={iconSize} width={iconSize} />,
             },

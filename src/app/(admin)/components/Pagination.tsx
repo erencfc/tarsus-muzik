@@ -97,7 +97,7 @@ export default function PaginationComponent({
                         </DropdownMenuContent>
                     </DropdownMenu>
                 ) : null}
-                {pages.map((page) => (
+                {pages.map((page, i) => (
                     <PaginationLink
                         key={page}
                         href={`${href}?${getSearchParams(page)}`}
@@ -114,7 +114,7 @@ export default function PaginationComponent({
 
                         <DropdownMenuContent className="min-w-fit list-none">
                             <ScrollArea className="h-[250px]">
-                                {nextPages.map((page) => (
+                                {nextPages.slice(0, 30).map((page, i) => (
                                     <DropdownMenuItem
                                         key={`next-${page}`}
                                         className="cursor-pointer rounded-md p-0"

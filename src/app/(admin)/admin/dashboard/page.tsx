@@ -33,7 +33,7 @@ export default async function Dashboard() {
                 ))}
             </div>
             <Orders />
-            TODO: Add charts
+            {/* TODO: Add charts */}
         </div>
     );
 }

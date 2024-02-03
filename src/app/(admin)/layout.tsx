@@ -21,7 +21,7 @@ export default async function AdminLayout({
 
     return (
         <SessionProvider session={session}>
-            <div className="flex min-h-screen bg-gray-950/95 text-white">
+            <div className="flex min-h-screen overflow-auto bg-gray-950/95 text-white">
                 <aside className="flex flex-1 flex-col justify-between bg-gray-900 p-6 py-8">
                     <div>
                         <SideBar />
