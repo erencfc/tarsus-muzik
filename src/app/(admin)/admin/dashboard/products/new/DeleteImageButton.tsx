@@ -18,10 +18,11 @@ export default function DeleteImageButton({
             onClick={async () => {
                 const { success, error } = await deleteImage(images[index]);
 
-                if (success) toast.success(success);
+                if (success) {
+                    toast.success(success);
+                    setImages((prev) => prev.filter((_, i) => i !== index));
+                }
                 if (error) toast.error(error);
-
-                setImages((prev) => prev.filter((_, i) => i !== index));
             }}
         >
             Sil
