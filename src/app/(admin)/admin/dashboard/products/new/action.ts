@@ -270,20 +270,20 @@ export const uploadImage = async (
     const buffer = new Uint8Array(arrayBuffer);
 
     try {
-        await readdir(join(process.cwd(), "static", "uploads"));
+        await readdir(join(process.cwd(), "public", "uploads"));
     } catch (error) {
-        await mkdir(join(process.cwd(), "static", "uploads"));
+        await mkdir(join(process.cwd(), "public", "uploads"));
     }
 
     try {
         const fileName = Date.now().toString() + "_" + modelSlug + ".jpg";
 
         await writeFile(
-            join(process.cwd(), "static", "uploads", fileName),
+            join(process.cwd(), "public", "uploads", fileName),
             buffer
         );
 
-        const imageUrl = `/static/uploads/${fileName}`;
+        const imageUrl = `/uploads/${fileName}`;
 
         return { success: "Resim başarıyla yüklendi.", imageUrl };
     } catch (error) {
@@ -304,7 +304,7 @@ export const deleteImage = async (
     try {
         const fileName = imageUrl.split("/")[2];
 
-        await unlink(join(process.cwd(), "static", "uploads", fileName));
+        await unlink(join(process.cwd(), "public", "uploads", fileName));
 
         return { success: "Resim başarıyla silindi." };
     } catch (error) {

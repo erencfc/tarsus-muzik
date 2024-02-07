@@ -512,7 +512,7 @@ export default function NewProductForm() {
                                                         className="h-16 w-16 rounded-md object-cover"
                                                     />
                                                     <p className="text-sm">
-                                                        {formatSlug(image)}
+                                                        {image}
                                                     </p>
                                                 </div>
                                             </Link>
