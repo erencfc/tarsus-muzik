@@ -4,6 +4,15 @@ import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/db/prisma";
 import { formatSlug } from "../format";
 
+export const getCategories = async () => {
+    const categories = await prisma.category.findMany({
+        include: {
+            SubCategory: true,
+        },
+    });
+    return categories;
+};
+
 export const getCategoryBySlug = async ({
     categorySlug,
     select,

@@ -2,10 +2,10 @@ import { CarouselItem } from "@/components/ui/carousel";
 import Carousel from "./Carousel";
 import Link from "next/link";
 import Image from "next/image";
-import { fetchCategories } from "@/app/utils/fetchCategories";
+import { getCategories } from "@/lib/db/category";
 
 export default async function Categories() {
-    const categories = await fetchCategories();
+    const categories = await getCategories();
 
     return (
         <div className="container mx-auto flex max-w-6xl flex-col gap-6">

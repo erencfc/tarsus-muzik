@@ -3,8 +3,8 @@ import { ToastContainer } from "react-toastify";
 import { Suspense } from "react";
 import HeaderTop from "@/components/Header/HeaderTop";
 import HeaderMobile from "@/components/Header/HeaderMobile";
-import Navbar from "@/components/Header/Navbar";
 import FooterTop from "@/components/Footer/FooterTop";
+import NavLinks from "@/components/Header/NavLinks";
 
 export default function MainLayout({
     children,
@@ -18,7 +18,11 @@ export default function MainLayout({
                     <div className="container m-auto max-w-6xl">
                         <HeaderTop />
                     </div>
-                    <Navbar />
+                    <div className="sticky top-0 z-[1111] hidden h-12 items-center justify-center bg-zinc-950 font-semibold text-white xl:flex">
+                        <ul className="flex items-center justify-between gap-6">
+                            <NavLinks />
+                        </ul>
+                    </div>
                 </div>
 
                 <HeaderMobile />

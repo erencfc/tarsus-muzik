@@ -1,8 +1,8 @@
 "use client";
 
-export const metadata = {
-    title: "Sayfa Bulunamadı - Hesaplı Müzik Aletleri",
-};
+// export const metadata = {
+//     title: "Sayfa Bulunamadı",
+// };
 
 export default function NotFound() {
     return (

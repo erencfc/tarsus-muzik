@@ -24,7 +24,7 @@ import { CardWrapper } from "@/components/auth/CardWrapper";
 import { SquaresPlusIcon } from "@heroicons/react/24/outline";
 import { newProduct, uploadImage } from "./action";
 import { Brand, Prisma } from "@prisma/client";
-import { fetchCategories } from "@/app/utils/fetchCategories";
+import { getCategories } from "@/lib/db/category";
 import {
     Select,
     SelectContent,
@@ -57,7 +57,7 @@ export default function NewProductForm() {
     const onLoad = useCallback(() => {
         if (categories.length > 0 && brands.length > 0) return;
 
-        Promise.all([fetchCategories(), fetchBrands()])
+        Promise.all([getCategories(), fetchBrands()])
             .then(([categoriesData, brandsData]) => {
                 setCategories(categoriesData);
                 setBrands(brandsData);

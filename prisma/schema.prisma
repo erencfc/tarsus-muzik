@@ -147,7 +147,7 @@ model Product {
   categoryId         String
   SubCategory        SubCategory     @relation(fields: [subCategoryId], references: [id], onDelete: Cascade)
   subCategoryId      String
-  from               String?         @default("dore")
+  from               String?         @default("bilinmeyen")
   CartItem           CartItem[]
   Favorite           Favorite[]
   Comment            Comment[]

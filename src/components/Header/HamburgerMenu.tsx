@@ -90,35 +90,49 @@ export default function HamburgerMenu({
                         </div>
                     ) : null}
                     <Accordion type="single" collapsible className="w-full">
-                        {categories.map((category) => (
-                            <AccordionItem
-                                key={category.id}
-                                value={category.id}
-                                className="px-4"
-                            >
-                                <AccordionTrigger>
-                                    {category.name}
-                                </AccordionTrigger>
-                                <AccordionContent>
-                                    <ul>
-                                        <li
-                                            key={category.id + 11}
-                                            className="relative flex w-full flex-col justify-end rounded-lg py-1.5 text-sm font-bold after:absolute after:top-0 after:h-[1px] after:w-full after:bg-zinc-800 after:p-0 after:content-['']"
-                                        >
-                                            <Link
-                                                className="px-4 py-1 font-bold"
-                                                href={`/kategori/${category.slug}`}
+                        {categories
+                            .sort((a, b) => {
+                                // order değerine göre sırala (eğer 0 ise en alta at)
+                                if (a.order === 0) return 1;
+                                if (b.order === 0) return -1;
+                                return a.order - b.order;
+                            })
+                            .map((category) => (
+                                <AccordionItem
+                                    key={category.id}
+                                    value={category.id}
+                                    className="px-4"
+                                >
+                                    <AccordionTrigger>
+                                        {category.name}
+                                    </AccordionTrigger>
+                                    <AccordionContent>
+                                        <ul>
+                                            <li
                                                 key={category.id + 11}
-                                                onClick={() =>
-                                                    setIsMenuOpen(false)
-                                                }
+                                                className="relative flex w-full flex-col justify-end rounded-lg py-1.5 text-sm font-bold after:absolute after:top-0 after:h-[1px] after:w-full after:bg-zinc-800 after:p-0 after:content-['']"
                                             >
-                                                {category.name} Kategorisi Ana
-                                                Sayfa
-                                            </Link>
-                                        </li>
-                                        {category.SubCategory.map(
-                                            (subCategory) => (
+                                                <Link
+                                                    className="px-4 py-1 font-bold"
+                                                    href={`/kategori/${category.slug}`}
+                                                    key={category.id + 11}
+                                                    onClick={() =>
+                                                        setIsMenuOpen(false)
+                                                    }
+                                                >
+                                                    {category.name} Kategorisi
+                                                    Ana Sayfa
+                                                </Link>
+                                            </li>
+                                            {category.SubCategory.sort(
+                                                (a, b) => {
+                                                    // order değerine göre sırala (eğer 0 ise en alta at)
+                                                    if (a.order === 0) return 1;
+                                                    if (b.order === 0)
+                                                        return -1;
+                                                    return a.order - b.order;
+                                                }
+                                            ).map((subCategory) => (
                                                 <li
                                                     key={subCategory.id}
                                                     className=" relative flex w-full flex-col justify-end rounded-lg py-1.5 text-sm after:absolute after:top-0 after:h-[1px] after:w-full after:bg-zinc-800 after:p-0 after:content-['']"
@@ -140,12 +154,11 @@ export default function HamburgerMenu({
                                                         </div>
                                                     </Link>
                                                 </li>
-                                            )
-                                        )}
-                                    </ul>
-                                </AccordionContent>
-                            </AccordionItem>
-                        ))}
+                                            ))}
+                                        </ul>
+                                    </AccordionContent>
+                                </AccordionItem>
+                            ))}
                     </Accordion>
                 </div>
             </div>

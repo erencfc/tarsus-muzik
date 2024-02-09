@@ -9,6 +9,7 @@ import { Brand, Category, SubCategory } from "@prisma/client";
 import { currentRole } from "@/lib/auth";
 import { mkdir, readdir, unlink, writeFile } from "fs/promises";
 import { join } from "path";
+import { revalidatePath } from "next/cache";
 
 async function checkProduct(model: string) {
     const existingProduct = await prisma.product.findFirst({
@@ -231,6 +232,8 @@ export const newProduct = async (values: z.infer<typeof NewProductSchema>) => {
 
         const productUrl =
             process.env.NEXT_PUBLIC_SITE_URL + `/urun/${formatSlug(model)}`;
+
+        revalidatePath("/admin/dashboard/products");
 
         return {
             success: "Ürün başarıyla eklendi.",

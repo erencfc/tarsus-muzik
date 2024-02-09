@@ -1,10 +1,10 @@
-import { fetchCategories } from "@/app/utils/fetchCategories";
+import { getCategories } from "@/lib/db/category";
 import HamburgerMenu from "./HamburgerMenu";
 import { getCart } from "@/lib/db/cart";
 import { currentUser } from "@/lib/auth";
 
 export default async function HeaderMobile() {
-    const categories = await fetchCategories();
+    const categories = await getCategories();
 
     const cart = await getCart();
 

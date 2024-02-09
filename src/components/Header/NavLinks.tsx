@@ -1,11 +1,9 @@
-"use server";
-
-import { fetchCategories } from "@/app/utils/fetchCategories";
+import { getCategories } from "@/lib/db/category";
 import { formatSlug, getPath } from "@/lib/format";
 import Link from "next/link";
 
 export default async function NavLinks() {
-    const categories = await fetchCategories();
+    const categories = await getCategories();
 
     return (
         <>

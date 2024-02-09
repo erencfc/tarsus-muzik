@@ -1,8 +1,8 @@
-import { fetchCategories } from "@/app/utils/fetchCategories";
+import { getCategories } from "@/lib/db/category";
 import Link from "next/link";
 
 export default async function FooterTop() {
-    const categories = await fetchCategories();
+    const categories = await getCategories();
 
     const dummyInfo = [
         {
