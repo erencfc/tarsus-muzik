@@ -113,7 +113,7 @@ export default async function CartPage() {
                     </>
                 ) : (
                     <>
-                        <div className="col-span-4 row-span-2 mb-6 rounded-md border border-solid border-[#dadada] p-6">
+                        <div className="col-span-4 row-span-2 mb-6 w-full rounded-md border border-solid border-[#dadada] p-6">
                             <div className="flex flex-col items-center justify-center">
                                 <ExclamationCircleIcon
                                     width={84}
