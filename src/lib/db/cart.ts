@@ -1,8 +1,8 @@
 import { cookies } from "next/headers";
-import { prisma } from "@/lib/db/prisma";
 import { Dealer, Prisma } from "@prisma/client";
+
+import { prisma } from "@/lib/db/prisma";
 import { currentUser } from "@/lib/auth";
-import { ObjectId } from "mongodb";
 
 export type CartWithProducts = Prisma.CartGetPayload<{
     include: {
@@ -52,7 +52,6 @@ export async function getCart(): Promise<ShoppingCart | null> {
     let cart: CartWithProducts | null = null;
 
     let localCartId = cookies().get("localCartId")?.value;
-    if (!ObjectId.isValid(localCartId)) localCartId = null;
 
     if (!user && !localCartId) return null;
 
@@ -88,6 +87,8 @@ export async function getCart(): Promise<ShoppingCart | null> {
             include,
         });
     } else return null;
+
+    if (!cart) return null;
 
     if (user && !cart) {
         if (!localCartId) return null;
